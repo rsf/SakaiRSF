@@ -1,0 +1,145 @@
+/*
+ * Created on Dec 2, 2005
+ */
+package uk.ac.cam.caret.sakai.rsf.servlet;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
+import org.sakaiproject.api.kernel.tool.Placement;
+import org.sakaiproject.api.kernel.tool.Tool;
+import org.sakaiproject.service.legacy.site.Site;
+import org.sakaiproject.service.legacy.site.SitePage;
+import org.sakaiproject.service.legacy.site.SiteService;
+import org.sakaiproject.service.legacy.site.ToolConfiguration;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.web.context.WebApplicationContext;
+
+import uk.ac.cam.caret.sakai.rsf.bridge.SakaiNavConversion;
+import uk.org.ponder.rsf.renderer.BasicSCR;
+import uk.org.ponder.rsf.renderer.ComponentRenderer;
+import uk.org.ponder.rsf.renderer.StaticRendererCollection;
+import uk.org.ponder.rsf.viewstate.BaseURLProvider;
+import uk.org.ponder.rsf.viewstate.StaticBaseURLProvider;
+import uk.org.ponder.servletutil.ServletUtil;
+import uk.org.ponder.util.Logger;
+import uk.org.ponder.webapputil.ConsumerInfo;
+import uk.org.ponder.xml.NameValue;
+
+public class SakaiRequestParser implements ApplicationContextAware {
+  private HttpServletRequest request;
+  private String portalurlbase;
+  private String resourceurlbase;
+
+  private Site site;
+  
+  private SitePage sitepage;
+  private SiteService siteservice;
+  
+  private BasicSCR bodyscr;
+  private StaticRendererCollection src;
+  
+  private WebApplicationContext wac;
+  private StaticBaseURLProvider sbup;
+  private ConsumerInfo consumerinfo; 
+  
+  public void setHttpServletRequest(HttpServletRequest request) {
+    this.request = request;
+  }
+  
+  public void setSiteService(SiteService siteservice) {
+    this.siteservice = siteservice;
+  }
+  
+  public void setApplicationContext(ApplicationContext applicationContext) {
+    wac = (WebApplicationContext) applicationContext;
+  }  
+  
+  // The argument to this is what Sakai "claims" is our base URL. The true
+  // resource URL will be somewhat unrelated in that it will share (at most)
+  // the host name and port of this URL.
+  private String computeResourceURLBase(String baseurl) {
+    if (resourceurlbase.charAt(0) == '/') {
+      int firstslashpos = baseurl.indexOf('/', "http://".length());
+      return baseurl.substring(0, firstslashpos) + resourceurlbase;
+    }
+    else { // it is an absolute URL
+      return resourceurlbase;
+    }
+  }
+  
+  public void init() {
+    ServletContext servletcontext = wac.getServletContext();
+    // yes, these two fields are not request-scope, but not worth creating
+    // a whole new class and bean file for them.
+    portalurlbase = servletcontext.getInitParameter("portalurlbase");
+    resourceurlbase = servletcontext.getInitParameter("resourceurlbase");
+    
+
+    // compute the baseURLprovider.
+    sbup = new StaticBaseURLProvider();
+    String baseurl = ServletUtil.getBaseURL2(request);
+    sbup.setResourceBaseURL(computeResourceURLBase(baseurl));
+    baseurl += SakaiEarlyRequestParser.FACES_PATH + "/";
+    sbup.setBaseURL(baseurl);
+
+    // Deliver the rewrite rule to the renderer that will invoke the relevant
+    // Javascript magic to resize our frame.
+    bodyscr = new BasicSCR();
+    bodyscr.setName("sakai-body");
+    bodyscr.addNameValue(new NameValue("onload", (String) request
+        .getAttribute("sakai.html.body.onload")));
+    bodyscr.tag_type = ComponentRenderer.NESTING_TAG;
+    
+    src = new StaticRendererCollection();
+    src.addSCR(bodyscr);
+
+
+    Tool tool = (Tool) request.getAttribute("sakai.tool");
+    Placement placement = (Placement) request
+        .getAttribute("sakai.tool.placement");
+    String toolid = tool.getId();
+    String toolinstancepid = placement.getId();
+    
+
+    Logger.log.info("Got tool dispatcher id of " + toolid
+        + " resourceBaseURL " + sbup.getResourceBaseURL() 
+        + " baseURL " + sbup.getBaseURL() + " and Sakai PID "
+        + toolinstancepid);
+    
+    // Compute the ConsumerInfo object.
+    site = SakaiNavConversion.siteForPID(siteservice, toolinstancepid);
+    ToolConfiguration tc = siteservice.findTool(toolinstancepid);
+    sitepage = SakaiNavConversion.pageForToolConfig(siteservice, tc);
+    
+    consumerinfo = new ConsumerInfo();
+    consumerinfo.urlbase = sbup.getBaseURL();
+    consumerinfo.resourceurlbase = sbup.getResourceBaseURL();
+    consumerinfo.consumertype = "sakai";
+    consumerinfo.extraparameters = "&panel=Main";
+
+    consumerinfo.externalURL = SakaiNavConversion.portalURLForSitePage(
+        portalurlbase, site, sitepage);
+  }
+
+  public Site getSite() {
+    return site;
+  }
+  
+  public SitePage getSitePage() {
+    return sitepage;
+  }
+
+  public StaticRendererCollection getConsumerStaticRenderers() {
+    return src;
+  }
+
+  public BaseURLProvider getBaseURLProvider() {
+    return sbup;
+  }
+  
+  public ConsumerInfo getConsumerInfo() {
+    return consumerinfo;
+  }
+}

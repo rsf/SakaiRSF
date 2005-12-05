@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+  <pomVersion>3</pomVersion>
+  <name>SakaiRSF</name>
+  <groupId>sakairsf</groupId>
+  <artifactId>sakairsf</artifactId>
+  <currentVersion>0.5</currentVersion>
+  <shortDescription>SakaiRSF contains minimal code for 
+    integrating RSF apps with Sakai</shortDescription>
+  <description>SakaiRSF contains minimal code for 
+    integrating RSF apps with Sakai</description>
+  <inceptionYear>2005</inceptionYear>
+  <logo>/images/logo.gif</logo>
+  <mailingLists>
+    <mailingList>
+      <name>${pom.name} Dev List</name>
+    </mailingList>
+    <mailingList>
+      <name>${pom.name} User List</name>
+    </mailingList>
+  </mailingLists>
+    <gumpRepositoryId>caret-saffron-svn</gumpRepositoryId>
+    <siteAddress>saffron.caret.cam.ac.uk</siteAddress>
+    <siteDirectory>/home/gump/project-websites/SakaiRSF/</siteDirectory>
+    <distributionSite>saffron.caret.cam.ac.uk</distributionSite>
+    <distributionDirectory>/home/gump/project-downloads/SakaiRSF</distributionDirectory>
+  <developers>
+    <developer>
+      <id>amb26</id>
+      <name>Antranig Basman</name>
+      <email>antranig@caret.cam.ac.uk</email>
+      <url></url>
+      <organization>CARET</organization>
+      <organizationUrl>http://www.caret.cam.ac.uk/</organizationUrl>
+    </developer>
+  </developers>
+  <licenses>
+    <license>
+      <name>University of Cambridge, Open Source License</name>
+      <url></url>
+      <distribution>repo</distribution>
+    </license>
+    </licenses>
+    <repository>
+        <connection>scm:svn:https://saffron.caret.cam.ac.uk/svn/projects/SakaiRSF/trunk</connection>
+        <developerConnection>scm:svn:https://saffron.caret.cam.ac.uk/svn/projects/SakaiRSF/trunk</developerConnection>
+        <url>https://saffron.caret.cam.ac.uk/cgi-bin/viewcvs.cgi/</url>
+    </repository>
+    <organization>
+        <name>CARET, University of Cambridge</name>
+        <url>http://www.caret.cam.ac.uk/</url>
+    </organization>
+  <dependencies>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.9</version>
+      <type>jar</type>
+    </dependency>
+        <dependency>
+      <groupId>servletapi</groupId>
+      <artifactId>servletapi</artifactId>
+      <version>2.3</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>ponderutilcore</groupId>
+      <artifactId>ponderutilcore</artifactId>
+      <version>1.0</version>
+      <type>jar</type>
+      <properties>
+        <war.bundle>true</war.bundle>
+      </properties>
+    </dependency>
+    <dependency>
+      <groupId>j-servletutil</groupId>
+      <artifactId>j-servletutil</artifactId>
+      <version>1.0</version>
+      <type>jar</type>
+      <properties>
+        <war.bundle>true</war.bundle>
+      </properties>
+    </dependency>
+     <dependency>
+      <groupId>rsfutil</groupId>
+      <artifactId>rsfutil</artifactId>
+      <version>0.5</version>
+      <type>jar</type>
+      <properties>
+        <war.bundle>true</war.bundle>
+      </properties>
+    </dependency>
+    <dependency>
+      <groupId>log4j</groupId>
+      <artifactId>log4j</artifactId>
+      <version>1.2.9</version>
+      <type>jar</type>
+      <properties>
+        <war.bundle>true</war.bundle>
+      </properties>
+    </dependency>
+    <dependency>
+      <groupId>sakaiproject</groupId>
+      <artifactId>sakai-legacy-service</artifactId>
+      <version>2.0.0</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>sakaiproject</groupId>
+      <artifactId>sakai-component</artifactId>
+      <version>2.0.0</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>sakaiproject</groupId>
+      <artifactId>sakai-tool</artifactId>
+      <version>2.0.0</version>
+      <type>jar</type>
+    </dependency>
+    <dependency>
+      <groupId>springframework</groupId>
+      <artifactId>spring</artifactId>
+      <version>1.1.5</version>
+      <type>jar</type>
+    </dependency>
+  </dependencies>
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+    <resources>
+      <resource>
+        <directory>src/java/</directory>
+        <targetPath>/</targetPath>
+        <includes>
+          <include>**/*.xml</include>
+        </includes>
+        <filtering>false</filtering>
+      </resource>
+    </resources>
+    <unitTest>
+      <includes>
+        <include>**/*Test.java</include>
+      </includes>
+    </unitTest>
+  </build>
+</project>
+
