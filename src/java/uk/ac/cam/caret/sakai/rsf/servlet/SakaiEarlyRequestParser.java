@@ -3,10 +3,10 @@
  */
 package uk.ac.cam.caret.sakai.rsf.servlet;
 
-import uk.org.ponder.rsf.servlet.EarlyRequestParser;
+import uk.org.ponder.rsf.servlet.ServletEarlyRequestParser;
 import uk.org.ponder.util.Logger;
 
-public class SakaiEarlyRequestParser extends EarlyRequestParser {
+public class SakaiEarlyRequestParser extends ServletEarlyRequestParser {
   
   /** Since it seems we can no longer apply servlet mappings in our web.xml
    * as of Sakai 2.0, we perform this feat manually, using the resourceurlbase

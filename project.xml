@@ -4,7 +4,7 @@
   <name>SakaiRSF</name>
   <groupId>sakairsf</groupId>
   <artifactId>sakairsf</artifactId>
-  <currentVersion>0.5</currentVersion>
+  <currentVersion>${rsfutil.version}-sakai-${sakai.version}</currentVersion>
   <shortDescription>SakaiRSF contains minimal code for 
     integrating RSF apps with Sakai</shortDescription>
   <description>SakaiRSF contains minimal code for 
@@ -66,7 +66,7 @@
     <dependency>
       <groupId>ponderutilcore</groupId>
       <artifactId>ponderutilcore</artifactId>
-      <version>1.0</version>
+      <version>${ponderutilcore.version}</version>
       <type>jar</type>
       <properties>
         <war.bundle>true</war.bundle>
@@ -75,7 +75,7 @@
     <dependency>
       <groupId>j-servletutil</groupId>
       <artifactId>j-servletutil</artifactId>
-      <version>1.0</version>
+      <version>${jservletutil.version}</version>
       <type>jar</type>
       <properties>
         <war.bundle>true</war.bundle>
@@ -84,7 +84,7 @@
      <dependency>
       <groupId>rsfutil</groupId>
       <artifactId>rsfutil</artifactId>
-      <version>0.5</version>
+      <version>${rsfutil.version}</version>
       <type>jar</type>
       <properties>
         <war.bundle>true</war.bundle>
@@ -102,19 +102,19 @@
     <dependency>
       <groupId>sakaiproject</groupId>
       <artifactId>sakai-legacy-service</artifactId>
-      <version>2.0.0</version>
+      <version>${sakai.version}</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>sakaiproject</groupId>
       <artifactId>sakai-component</artifactId>
-      <version>2.0.0</version>
+      <version>${sakai.version}</version>
       <type>jar</type>
     </dependency>
     <dependency>
       <groupId>sakaiproject</groupId>
       <artifactId>sakai-tool</artifactId>
-      <version>2.0.0</version>
+      <version>${sakai.version}</version>
       <type>jar</type>
     </dependency>
     <dependency>
