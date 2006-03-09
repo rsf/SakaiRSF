@@ -4,11 +4,10 @@
   <name>SakaiRSF</name>
   <groupId>sakairsf</groupId>
   <artifactId>sakairsf</artifactId>
-  <currentVersion>${rsfutil.version}-sakai-${sakai.version}</currentVersion>
-  <shortDescription>SakaiRSF contains minimal code for 
-    integrating RSF apps with Sakai</shortDescription>
-  <description>SakaiRSF contains minimal code for 
-    integrating RSF apps with Sakai</description>
+  <currentVersion>${rsfutil.version}-${sakai.version}</currentVersion>
+  <shortDescription>RSF integration library for RSF</shortDescription>
+  <description>Abstracts over Sakai dispatch cycle and tool state holders
+   </description>
   <inceptionYear>2005</inceptionYear>
   <logo>/images/logo.gif</logo>
   <mailingLists>
@@ -108,6 +107,12 @@
     <dependency>
       <groupId>sakaiproject</groupId>
       <artifactId>sakai-component</artifactId>
+      <version>${sakai.version}</version>
+      <type>jar</type>
+    </dependency>
+      <dependency>
+      <groupId>sakaiproject</groupId>
+      <artifactId>sakai-session</artifactId>
       <version>${sakai.version}</version>
       <type>jar</type>
     </dependency>
