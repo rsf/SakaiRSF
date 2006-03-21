@@ -34,7 +34,7 @@ public class ReasonableSakaiServlet extends HttpServlet {
 
       WebApplicationContext wac = WebApplicationContextUtils
           .getWebApplicationContext(getServletContext());
-      rsacbl = (RSACBeanLocator) wac.getBean("rsacBeanLocator");
+      rsacbl = (RSACBeanLocator) wac.getBean("RSACBeanLocator");
     }
     catch (Throwable t) {
       Logger.log.warn("Error initialising tunnel servlet: ", t);
