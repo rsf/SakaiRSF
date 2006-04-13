@@ -23,13 +23,13 @@ import uk.org.ponder.rsf.renderer.StaticRendererCollection;
 import uk.org.ponder.rsf.viewstate.BaseURLProvider;
 import uk.org.ponder.rsf.viewstate.StaticBaseURLProvider;
 import uk.org.ponder.servletutil.ServletUtil;
+import uk.org.ponder.stringutil.URLUtil;
 import uk.org.ponder.util.Logger;
 import uk.org.ponder.webapputil.ConsumerInfo;
 import uk.org.ponder.xml.NameValue;
 
 public class SakaiRequestParser implements ApplicationContextAware {
   private HttpServletRequest request;
-  private String portalurlbase;
   private String resourceurlbase;
 
   private Site site;
@@ -73,7 +73,6 @@ public class SakaiRequestParser implements ApplicationContextAware {
     ServletContext servletcontext = wac.getServletContext();
     // yes, these two fields are not request-scope, but not worth creating
     // a whole new class and bean file for them.
-    portalurlbase = servletcontext.getInitParameter("portalurlbase");
     resourceurlbase = servletcontext.getInitParameter("resourceurlbase");
     
 
@@ -119,8 +118,7 @@ public class SakaiRequestParser implements ApplicationContextAware {
     consumerinfo.consumertype = "sakai";
     consumerinfo.extraparameters = "&panel=Main";
 
-    consumerinfo.externalURL = SakaiNavConversion.portalURLForSitePage(
-        portalurlbase, site, sitepage);
+    consumerinfo.externalURL = URLUtil.deSpace(sitepage.getUrl());
   }
 
   public Site getSite() {
