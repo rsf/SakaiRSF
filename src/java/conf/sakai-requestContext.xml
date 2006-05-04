@@ -4,32 +4,35 @@
 <!-- Contains bean overrides and new definitions for request-scope beans
   required for integration of RSF apps into Sakai -->
 <beans>
-  <bean name="sakaiRequestParser" class="uk.ac.cam.caret.sakai.rsf.servlet.SakaiRequestParser"
+  <bean name="sakaiRequestParser"
+    class="uk.ac.cam.caret.sakai.rsf.servlet.SakaiRequestParser"
     init-method="init">
     <property name="httpServletRequest">
-      <ref bean="httpServletRequest"/>
+      <ref bean="httpServletRequest" />
     </property>
     <property name="siteService">
-      <ref bean="org.sakaiproject.service.legacy.site.SiteService"/>
+      <ref bean="org.sakaiproject.service.legacy.site.SiteService" />
     </property>
   </bean>
-  
-  <bean name="baseURLProvider" factory-bean="sakaiRequestParser" 
+
+  <bean name="baseURLProvider" factory-bean="sakaiRequestParser"
     factory-method="getBaseURLProvider">
   </bean>
-  
-  <bean id="consumerStaticRenderers" factory-bean="sakaiRequestParser" 
+
+  <bean id="consumerStaticRenderers" factory-bean="sakaiRequestParser"
     factory-method="getConsumerStaticRenderers">
   </bean>
-  
-  <bean id="consumerInfo" factory-bean="sakaiRequestParser" 
+
+  <bean id="consumerInfo" factory-bean="sakaiRequestParser"
     factory-method="getConsumerInfo">
   </bean>
-  
-  <bean name="earlyRequestParser" class="uk.ac.cam.caret.sakai.rsf.servlet.SakaiEarlyRequestParser">
-     <property name="httpServletRequest" ref="httpServletRequest"/>
-     <property name="defaultView" ref="defaultView"/>
-     <property name="multipartResolver" ref="multipartResolver"/>
+
+  <bean name="earlyRequestParser"
+    class="uk.ac.cam.caret.sakai.rsf.servlet.SakaiEarlyRequestParser"
+    init-method="init">
+    <property name="httpServletRequest" ref="httpServletRequest" />
+    <property name="defaultView" ref="defaultView" />
+    <property name="multipartResolver" ref="multipartResolver" />
   </bean>
-  
+
 </beans>
