@@ -27,12 +27,9 @@
   </bean>
   
   <bean name="earlyRequestParser" class="uk.ac.cam.caret.sakai.rsf.servlet.SakaiEarlyRequestParser">
-     <property name="httpServletRequest">
-      <ref bean="httpServletRequest"/>
-     </property>
-     <property name="defaultView">
-       <ref bean="defaultView"/>
-     </property>
+     <property name="httpServletRequest" ref="httpServletRequest"/>
+     <property name="defaultView" ref="defaultView"/>
+     <property name="multipartResolver" ref="multipartResolver"/>
   </bean>
   
 </beans>

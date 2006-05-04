@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beansProjectDescription>
+	<configExtensions>
+		<configExtension>xml</configExtension>
+	</configExtensions>
 	<configs>
 		<config>src/java/conf/sakai-requestContext.xml</config>
 		<config>src/java/conf/sakai-applicationContext.xml</config>
 	</configs>
+	<configSets>
+		<configSet>
+			<name>SakaiRSF</name>
+			<allowBeanDefinitionOverriding>true</allowBeanDefinitionOverriding>
+			<incomplete>false</incomplete>
+			<configs>
+				<config>/J-RSFUtil/src/conf/blank-applicationContext.xml</config>
+				<config>/J-RSFUtil/src/conf/blank-requestContext.xml</config>
+				<config>/J-RSFUtil/src/conf/rsf-config.xml</config>
+				<config>/J-RSFUtil/src/conf/rsf-requestscope-config.xml</config>
+				<config>src/java/conf/sakai-applicationContext.xml</config>
+				<config>src/java/conf/sakai-requestContext.xml</config>
+			</configs>
+		</configSet>
+	</configSets>
 </beansProjectDescription>
