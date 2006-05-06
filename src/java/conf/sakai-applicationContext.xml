@@ -4,23 +4,32 @@
 <!-- Contains bean overrides and new definitions for request-scope beans
   required for integration of RSF apps into Sakai -->
 <beans>
- 
-  <bean id="flowTokenStateHolder" class="uk.ac.cam.caret.sakai.rsf.state.InSakaiSessionTSH">
-    <property name="sessionManager" ref="org.sakaiproject.api.kernel.session.SessionManager"/>
+
+  <bean id="flowTokenStateHolder"
+    class="uk.ac.cam.caret.sakai.rsf.state.InSakaiSessionTSH">
+    <property name="sessionManager"
+      ref="org.sakaiproject.api.kernel.session.SessionManager" />
     <property name="expirySeconds">
       <!-- deliberately short time for testing - all flows will expire after 
         30 seconds of disuse -->
       <value>30</value>
     </property>
   </bean>
-  
-   <bean id="bandgapStateHolder" class="uk.ac.cam.caret.sakai.rsf.state.InSakaiSessionTSH">
-    <property name="sessionManager" ref="org.sakaiproject.api.kernel.session.SessionManager"/>
+
+  <bean id="bandgapStateHolder"
+    class="uk.ac.cam.caret.sakai.rsf.state.InSakaiSessionTSH">
+    <property name="sessionManager"
+      ref="org.sakaiproject.api.kernel.session.SessionManager" />
     <property name="expirySeconds">
       <!-- deliberately short time for testing - all errors will expire after 
         10 seconds of disuse -->
       <value>10</value>
     </property>
   </bean>
- 
+  <!--  no problem declaring this here since Sakai already has commons-upload 
+  in shared. -->
+  <bean id="multipartResolver"
+    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+  </bean>
+
 </beans>
