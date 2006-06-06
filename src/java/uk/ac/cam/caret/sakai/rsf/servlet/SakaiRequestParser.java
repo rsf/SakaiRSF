@@ -6,12 +6,12 @@ package uk.ac.cam.caret.sakai.rsf.servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import org.sakaiproject.api.kernel.tool.Placement;
-import org.sakaiproject.api.kernel.tool.Tool;
-import org.sakaiproject.service.legacy.site.Site;
-import org.sakaiproject.service.legacy.site.SitePage;
-import org.sakaiproject.service.legacy.site.SiteService;
-import org.sakaiproject.service.legacy.site.ToolConfiguration;
+import org.sakaiproject.site.api.Site;
+import org.sakaiproject.site.api.SitePage;
+import org.sakaiproject.site.api.SiteService;
+import org.sakaiproject.site.api.ToolConfiguration;
+import org.sakaiproject.tool.api.Placement;
+import org.sakaiproject.tool.api.Tool;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.context.WebApplicationContext;

@@ -2,34 +2,54 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
   "http://www.springframework.org/dtd/spring-beans.dtd">
 <!-- Contains bean overrides and new definitions for application-scope beans
-  required for integration of RSF apps into Sakai -->
+	required for integration of RSF apps into Sakai -->
 <beans>
 
-  <bean id="flowTokenStateHolder"
-    class="uk.ac.cam.caret.sakai.rsf.state.InSakaiSessionTSH">
-    <property name="sessionManager"
-      ref="org.sakaiproject.api.kernel.session.SessionManager" />
-    <property name="expirySeconds">
-      <!-- deliberately short time for testing - all flows will expire after 
-        30 seconds of disuse -->
-      <value>30</value>
-    </property>
-  </bean>
+	<bean id="flowTokenStateHolder"
+		class="uk.ac.cam.caret.sakai.rsf.state.InSakaiSessionTSH">
+		<property name="sessionManager"
+			ref="org.sakaiproject.tool.api.SessionManager" />
+		<property name="expirySeconds">
+			<!-- deliberately short time for testing - all flows will expire after 
+				30 seconds of disuse -->
+			<value>30</value>
+		</property>
+	</bean>
 
-  <bean id="bandgapStateHolder"
-    class="uk.ac.cam.caret.sakai.rsf.state.InSakaiSessionTSH">
-    <property name="sessionManager"
-      ref="org.sakaiproject.api.kernel.session.SessionManager" />
-    <property name="expirySeconds">
-      <!-- deliberately short time for testing - all errors will expire after 
-        10 seconds of disuse -->
-      <value>10</value>
-    </property>
-  </bean>
-  <!--  no problem declaring this here since Sakai already has commons-upload 
-  in shared. -->
-  <bean id="multipartResolver"
-    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-  </bean>
+	<bean id="bandgapStateHolder"
+		class="uk.ac.cam.caret.sakai.rsf.state.InSakaiSessionTSH">
+		<property name="sessionManager"
+			ref="org.sakaiproject.tool.api.SessionManager" />
+		<property name="expirySeconds">
+			<!-- deliberately short time for testing - all errors will expire after 
+				10 seconds of disuse -->
+			<value>10</value>
+		</property>
+	</bean>
+	<!--  no problem declaring this here since Sakai already has commons-upload 
+		in shared. -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	</bean>
 
+	<bean id="sakai-LocaleProxy" parent="RSACLocaleBridge">
+		<property name="targetBeanName" value="sakai-Locale" />
+	</bean>
+
+	<!--  Use this bean as a base class for a bean "messageSource" with the
+	resource bundle name of your choice -->
+	<bean id="messageSource-base" abstract="true"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+	</bean>
+	
+	<bean id="messageSource" parent="messageSource-base"/>
+
+	<bean id="sakai-messageLocator"
+		class="uk.org.ponder.springutil.SpringMessageLocator">
+		<property name="messageSource" ref="messageSource" />
+		<property name="localeGetter" ref="sakai-LocaleProxy" />
+	</bean>
+
+	<bean id="rsf-dummy-SakaiResourceLoader"
+		class="org.sakaiproject.util.ResourceLoader" />
 </beans>

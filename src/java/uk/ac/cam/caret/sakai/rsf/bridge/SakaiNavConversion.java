@@ -4,34 +4,16 @@
 package uk.ac.cam.caret.sakai.rsf.bridge;
 
 import org.sakaiproject.exception.IdUnusedException;
-import org.sakaiproject.service.legacy.site.Site;
-import org.sakaiproject.service.legacy.site.SitePage;
-import org.sakaiproject.service.legacy.site.SiteService;
-import org.sakaiproject.service.legacy.site.ToolConfiguration;
-
-import uk.org.ponder.stringutil.CharWrap;
-import uk.org.ponder.stringutil.URLEncoder;
+import org.sakaiproject.site.api.Site;
+import org.sakaiproject.site.api.SitePage;
+import org.sakaiproject.site.api.SiteService;
+import org.sakaiproject.site.api.ToolConfiguration;
 
 /**
  * @author Antranig Basman (antranig@caret.cam.ac.uk)
  *  
  */
 public class SakaiNavConversion {
-
-  public static String portalURLForSitePage(String baseurl, Site site,
-      SitePage page) {
-    CharWrap togo = new CharWrap();
-    togo.append(baseurl).append("/site/");
-    String encodedsite = URLEncoder.encode(site.getId());
-    togo.append(encodedsite);
-    if (page != null) {
-      togo.append("/page/");
-      String encodedpage = URLEncoder.encode(page.getId());
-      togo.append(encodedpage);
-    }
-    return togo.toString();
-
-  }
 
   public static Site siteForPID(SiteService siteservice, String pid) {
     Site togo = null;

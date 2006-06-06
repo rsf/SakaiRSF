@@ -3,8 +3,8 @@
  */
 package uk.ac.cam.caret.sakai.rsf.state;
 
-import org.sakaiproject.api.kernel.session.SessionManager;
-import org.sakaiproject.api.kernel.session.ToolSession;
+
+import org.sakaiproject.tool.api.SessionManager;
 
 import uk.org.ponder.rsf.state.TokenStateHolder;
 

@@ -11,7 +11,7 @@
 		<configSet>
 			<name>SakaiRSF</name>
 			<allowBeanDefinitionOverriding>true</allowBeanDefinitionOverriding>
-			<incomplete>false</incomplete>
+			<incomplete>true</incomplete>
 			<configs>
 				<config>/J-RSFUtil/src/conf/blank-applicationContext.xml</config>
 				<config>/J-RSFUtil/src/conf/blank-requestContext.xml</config>

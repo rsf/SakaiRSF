@@ -11,7 +11,7 @@
       <ref bean="httpServletRequest" />
     </property>
     <property name="siteService">
-      <ref bean="org.sakaiproject.service.legacy.site.SiteService" />
+      <ref bean="org.sakaiproject.site.api.SiteService" />
     </property>
   </bean>
 
@@ -34,5 +34,12 @@
     <property name="defaultView" ref="defaultView" />
     <property name="multipartResolver" ref="multipartResolver" />
   </bean>
+  
+  <bean name="currentUser"
+     factory-bean="org.sakaiproject.user.api.UserDirectoryService"
+     factory-method="getCurrentUser"/>
+
+	<bean name="sakai-Locale" factory-bean="rsf-dummy-SakaiResourceLoader"
+	  factory-method="getLocale"/>
 
 </beans>
