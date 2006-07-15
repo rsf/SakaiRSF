@@ -42,7 +42,8 @@ public class SakaiRequestParser implements ApplicationContextAware {
   
   private WebApplicationContext wac;
   private StaticBaseURLProvider sbup;
-  private ConsumerInfo consumerinfo; 
+  private ConsumerInfo consumerinfo;
+  private Placement placement; 
   
   public void setHttpServletRequest(HttpServletRequest request) {
     this.request = request;
@@ -96,8 +97,7 @@ public class SakaiRequestParser implements ApplicationContextAware {
 
 
     Tool tool = (Tool) request.getAttribute("sakai.tool");
-    Placement placement = (Placement) request
-        .getAttribute("sakai.tool.placement");
+    placement = (Placement) request.getAttribute("sakai.tool.placement");
     String toolid = tool.getId();
     String toolinstancepid = placement.getId();
     
@@ -139,5 +139,9 @@ public class SakaiRequestParser implements ApplicationContextAware {
   
   public ConsumerInfo getConsumerInfo() {
     return consumerinfo;
+  }
+  
+  public Placement getPlacement() {
+    return placement;
   }
 }

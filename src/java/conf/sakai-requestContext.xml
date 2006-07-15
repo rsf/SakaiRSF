@@ -34,12 +34,14 @@
     <property name="defaultView" ref="defaultView" />
     <property name="multipartResolver" ref="multipartResolver" />
   </bean>
-  
+
   <bean name="currentUser"
-     factory-bean="org.sakaiproject.user.api.UserDirectoryService"
-     factory-method="getCurrentUser"/>
+    factory-bean="org.sakaiproject.user.api.UserDirectoryService"
+    factory-method="getCurrentUser" />
 
-	<bean name="sakai-Locale" factory-bean="rsf-dummy-SakaiResourceLoader"
-	  factory-method="getLocale"/>
+  <bean name="sakai-Locale" factory-bean="rsf-dummy-SakaiResourceLoader"
+    factory-method="getLocale" />
 
+  <bean name="sakai-Placement" factory-bean="sakaiRequestParser" 
+    factory-method="getPlacement"/>
 </beans>

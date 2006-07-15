@@ -3,7 +3,6 @@
  */
 package uk.ac.cam.caret.sakai.rsf.servlet;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +36,7 @@ public class ReasonableSakaiServlet extends HttpServlet {
       rsacbl = (RSACBeanLocator) wac.getBean("RSACBeanLocator");
     }
     catch (Throwable t) {
-      Logger.log.warn("Error initialising tunnel servlet: ", t);
+      Logger.log.warn("Error initialising SakaiRSF servlet: ", t);
     }
   }
 
@@ -47,15 +46,6 @@ public class ReasonableSakaiServlet extends HttpServlet {
       // This line was added for Sakai 2.0
       req.setAttribute(Tool.NATIVE_URL, Tool.NATIVE_URL);
 
-      String panelparam = req.getParameter("panel");
-      if (panelparam != null && panelparam.equals("Title")) {
-        String targetPage = "/jsp/Title.jsp";
-        RequestDispatcher rd = getServletContext().getRequestDispatcher(
-            targetPage);
-        rd.forward(req, res);
-        return;
-      }
-      
       RSACUtils.startServletRequest(req, res, 
           rsacbl, RSACUtils.HTTP_SERVLET_FACTORY);
       //A request bean locator just good for this request.
@@ -65,7 +55,7 @@ public class ReasonableSakaiServlet extends HttpServlet {
       rbl.locateBean("rootHandlerBean");
     }
     catch (Throwable t) {
-      Logger.log.warn("Error servicing RSF request ", t);
+      Logger.log.warn("Error servicing SakaiRSF request ", t);
       try {
         res.getWriter().print(
             "[An error occurred handling this RSF request]");
@@ -74,7 +64,7 @@ public class ReasonableSakaiServlet extends HttpServlet {
       catch (Exception e) {
       }
       throw UniversalRuntimeException.accumulate(t,
-          "Error servicing ToolSinkTunnel request ");
+          "Error servicing SakaiRSF request ");
     }
     finally {
       rsacbl.endRequest();
