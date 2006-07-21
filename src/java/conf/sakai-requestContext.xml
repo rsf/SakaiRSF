@@ -35,9 +35,15 @@
     <property name="multipartResolver" ref="multipartResolver" />
   </bean>
 
-  <bean name="currentUser"
+  <bean name="sakai-User"
     factory-bean="org.sakaiproject.user.api.UserDirectoryService"
     factory-method="getCurrentUser" />
+    
+  <bean name="sakai-UserDisplayName"
+    factory-bean="sakai-User" factory-method="getDisplayName"/>
+  
+  <bean name="sakai-UserEID"
+    factory-bean="sakai-User" factory-method="getUserEid"/>
 
   <bean name="sakai-Locale" factory-bean="rsf-dummy-SakaiResourceLoader"
     factory-method="getLocale" />
