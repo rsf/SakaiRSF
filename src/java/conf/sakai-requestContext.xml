@@ -43,7 +43,7 @@
     factory-bean="sakai-User" factory-method="getDisplayName"/>
   
   <bean name="sakai-UserEID"
-    factory-bean="sakai-User" factory-method="getUserEid"/>
+    factory-bean="sakai-User" factory-method="getEid"/>
 
   <bean name="sakai-Locale" factory-bean="rsf-dummy-SakaiResourceLoader"
     factory-method="getLocale" />
