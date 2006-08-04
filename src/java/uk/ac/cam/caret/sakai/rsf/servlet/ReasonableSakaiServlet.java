@@ -33,7 +33,8 @@ public class ReasonableSakaiServlet extends HttpServlet {
 
       WebApplicationContext wac = WebApplicationContextUtils
           .getWebApplicationContext(getServletContext());
-      rsacbl = (RSACBeanLocator) wac.getBean("RSACBeanLocator");
+      rsacbl = (RSACBeanLocator) 
+        wac.getBean(RSACBeanLocator.RSAC_BEAN_LOCATOR_NAME);
     }
     catch (Throwable t) {
       Logger.log.warn("Error initialising SakaiRSF servlet: ", t);

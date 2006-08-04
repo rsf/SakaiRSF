@@ -7,7 +7,7 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/PonderUtilCore"/>
 	<classpathentry kind="var" path="MAVEN_REPO/servletapi/jars/servletapi-2.3.jar"/>
 	<classpathentry sourcepath="/E_DRIVE/logging-log4j-1.2.9/src/java" kind="var" path="MAVEN_REPO/log4j/jars/log4j-1.2.9.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Spring 1.2.6"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Spring 1.2.8"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/sakai22-tool-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/sakai22-site-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/sakai22-entity-api"/>
