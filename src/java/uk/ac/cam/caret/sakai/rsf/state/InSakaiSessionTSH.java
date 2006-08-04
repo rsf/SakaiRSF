@@ -45,5 +45,9 @@ public class InSakaiSessionTSH implements TokenStateHolder {
   public void setExpirySeconds(int seconds) {
     this.expiryseconds = seconds;
   }
+
+  public String getId() {
+    return sessionmanager.getCurrentToolSession().getId();
+  }
   
 }

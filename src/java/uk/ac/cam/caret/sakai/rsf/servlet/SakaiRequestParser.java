@@ -12,6 +12,7 @@ import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.site.api.ToolConfiguration;
 import org.sakaiproject.tool.api.Placement;
 import org.sakaiproject.tool.api.Tool;
+import org.sakaiproject.util.Web;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.context.WebApplicationContext;
@@ -57,12 +58,24 @@ public class SakaiRequestParser implements ApplicationContextAware {
     wac = (WebApplicationContext) applicationContext;
   }  
   
+  // SAKAI URL handling is ridiculous, in that the URL returned from
+  // req.getRequestURL() may simply be *wrong*. This method adjusts the
+  // protocol and port from a "correctly" computed URL to be closer to
+  // reality, via the hackery from Sakai "Web" utils.
+  public static String fixSakaiURL(HttpServletRequest req, String computed) {
+    String serverURL = Web.serverUrl(req);
+    int endprotpos = computed.indexOf("://");
+    int slashpos = computed.indexOf('/', endprotpos + 3);
+    return serverURL + computed.substring(slashpos);
+  }
+  
   // The argument to this is what Sakai "claims" is our base URL. The true
   // resource URL will be somewhat unrelated in that it will share (at most)
   // the host name and port of this URL.
   private String computeResourceURLBase(String baseurl) {
     if (resourceurlbase.charAt(0) == '/') {
-      int firstslashpos = baseurl.indexOf('/', "http://".length());
+      int endprotpos = baseurl.indexOf("://");
+      int firstslashpos = baseurl.indexOf('/', endprotpos + 3);
       return baseurl.substring(0, firstslashpos) + resourceurlbase;
     }
     else { // it is an absolute URL
@@ -76,10 +89,9 @@ public class SakaiRequestParser implements ApplicationContextAware {
     // a whole new class and bean file for them.
     resourceurlbase = servletcontext.getInitParameter("resourceurlbase");
     
-
     // compute the baseURLprovider.
     sbup = new StaticBaseURLProvider();
-    String baseurl = ServletUtil.getBaseURL2(request);
+    String baseurl = fixSakaiURL(request, ServletUtil.getBaseURL2(request));
     sbup.setResourceBaseURL(computeResourceURLBase(baseurl));
     baseurl += SakaiEarlyRequestParser.FACES_PATH + "/";
     sbup.setBaseURL(baseurl);
