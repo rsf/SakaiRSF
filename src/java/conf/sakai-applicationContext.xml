@@ -36,14 +36,6 @@
     <property name="targetBeanName" value="sakai-Locale" />
   </bean>
 
-  <!--  Use this bean as a base class for a bean "messageSource" with the
-    resource bundle name of your choice -->
-  <bean id="messageSource-base" abstract="true"
-    class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-  </bean>
-
-  <bean id="messageSource" parent="messageSource-base" />
-
   <bean id="sakai-messageLocator"
     class="uk.org.ponder.springutil.SpringMessageLocator">
     <property name="messageSource" ref="messageSource" />
