@@ -18,6 +18,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.context.WebApplicationContext;
 
 import uk.ac.cam.caret.sakai.rsf.bridge.SakaiNavConversion;
+import uk.ac.cam.caret.sakai.rsf.template.SakaiBodyTPI;
 import uk.org.ponder.rsf.renderer.BasicSCR;
 import uk.org.ponder.rsf.renderer.ComponentRenderer;
 import uk.org.ponder.rsf.renderer.StaticRendererCollection;
@@ -99,7 +100,7 @@ public class SakaiRequestParser implements ApplicationContextAware {
     // Deliver the rewrite rule to the renderer that will invoke the relevant
     // Javascript magic to resize our frame.
     bodyscr = new BasicSCR();
-    bodyscr.setName("sakai-body");
+    bodyscr.setName(SakaiBodyTPI.SAKAI_BODY);
     bodyscr.addNameValue(new NameValue("onload", (String) request
         .getAttribute("sakai.html.body.onload")));
     bodyscr.tag_type = ComponentRenderer.NESTING_TAG;
