@@ -36,7 +36,7 @@
     <property name="targetBeanName" value="sakai-Locale" />
   </bean>
 
-  <bean id="sakai-messageLocator"
+  <bean id="messageLocator"
     class="uk.org.ponder.springutil.SpringMessageLocator">
     <property name="messageSource" ref="messageSource" />
     <property name="localeGetter" ref="sakai-LocaleProxy" />
