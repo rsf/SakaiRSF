@@ -58,8 +58,12 @@ public class ReasonableSakaiServlet extends HttpServlet {
     catch (Throwable t) {
       Logger.log.warn("Error servicing SakaiRSF request ", t);
       try {
-        res.getWriter().print(
+        res.getWriter().println(
             "[An error occurred handling this RSF request]");
+        if (rsacbl == null) {
+          res.getWriter().println(
+              "[Context has not been started properly]");
+        }
         res.getWriter().close();
       }
       catch (Exception e) {
@@ -68,7 +72,9 @@ public class ReasonableSakaiServlet extends HttpServlet {
           "Error servicing SakaiRSF request ");
     }
     finally {
-      rsacbl.endRequest();
+      if (rsacbl != null) {
+        rsacbl.endRequest();
+      }
     }
 
   }
