@@ -13,5 +13,13 @@ public class HelperViewParameters extends SimpleViewParameters {
 	 * Name of the component whose value is the method binding to call after the helper has returned.
 	 * This is in order to infer the action result, if any is required.
 	 */
-	public static final String POST_HELPER_BINDING = "helper-binding"; 
+	public static final String POST_HELPER_BINDING = "helper-binding";
+
+	public HelperViewParameters() {
+		super();
+	}
+
+	public HelperViewParameters(String viewID) {
+		super(viewID);
+	} 
 }
