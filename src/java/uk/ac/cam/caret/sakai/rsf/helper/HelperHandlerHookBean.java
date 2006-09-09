@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.sakaiproject.tool.api.ActiveTool;
 import org.sakaiproject.tool.api.ActiveToolManager;
-import org.sakaiproject.tool.api.Tool;
 import org.sakaiproject.tool.api.ToolException;
 
 import uk.org.ponder.beanutil.BeanLocator;
@@ -22,6 +21,7 @@ import uk.org.ponder.rsf.state.TokenStateHolder;
 import uk.org.ponder.rsf.view.View;
 import uk.org.ponder.rsf.view.ViewComponentProducer;
 import uk.org.ponder.rsf.view.ViewResolver;
+import uk.org.ponder.rsf.viewstate.BaseURLProvider;
 import uk.org.ponder.rsf.viewstate.ViewParameters;
 import uk.org.ponder.rsf.viewstate.ViewStateHandler;
 import uk.org.ponder.util.UniversalRuntimeException;
@@ -47,9 +47,10 @@ public class HelperHandlerHookBean {
 	private BeanLocator beanLocator;
 	private ActionResultInterpreter ari;
 	private ActiveToolManager activeToolManager;
+	private BaseURLProvider bup;
+	private String pathInfo;
 
 	public boolean handle() {
-		String pathInfo = request.getPathInfo();
 		String viewID = viewParameters.viewID;
 		
 		String pathBeyondViewID = "" ;
@@ -89,18 +90,20 @@ public class HelperHandlerHookBean {
 		String helperId = (String) tsh.getTokenState(TOKEN_STATE_PREFIX + viewParameters.viewID + HelperViewParameters.HELPER_ID);
 		
 		ActiveTool helperTool = activeToolManager.getActiveTool(helperId);
-		
-		String contextPath = request.getContextPath();
-		String fullUrl = vsh.getFullURL(viewParameters);
-		contextPath = fullUrl.substring(fullUrl.indexOf(contextPath));
-		contextPath = contextPath.substring(0, contextPath.indexOf(pathBeyondViewID));
-		request.removeAttribute(Tool.NATIVE_URL);
 
-		String pathInfo = pathBeyondViewID.length() > IN_HELPER_PATH.length() ? pathBeyondViewID.substring(IN_HELPER_PATH.length()) : ""; 
+		String baseUrl = bup.getBaseURL();
+		int hostStart = baseUrl.indexOf("://") + 3;
+		int hostEnd = baseUrl.indexOf('/', hostStart);
+		
+		
+		String contextPath = baseUrl.substring(hostEnd);
+		contextPath += viewParameters.viewID;
+		contextPath += IN_HELPER_PATH;
+		String helperPathInfo = pathInfo.substring(1 + viewParameters.viewID.length() + IN_HELPER_PATH.length());
 		
 		// this is the forward call
 		try {
-			helperTool.help(request, response, contextPath + IN_HELPER_PATH, pathInfo);
+			helperTool.help(request, response, contextPath, helperPathInfo);
 		} catch (ToolException e) {
 			throw UniversalRuntimeException.accumulate(e, "ToolException when trying to call help. HelperId: " + helperId + " contextPath: " + contextPath + " pathInfo: " + pathInfo);
 		}
@@ -126,13 +129,7 @@ public class HelperHandlerHookBean {
 			tsh.putTokenState(TOKEN_STATE_PREFIX + viewParameters.viewID + HelperViewParameters.POST_HELPER_BINDING, helperBinding.methodbinding);
 		}
 
-		String helperToolPath = vsh.getFullURL(viewParameters);
-		int indexOfPathInfo = helperToolPath.indexOf(request.getPathInfo());
-		int indexOfViewID = request.getPathInfo().indexOf(viewParameters.viewID);
-		
-		helperToolPath = helperToolPath.substring(0, indexOfPathInfo + indexOfViewID);
-		helperToolPath += viewParameters.viewID ;  
-		helperToolPath += IN_HELPER_PATH;
+		String helperToolPath = bup.getBaseURL() + viewParameters.viewID + IN_HELPER_PATH;
 		
 		try {
 			response.sendRedirect(helperToolPath);
@@ -187,5 +184,12 @@ public class HelperHandlerHookBean {
 	public void setViewStateHandler(ViewStateHandler vsh) {
 		this.vsh = vsh;
 	}
+
+	public void setBaseURLProvider(BaseURLProvider bup) {
+		this.bup = bup;
+	}
 	
+	public void setPathInfo(String pathInfo) {
+		this.pathInfo = pathInfo;
+	}
 }

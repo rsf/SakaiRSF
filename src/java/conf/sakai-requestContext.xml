@@ -69,5 +69,7 @@
    	<property name="viewParameters" ref="viewParameters"/>
    	<property name="viewResolver" ref="viewResolver"/>
    	<property name="viewStateHandler" ref="viewStateHandler"/>
+   	<property name="baseURLProvider" ref="baseURLProvider"/>
+   	<property name="pathInfo" ref="pathInfo"/>
   </bean>
 </beans>
