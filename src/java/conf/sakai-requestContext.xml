@@ -50,4 +50,24 @@
 
   <bean name="sakai-Placement" factory-bean="sakaiRequestParser" 
     factory-method="getPlacement"/>
+    
+  <bean id="handlerHook" class="uk.ac.cam.caret.sakai.rsf.helper.HelperHandlerHook">
+  	<property name="viewParameters" ref="viewParameters"/>
+  	<property name="helperHandlerHookBean" ref="helperHandlerHookBean"/>
+  </bean>
+  <alias alias="helperHandlerHook" name="handlerHook"/>
+  
+  <bean id="helperHandlerHookBean" class="uk.ac.cam.caret.sakai.rsf.helper.HelperHandlerHookBean" lazy-init="true">
+   	<property name="activeToolManager" ref="org.sakaiproject.tool.api.ActiveToolManager"/>
+   	<property name="actionResultInterpreter" ref="actionResultInterpreter"/>
+   	<property name="beanLocator" ref="requestBeanLocator"/>
+   	<property name="beanModelAlterer" ref="DARApplier"/>
+   	<property name="httpServletRequest" ref="httpServletRequest"/>
+   	<property name="httpServletResponse" ref="httpServletResponse"/>
+   	<property name="statePreservationManager" ref="statePreservationManager"/>
+   	<property name="tokenStateHolder" ref="flowTokenStateHolder"/>
+   	<property name="viewParameters" ref="viewParameters"/>
+   	<property name="viewResolver" ref="viewResolver"/>
+   	<property name="viewStateHandler" ref="viewStateHandler"/>
+  </bean>
 </beans>
