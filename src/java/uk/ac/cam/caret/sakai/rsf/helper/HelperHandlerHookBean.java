@@ -114,7 +114,7 @@ public class HelperHandlerHookBean {
 		if (producersList.size() != 1) {
 			throw new IllegalArgumentException("There is not exactly one view producer for the view: " + viewParameters.viewID);
 		}
-		ViewComponentProducer vp = (ViewComponentProducer) producersList.get(1);
+		ViewComponentProducer vp = (ViewComponentProducer) producersList.get(0);
 		
 		statePreservationManager.scopeRestore();
 		vp.fillComponents(view.viewroot, viewParameters, null);
