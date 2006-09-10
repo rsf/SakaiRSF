@@ -57,7 +57,7 @@ public class HelperHandlerHookBean {
 		
 		String pathBeyondViewID = "" ;
 		if (pathInfo.length() > viewID.length() + 1) {
-			pathBeyondViewID = pathInfo.substring(viewParameters.viewID.length());
+			pathBeyondViewID = pathInfo.substring(viewParameters.viewID.length() + 1);
 		}
 		if (Logger.log.isInfoEnabled()) {
 			Logger.log.info("pathInfo: " + pathInfo + " pathBeyondViewID: " + pathBeyondViewID);
