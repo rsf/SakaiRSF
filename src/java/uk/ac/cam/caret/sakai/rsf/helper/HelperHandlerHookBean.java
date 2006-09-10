@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.sakaiproject.tool.api.ActiveTool;
 import org.sakaiproject.tool.api.ActiveToolManager;
+import org.sakaiproject.tool.api.Tool;
 import org.sakaiproject.tool.api.ToolException;
 
 import uk.org.ponder.beanutil.BeanLocator;
@@ -108,6 +109,8 @@ public class HelperHandlerHookBean {
 		contextPath += viewParameters.viewID;
 		contextPath += IN_HELPER_PATH;
 		String helperPathInfo = pathInfo.substring(1 + viewParameters.viewID.length() + IN_HELPER_PATH.length());
+		
+		request.removeAttribute(Tool.NATIVE_URL);
 		
 		// this is the forward call
 		try {
