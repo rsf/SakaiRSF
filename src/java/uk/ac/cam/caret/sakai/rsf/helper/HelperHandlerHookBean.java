@@ -24,6 +24,7 @@ import uk.org.ponder.rsf.view.ViewResolver;
 import uk.org.ponder.rsf.viewstate.BaseURLProvider;
 import uk.org.ponder.rsf.viewstate.ViewParameters;
 import uk.org.ponder.rsf.viewstate.ViewStateHandler;
+import uk.org.ponder.util.Logger;
 import uk.org.ponder.util.UniversalRuntimeException;
 
 /**
@@ -31,7 +32,7 @@ import uk.org.ponder.util.UniversalRuntimeException;
  * @author Andrew Thornton
  */
 public class HelperHandlerHookBean {
-
+	
 	private static final String TOKEN_STATE_PREFIX = "HelperHandlerHook";
 	private static final String HELPER_FINISHED_PATH = "/done";
 	private static final String IN_HELPER_PATH = "/tool";
@@ -52,12 +53,15 @@ public class HelperHandlerHookBean {
 
 	public boolean handle() {
 		String viewID = viewParameters.viewID;
+		Logger.log.info("Handling view: " + viewID);
 		
 		String pathBeyondViewID = "" ;
 		if (pathInfo.length() > viewID.length() + 1) {
 			pathBeyondViewID = pathInfo.substring(viewParameters.viewID.length());
 		}
-		
+		if (Logger.log.isInfoEnabled()) {
+			Logger.log.info("pathInfo: " + pathInfo + " pathBeyondViewID: " + pathBeyondViewID);
+		}
 		if (pathBeyondViewID.startsWith(HELPER_FINISHED_PATH)) {
 			return handleHelperDone();
 		}
@@ -71,6 +75,8 @@ public class HelperHandlerHookBean {
 	
 	
 	private boolean handleHelperDone() {
+		Logger.log.info("Done handling helper in view: " + viewParameters.viewID);
+		
 		String methodBinding = (String) tsh.getTokenState(TOKEN_STATE_PREFIX + viewParameters.viewID + HelperViewParameters.POST_HELPER_BINDING);
 		statePreservationManager.scopeRestore();
 		Object beanReturn = methodBinding == null ? null : bma.invokeBeanMethod(methodBinding, beanLocator);
@@ -87,6 +93,8 @@ public class HelperHandlerHookBean {
 	}
 
 	private boolean handleHelperHelper(final String pathBeyondViewID) {
+		Logger.log.info("Handling helper in view: " + viewParameters.viewID);
+		
 		String helperId = (String) tsh.getTokenState(TOKEN_STATE_PREFIX + viewParameters.viewID + HelperViewParameters.HELPER_ID);
 		
 		ActiveTool helperTool = activeToolManager.getActiveTool(helperId);
@@ -112,6 +120,7 @@ public class HelperHandlerHookBean {
 	}
 	
 	private boolean handleHelperStart() {
+		Logger.log.info("Handling helper start in view: " + viewParameters.viewID);
 		View view = new View();
 		List producersList = viewResolver.getProducers(viewParameters.viewID);
 		if (producersList.size() != 1) {
