@@ -94,7 +94,7 @@ public class HelperHandlerHookBean {
 	}
 
 	private boolean handleHelperHelper(final String pathBeyondViewID) {
-		Logger.log.info("Handling helper in view: " + viewParameters.viewID);
+		Logger.log.info("Handling helper in view: " + viewParameters.viewID + " pathBeyondViewID: " + pathBeyondViewID);
 		
 		String helperId = (String) tsh.getTokenState(TOKEN_STATE_PREFIX + viewParameters.viewID + HelperViewParameters.HELPER_ID);
 		
@@ -142,6 +142,7 @@ public class HelperHandlerHookBean {
 		}
 
 		String helperToolPath = bup.getBaseURL() + viewParameters.viewID + IN_HELPER_PATH;
+		tsh.putTokenState(helperId.getValue() + Tool.HELPER_DONE_URL, bup.getBaseURL() + viewParameters.viewID + HELPER_FINISHED_PATH);
 		
 		try {
 			response.sendRedirect(helperToolPath);
