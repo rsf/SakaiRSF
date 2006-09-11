@@ -7,7 +7,7 @@
   <currentVersion>
     ${rsfutil.version}-sakai_${sakai.version}
   </currentVersion>
-  <shortDescription>RSF integration library for RSF</shortDescription>
+  <shortDescription>Sakai integration library for RSF</shortDescription>
   <description>
     Abstracts over Sakai dispatch cycle and tool state holders
   </description>
@@ -76,36 +76,18 @@
       <artifactId>ponderutilcore</artifactId>
       <version>${ponderutilcore.version}</version>
       <type>jar</type>
-      <properties>
-        <war.bundle>true</war.bundle>
-      </properties>
     </dependency>
     <dependency>
       <groupId>j-servletutil</groupId>
       <artifactId>j-servletutil</artifactId>
       <version>${jservletutil.version}</version>
       <type>jar</type>
-      <properties>
-        <war.bundle>true</war.bundle>
-      </properties>
     </dependency>
     <dependency>
       <groupId>rsfutil</groupId>
       <artifactId>rsfutil</artifactId>
       <version>${rsfutil.version}</version>
       <type>jar</type>
-      <properties>
-        <war.bundle>true</war.bundle>
-      </properties>
-    </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <version>1.2.9</version>
-      <type>jar</type>
-      <properties>
-        <war.bundle>true</war.bundle>
-      </properties>
     </dependency>
     <dependency>
       <groupId>sakaiproject</groupId>
