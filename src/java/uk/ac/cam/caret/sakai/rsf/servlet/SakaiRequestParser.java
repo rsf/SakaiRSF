@@ -19,9 +19,9 @@ import org.springframework.web.context.WebApplicationContext;
 
 import uk.ac.cam.caret.sakai.rsf.bridge.SakaiNavConversion;
 import uk.ac.cam.caret.sakai.rsf.template.SakaiBodyTPI;
-import uk.org.ponder.rsf.renderer.BasicSCR;
 import uk.org.ponder.rsf.renderer.ComponentRenderer;
-import uk.org.ponder.rsf.renderer.StaticRendererCollection;
+import uk.org.ponder.rsf.renderer.scr.FlatSCR;
+import uk.org.ponder.rsf.renderer.scr.StaticRendererCollection;
 import uk.org.ponder.rsf.viewstate.BaseURLProvider;
 import uk.org.ponder.rsf.viewstate.StaticBaseURLProvider;
 import uk.org.ponder.servletutil.ServletUtil;
@@ -39,7 +39,7 @@ public class SakaiRequestParser implements ApplicationContextAware {
   private SitePage sitepage;
   private SiteService siteservice;
   
-  private BasicSCR bodyscr;
+  private FlatSCR bodyscr;
   private StaticRendererCollection src;
   
   private WebApplicationContext wac;
@@ -99,7 +99,7 @@ public class SakaiRequestParser implements ApplicationContextAware {
 
     // Deliver the rewrite rule to the renderer that will invoke the relevant
     // Javascript magic to resize our frame.
-    bodyscr = new BasicSCR();
+    bodyscr = new FlatSCR();
     bodyscr.setName(SakaiBodyTPI.SAKAI_BODY);
     bodyscr.addNameValue(new NameValue("onload", (String) request
         .getAttribute("sakai.html.body.onload")));
