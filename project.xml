@@ -5,7 +5,7 @@
   <groupId>sakairsf</groupId>
   <artifactId>sakairsf</artifactId>
   <currentVersion>
-    ${rsfutil.version}-sakai_${sakai.version}
+    ${rsfutil.version}-sakai_${rsf.sakai.version}
   </currentVersion>
   <shortDescription>Sakai integration library for RSF</shortDescription>
   <description>
