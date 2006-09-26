@@ -33,6 +33,10 @@ public class ReasonableSakaiServlet extends HttpServlet {
 
       WebApplicationContext wac = WebApplicationContextUtils
           .getWebApplicationContext(getServletContext());
+      if (wac == null) {
+        throw new IllegalStateException("Error acquiring web application context " +
+                "- servlet context not configured correctly");
+      }
       rsacbl = (RSACBeanLocator) 
         wac.getBean(RSACBeanLocator.RSAC_BEAN_LOCATOR_NAME);
     }
