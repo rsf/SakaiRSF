@@ -3,7 +3,10 @@
  */
 package uk.ac.cam.caret.sakai.rsf.servlet;
 
+import java.net.URL;
+
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,9 +33,10 @@ public class ReasonableSakaiServlet extends HttpServlet {
   public void init(ServletConfig config) {
     try {
       super.init(config);
+      ServletContext context = getServletContext();
 
       WebApplicationContext wac = WebApplicationContextUtils
-          .getWebApplicationContext(getServletContext());
+          .getWebApplicationContext(context);
       if (wac == null) {
         throw new IllegalStateException("Error acquiring web application context " +
                 "- servlet context not configured correctly");
@@ -50,10 +54,10 @@ public class ReasonableSakaiServlet extends HttpServlet {
       req.setCharacterEncoding("UTF-8");
       // This line was added for Sakai 2.0
       req.setAttribute(Tool.NATIVE_URL, Tool.NATIVE_URL);
-
+ 
       RSACUtils.startServletRequest(req, res, 
           rsacbl, RSACUtils.HTTP_SERVLET_FACTORY);
-      //A request bean locator just good for this request.
+      // A request bean locator just good for this request.
       BeanLocator rbl = rsacbl.getBeanLocator();
      
       // pass the request to RSF. 

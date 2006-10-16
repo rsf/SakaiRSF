@@ -22,6 +22,7 @@ import uk.ac.cam.caret.sakai.rsf.template.SakaiBodyTPI;
 import uk.org.ponder.rsf.renderer.ComponentRenderer;
 import uk.org.ponder.rsf.renderer.scr.FlatSCR;
 import uk.org.ponder.rsf.renderer.scr.StaticRendererCollection;
+import uk.org.ponder.rsf.servlet.ServletContextCUP;
 import uk.org.ponder.rsf.viewstate.BaseURLProvider;
 import uk.org.ponder.rsf.viewstate.StaticBaseURLProvider;
 import uk.org.ponder.servletutil.ServletUtil;
@@ -89,6 +90,9 @@ public class SakaiRequestParser implements ApplicationContextAware {
     // yes, these two fields are not request-scope, but not worth creating
     // a whole new class and bean file for them.
     resourceurlbase = servletcontext.getInitParameter("resourceurlbase");
+    if (resourceurlbase == null) {
+      resourceurlbase = ServletContextCUP.computeContextName(servletcontext);
+    }
     
     // compute the baseURLprovider.
     sbup = new StaticBaseURLProvider();
