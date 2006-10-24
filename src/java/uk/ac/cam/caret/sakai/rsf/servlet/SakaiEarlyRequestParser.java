@@ -30,6 +30,11 @@ public class SakaiEarlyRequestParser extends ServletEarlyRequestParser {
     if (extrapath.length() > 0 && extrapath.charAt(0) == '/') {
       extrapath = extrapath.substring(1);
     }
+    int earlypos = requesturl.indexOf('/' + FACES_PATH);
+    // within a Sakai helper, the request wrapper is even FURTHER screwed up
+    if ("".equals(extrapath) && earlypos >= 0) {
+       extrapath = requesturl.substring(earlypos + 1);
+       } 
     // Now, the Sakai "PathInfo" is *longer* than we would expect were we
     // mapped properly, since it will include what we call the "FACES_PATH",
     // as inserted there by RequestParser when asked for the baseURL.
