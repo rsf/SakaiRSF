@@ -4,19 +4,25 @@
 <!-- Contains bean overrides and new definitions for request-scope beans
   required for integration of RSF apps into Sakai -->
 <beans>
+  <bean name="earlyRequestParser"
+    class="uk.ac.cam.caret.sakai.rsf.servlet.SakaiEarlyRequestParser"
+    init-method="init">
+    <property name="httpServletRequest" ref="httpServletRequest" />
+    <property name="defaultView" ref="defaultView" />
+    <property name="multipartResolver" ref="multipartResolver" />
+  </bean>
+
+  <bean name="baseURLProvider" factory-bean="earlyRequestParser"
+    factory-method="getBaseURLProvider">
+  </bean>
+
   <bean name="sakaiRequestParser"
     class="uk.ac.cam.caret.sakai.rsf.servlet.SakaiRequestParser"
     init-method="init">
-    <property name="httpServletRequest">
-      <ref bean="httpServletRequest" />
-    </property>
-    <property name="siteService">
-      <ref bean="org.sakaiproject.site.api.SiteService" />
-    </property>
-  </bean>
-
-  <bean name="baseURLProvider" factory-bean="sakaiRequestParser"
-    factory-method="getBaseURLProvider">
+    <property name="httpServletRequest" ref="httpServletRequest"/>
+    <property name="siteService"
+      ref="org.sakaiproject.site.api.SiteService"/>
+    <property name="baseURLProvider" ref="baseURLProvider"/>
   </bean>
 
   <bean id="consumerStaticRenderers" factory-bean="sakaiRequestParser"
@@ -26,19 +32,12 @@
   <bean id="consumerInfo" factory-bean="sakaiRequestParser"
     factory-method="getConsumerInfo">
   </bean>
-
-  <bean name="earlyRequestParser"
-    class="uk.ac.cam.caret.sakai.rsf.servlet.SakaiEarlyRequestParser"
-    init-method="init">
-    <property name="httpServletRequest" ref="httpServletRequest" />
-    <property name="defaultView" ref="defaultView" />
-    <property name="multipartResolver" ref="multipartResolver" />
-  </bean>
+  
 
   <bean name="sakai-User"
     factory-bean="org.sakaiproject.user.api.UserDirectoryService"
     factory-method="getCurrentUser" />
-    
+
   <bean name="sakai-UserDisplayName"
     factory-bean="sakai-User" factory-method="getDisplayName"/>
   

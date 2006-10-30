@@ -3,7 +3,6 @@
  */
 package uk.ac.cam.caret.sakai.rsf.servlet;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.sakaiproject.site.api.Site;
@@ -12,28 +11,27 @@ import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.site.api.ToolConfiguration;
 import org.sakaiproject.tool.api.Placement;
 import org.sakaiproject.tool.api.Tool;
-import org.sakaiproject.util.Web;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.web.context.WebApplicationContext;
 
 import uk.ac.cam.caret.sakai.rsf.bridge.SakaiNavConversion;
 import uk.ac.cam.caret.sakai.rsf.template.SakaiBodyTPI;
 import uk.org.ponder.rsf.renderer.ComponentRenderer;
 import uk.org.ponder.rsf.renderer.scr.FlatSCR;
 import uk.org.ponder.rsf.renderer.scr.StaticRendererCollection;
-import uk.org.ponder.rsf.servlet.ServletContextCUP;
 import uk.org.ponder.rsf.viewstate.BaseURLProvider;
-import uk.org.ponder.rsf.viewstate.StaticBaseURLProvider;
-import uk.org.ponder.servletutil.ServletUtil;
 import uk.org.ponder.stringutil.URLUtil;
 import uk.org.ponder.util.Logger;
 import uk.org.ponder.webapputil.ConsumerInfo;
 import uk.org.ponder.xml.NameValue;
 
-public class SakaiRequestParser implements ApplicationContextAware {
+/** Parses the servlet request and general Sakai environment for appropriate
+ * Sakai request-scope beans. Do not try to make any use of URL information
+ * from the request outside the EarlyRequestParser.
+ * @author Antranig Basman (antranig@caret.cam.ac.uk)
+ *
+ */
+
+public class SakaiRequestParser {
   private HttpServletRequest request;
-  private String resourceurlbase;
 
   private Site site;
   
@@ -42,11 +40,12 @@ public class SakaiRequestParser implements ApplicationContextAware {
   
   private FlatSCR bodyscr;
   private StaticRendererCollection src;
-  
-  private WebApplicationContext wac;
-  private StaticBaseURLProvider sbup;
+
   private ConsumerInfo consumerinfo;
-  private Placement placement; 
+  
+  private Placement placement;
+
+  private BaseURLProvider sbup; 
   
   public void setHttpServletRequest(HttpServletRequest request) {
     this.request = request;
@@ -56,50 +55,11 @@ public class SakaiRequestParser implements ApplicationContextAware {
     this.siteservice = siteservice;
   }
   
-  public void setApplicationContext(ApplicationContext applicationContext) {
-    wac = (WebApplicationContext) applicationContext;
-  }  
-  
-  // SAKAI URL handling is ridiculous, in that the URL returned from
-  // req.getRequestURL() may simply be *wrong*. This method adjusts the
-  // protocol and port from a "correctly" computed URL to be closer to
-  // reality, via the hackery from Sakai "Web" utils.
-  public static String fixSakaiURL(HttpServletRequest req, String computed) {
-    String serverURL = Web.serverUrl(req);
-    int endprotpos = computed.indexOf("://");
-    int slashpos = computed.indexOf('/', endprotpos + 3);
-    return serverURL + computed.substring(slashpos);
-  }
-  
-  // The argument to this is what Sakai "claims" is our base URL. The true
-  // resource URL will be somewhat unrelated in that it will share (at most)
-  // the host name and port of this URL.
-  private String computeResourceURLBase(String baseurl) {
-    if (resourceurlbase.charAt(0) == '/') {
-      int endprotpos = baseurl.indexOf("://");
-      int firstslashpos = baseurl.indexOf('/', endprotpos + 3);
-      return baseurl.substring(0, firstslashpos) + resourceurlbase;
-    }
-    else { // it is an absolute URL
-      return resourceurlbase;
-    }
+  public void setBaseURLProvider(BaseURLProvider bup) {
+    this.sbup = bup;
   }
   
   public void init() {
-    ServletContext servletcontext = wac.getServletContext();
-    // yes, these two fields are not request-scope, but not worth creating
-    // a whole new class and bean file for them.
-    resourceurlbase = servletcontext.getInitParameter("resourceurlbase");
-    if (resourceurlbase == null) {
-      resourceurlbase = ServletContextCUP.computeContextName(servletcontext);
-    }
-    
-    // compute the baseURLprovider.
-    sbup = new StaticBaseURLProvider();
-    String baseurl = fixSakaiURL(request, ServletUtil.getBaseURL2(request));
-    sbup.setResourceBaseURL(computeResourceURLBase(baseurl));
-    baseurl += SakaiEarlyRequestParser.FACES_PATH + "/";
-    sbup.setBaseURL(baseurl);
 
     // Deliver the rewrite rule to the renderer that will invoke the relevant
     // Javascript magic to resize our frame.
@@ -128,7 +88,7 @@ public class SakaiRequestParser implements ApplicationContextAware {
     site = SakaiNavConversion.siteForPID(siteservice, toolinstancepid);
     ToolConfiguration tc = siteservice.findTool(toolinstancepid);
     sitepage = SakaiNavConversion.pageForToolConfig(siteservice, tc);
-    
+
     consumerinfo = new ConsumerInfo();
     consumerinfo.urlbase = sbup.getBaseURL();
     consumerinfo.resourceurlbase = sbup.getResourceBaseURL();
@@ -150,10 +110,6 @@ public class SakaiRequestParser implements ApplicationContextAware {
     return src;
   }
 
-  public BaseURLProvider getBaseURLProvider() {
-    return sbup;
-  }
-  
   public ConsumerInfo getConsumerInfo() {
     return consumerinfo;
   }

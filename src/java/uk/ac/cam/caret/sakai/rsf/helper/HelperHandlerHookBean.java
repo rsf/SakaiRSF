@@ -33,176 +33,198 @@ import uk.org.ponder.util.UniversalRuntimeException;
  * @author Andrew Thornton
  */
 public class HelperHandlerHookBean {
-	
-	private static final String TOKEN_STATE_PREFIX = "HelperHandlerHook";
-	private static final String HELPER_FINISHED_PATH = "/done";
-	private static final String IN_HELPER_PATH = "/tool";
-	
-	private HttpServletResponse response;
-	private HttpServletRequest request;
-	private ViewParameters viewParameters;
-	private ViewResolver viewResolver;
-	private StatePreservationManager statePreservationManager;
-	private TokenStateHolder tsh;
-	private ViewStateHandler vsh;
-	private BeanModelAlterer bma;
-	private BeanLocator beanLocator;
-	private ActionResultInterpreter ari;
-	private ActiveToolManager activeToolManager;
-	private BaseURLProvider bup;
-	private String pathInfo;
 
-	public boolean handle() {
-		String viewID = viewParameters.viewID;
-		Logger.log.info("Handling view: " + viewID);
-		
-		String pathBeyondViewID = "" ;
-		if (pathInfo.length() > viewID.length() + 1) {
-			pathBeyondViewID = pathInfo.substring(viewParameters.viewID.length() + 1);
-		}
-		if (Logger.log.isInfoEnabled()) {
-			Logger.log.info("pathInfo: " + pathInfo + " pathBeyondViewID: " + pathBeyondViewID);
-		}
-		if (pathBeyondViewID.startsWith(HELPER_FINISHED_PATH)) {
-			return handleHelperDone();
-		}
-		
-		if (pathBeyondViewID.startsWith(IN_HELPER_PATH)) {
-			return handleHelperHelper(pathBeyondViewID);
-		}
-		
-		return handleHelperStart();
-	}
-	
-	
-	private boolean handleHelperDone() {
-		Logger.log.info("Done handling helper in view: " + viewParameters.viewID);
-		
-		String methodBinding = (String) tsh.getTokenState(TOKEN_STATE_PREFIX + viewParameters.viewID + HelperViewParameters.POST_HELPER_BINDING);
-		statePreservationManager.scopeRestore();
-		Object beanReturn = methodBinding == null ? null : bma.invokeBeanMethod(methodBinding, beanLocator);
-		
-		ARIResult ariresult = ari.interpretActionResult(viewParameters, beanReturn);
-		
-		String urlToRedirectTo = vsh.getFullURL(ariresult.resultingview);
-		try {
-			response.sendRedirect(urlToRedirectTo);
-		} catch (IOException e) {
-			throw UniversalRuntimeException.accumulate(e, "Error redirecting to view: " + ariresult.resultingview.viewID + " url: " + urlToRedirectTo);
-		}
-		return true;
-	}
+  private static final String TOKEN_STATE_PREFIX = "HelperHandlerHook";
+  private static final String HELPER_FINISHED_PATH = "/done";
+  private static final String IN_HELPER_PATH = "/tool";
 
-	private boolean handleHelperHelper(final String pathBeyondViewID) {
-		Logger.log.info("Handling helper in view: " + viewParameters.viewID + " pathBeyondViewID: " + pathBeyondViewID);
-		
-		String helperId = (String) tsh.getTokenState(TOKEN_STATE_PREFIX + viewParameters.viewID + HelperViewParameters.HELPER_ID);
-		
-		ActiveTool helperTool = activeToolManager.getActiveTool(helperId);
+  private HttpServletResponse response;
+  private HttpServletRequest request;
+  private ViewParameters viewParameters;
+  private ViewResolver viewResolver;
+  private StatePreservationManager statePreservationManager;
+  private TokenStateHolder tsh;
+  private ViewStateHandler vsh;
+  private BeanModelAlterer bma;
+  private BeanLocator beanLocator;
+  private ActionResultInterpreter ari;
+  private ActiveToolManager activeToolManager;
+  private BaseURLProvider bup;
+  private String pathInfo;
 
-		String baseUrl = bup.getBaseURL();
-		int hostStart = baseUrl.indexOf("://") + 3;
-		int hostEnd = baseUrl.indexOf('/', hostStart);
-		
-		
-		String contextPath = baseUrl.substring(hostEnd);
-		contextPath += viewParameters.viewID;
-		contextPath += IN_HELPER_PATH;
-		String helperPathInfo = pathInfo.substring(1 + viewParameters.viewID.length() + IN_HELPER_PATH.length());
-		
-		request.removeAttribute(Tool.NATIVE_URL);
-		
-		// this is the forward call
-		try {
-			helperTool.help(request, response, contextPath, helperPathInfo);
-		} catch (ToolException e) {
-			throw UniversalRuntimeException.accumulate(e, "ToolException when trying to call help. HelperId: " + helperId + " contextPath: " + contextPath + " pathInfo: " + pathInfo);
-		}
-		
-		return true;
-	}
-	
-	private boolean handleHelperStart() {
-		Logger.log.info("Handling helper start in view: " + viewParameters.viewID);
-		View view = new View();
-		List producersList = viewResolver.getProducers(viewParameters.viewID);
-		if (producersList.size() != 1) {
-			throw new IllegalArgumentException("There is not exactly one view producer for the view: " + viewParameters.viewID);
-		}
-		ViewComponentProducer vp = (ViewComponentProducer) producersList.get(0);
-		
-		statePreservationManager.scopeRestore();
-		vp.fillComponents(view.viewroot, viewParameters, null);
-		statePreservationManager.scopePreserve();
-		UIOutput helperId = (UIOutput) view.viewroot.getComponent(HelperViewParameters.HELPER_ID);
-		UICommand helperBinding = (UICommand) view.viewroot.getComponent(HelperViewParameters.POST_HELPER_BINDING);
-		tsh.putTokenState(TOKEN_STATE_PREFIX + viewParameters.viewID + HelperViewParameters.HELPER_ID, helperId.getValue());
-		if (helperBinding != null) {
-			tsh.putTokenState(TOKEN_STATE_PREFIX + viewParameters.viewID + HelperViewParameters.POST_HELPER_BINDING, helperBinding.methodbinding);
-		}
+  public boolean handle() {
+    String viewID = viewParameters.viewID;
+    Logger.log.info("Handling view: " + viewID);
 
-		String helperToolPath = bup.getBaseURL() + viewParameters.viewID + IN_HELPER_PATH;
-		tsh.putTokenState(helperId.getValue() + Tool.HELPER_DONE_URL, bup.getBaseURL() + viewParameters.viewID + HELPER_FINISHED_PATH);
-		
-		try {
-			response.sendRedirect(helperToolPath);
-		} catch (IOException e) {
-			throw UniversalRuntimeException.accumulate(e, "IOException when trying to redirect to helper tool");
-		}
-		
-		return true;
-	}
+    String pathBeyondViewID = "";
+    if (pathInfo.length() > viewID.length() + 1) {
+      pathBeyondViewID = pathInfo.substring(viewParameters.viewID.length() + 1);
+    }
+    if (Logger.log.isInfoEnabled()) {
+      Logger.log.info("pathInfo: " + pathInfo + " pathBeyondViewID: "
+          + pathBeyondViewID);
+    }
+    if (pathBeyondViewID.startsWith(HELPER_FINISHED_PATH)) {
+      return handleHelperDone();
+    }
 
-	public void setActiveToolManager(ActiveToolManager activeToolManager) {
-		this.activeToolManager = activeToolManager;
-	}
+    if (pathBeyondViewID.startsWith(IN_HELPER_PATH)) {
+      return handleHelperHelper(pathBeyondViewID);
+    }
 
-	public void setActionResultInterpreter(ActionResultInterpreter ari) {
-		this.ari = ari;
-	}
+    return handleHelperStart();
+  }
 
-	public void setBeanLocator(BeanLocator beanLocator) {
-		this.beanLocator = beanLocator;
-	}
+  private boolean handleHelperDone() {
+    Logger.log.info("Done handling helper in view: " + viewParameters.viewID);
 
-	public void setBeanModelAlterer(BeanModelAlterer bma) {
-		this.bma = bma;
-	}
+    String methodBinding = (String) tsh.getTokenState(TOKEN_STATE_PREFIX
+        + viewParameters.viewID + HelperViewParameters.POST_HELPER_BINDING);
+    statePreservationManager.scopeRestore();
+    Object beanReturn = methodBinding == null ? null
+        : bma.invokeBeanMethod(methodBinding, beanLocator);
 
-	public void setHttpServletRequest(HttpServletRequest httpServletRequest) {
-		this.request = httpServletRequest;
-	}
+    ARIResult ariresult = ari.interpretActionResult(viewParameters, beanReturn);
 
-	public void setHttpServletResponse(HttpServletResponse response) {
-		this.response = response;
-	}
+    String urlToRedirectTo = vsh.getFullURL(ariresult.resultingview);
+    try {
+      response.sendRedirect(urlToRedirectTo);
+    }
+    catch (IOException e) {
+      throw UniversalRuntimeException.accumulate(e,
+          "Error redirecting to view: " + ariresult.resultingview.viewID
+              + " url: " + urlToRedirectTo);
+    }
+    return true;
+  }
 
-	public void setStatePreservationManager(
-			StatePreservationManager statePreservationManager) {
-		this.statePreservationManager = statePreservationManager;
-	}
+  private boolean handleHelperHelper(final String pathBeyondViewID) {
+    Logger.log.info("Handling helper in view: " + viewParameters.viewID
+        + " pathBeyondViewID: " + pathBeyondViewID);
 
-	public void setTokenStateHolder(TokenStateHolder tsh) {
-		this.tsh = tsh;
-	}
+    String helperId = (String) tsh.getTokenState(TOKEN_STATE_PREFIX
+        + viewParameters.viewID + HelperViewParameters.HELPER_ID);
 
-	public void setViewParameters(ViewParameters viewParameters) {
-		this.viewParameters = viewParameters;
-	}
+    ActiveTool helperTool = activeToolManager.getActiveTool(helperId);
 
-	public void setViewResolver(ViewResolver viewResolver) {
-		this.viewResolver = viewResolver;
-	}
+    String baseUrl = bup.getBaseURL();
+    int hostStart = baseUrl.indexOf("://") + 3;
+    int hostEnd = baseUrl.indexOf('/', hostStart);
 
-	public void setViewStateHandler(ViewStateHandler vsh) {
-		this.vsh = vsh;
-	}
+    String contextPath = baseUrl.substring(hostEnd);
+    contextPath += viewParameters.viewID;
+    contextPath += IN_HELPER_PATH;
+    String helperPathInfo = pathInfo.substring(1
+        + viewParameters.viewID.length() + IN_HELPER_PATH.length());
 
-	public void setBaseURLProvider(BaseURLProvider bup) {
-		this.bup = bup;
-	}
-	
-	public void setPathInfo(String pathInfo) {
-		this.pathInfo = pathInfo;
-	}
+    request.removeAttribute(Tool.NATIVE_URL);
+
+    // this is the forward call
+    try {
+      helperTool.help(request, response, contextPath, helperPathInfo);
+    }
+    catch (ToolException e) {
+      throw UniversalRuntimeException.accumulate(e,
+          "ToolException when trying to call help. HelperId: " + helperId
+              + " contextPath: " + contextPath + " pathInfo: " + pathInfo);
+    }
+
+    return true;
+  }
+
+  private boolean handleHelperStart() {
+    Logger.log.info("Handling helper start in view: " + viewParameters.viewID);
+    View view = new View();
+    List producersList = viewResolver.getProducers(viewParameters.viewID);
+    if (producersList.size() != 1) {
+      throw new IllegalArgumentException(
+          "There is not exactly one view producer for the view: "
+              + viewParameters.viewID);
+    }
+    ViewComponentProducer vp = (ViewComponentProducer) producersList.get(0);
+
+    statePreservationManager.scopeRestore();
+    vp.fillComponents(view.viewroot, viewParameters, null);
+    statePreservationManager.scopePreserve();
+    UIOutput helperId = (UIOutput) view.viewroot
+        .getComponent(HelperViewParameters.HELPER_ID);
+    UICommand helperBinding = (UICommand) view.viewroot
+        .getComponent(HelperViewParameters.POST_HELPER_BINDING);
+    tsh.putTokenState(TOKEN_STATE_PREFIX + viewParameters.viewID
+        + HelperViewParameters.HELPER_ID, helperId.getValue());
+    if (helperBinding != null) {
+      tsh.putTokenState(TOKEN_STATE_PREFIX + viewParameters.viewID
+          + HelperViewParameters.POST_HELPER_BINDING,
+          helperBinding.methodbinding);
+    }
+
+    String helperToolPath = bup.getBaseURL() + viewParameters.viewID
+        + IN_HELPER_PATH;
+    tsh.putTokenState(helperId.getValue() + Tool.HELPER_DONE_URL, bup
+        .getBaseURL()
+        + viewParameters.viewID + HELPER_FINISHED_PATH);
+
+    try {
+      response.sendRedirect(helperToolPath);
+    }
+    catch (IOException e) {
+      throw UniversalRuntimeException.accumulate(e,
+          "IOException when trying to redirect to helper tool");
+    }
+
+    return true;
+  }
+
+  public void setActiveToolManager(ActiveToolManager activeToolManager) {
+    this.activeToolManager = activeToolManager;
+  }
+
+  public void setActionResultInterpreter(ActionResultInterpreter ari) {
+    this.ari = ari;
+  }
+
+  public void setBeanLocator(BeanLocator beanLocator) {
+    this.beanLocator = beanLocator;
+  }
+
+  public void setBeanModelAlterer(BeanModelAlterer bma) {
+    this.bma = bma;
+  }
+
+  public void setHttpServletRequest(HttpServletRequest httpServletRequest) {
+    this.request = httpServletRequest;
+  }
+
+  public void setHttpServletResponse(HttpServletResponse response) {
+    this.response = response;
+  }
+
+  public void setStatePreservationManager(
+      StatePreservationManager statePreservationManager) {
+    this.statePreservationManager = statePreservationManager;
+  }
+
+  public void setTokenStateHolder(TokenStateHolder tsh) {
+    this.tsh = tsh;
+  }
+
+  public void setViewParameters(ViewParameters viewParameters) {
+    this.viewParameters = viewParameters;
+  }
+
+  public void setViewResolver(ViewResolver viewResolver) {
+    this.viewResolver = viewResolver;
+  }
+
+  public void setViewStateHandler(ViewStateHandler vsh) {
+    this.vsh = vsh;
+  }
+
+  public void setBaseURLProvider(BaseURLProvider bup) {
+    this.bup = bup;
+  }
+
+  public void setPathInfo(String pathInfo) {
+    this.pathInfo = pathInfo;
+  }
 }

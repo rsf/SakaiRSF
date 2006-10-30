@@ -3,6 +3,11 @@ package uk.ac.cam.caret.sakai.rsf.helper;
 import uk.org.ponder.rsf.processor.HandlerHook;
 import uk.org.ponder.rsf.viewstate.ViewParameters;
 
+/** 
+ * @author Andrew Thornton
+ *
+ */
+
 public class HelperHandlerHook implements HandlerHook {
 
 	private HandlerHook hh;

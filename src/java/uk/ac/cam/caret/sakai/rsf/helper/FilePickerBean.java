@@ -4,6 +4,11 @@ import java.util.List;
 
 import org.sakaiproject.content.api.ContentResourceFilter;
 
+/**
+ * @author Andrew Thornton
+ *
+ */
+
 public class FilePickerBean {
 
 	public List attachments;
