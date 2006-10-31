@@ -23,6 +23,7 @@ import uk.org.ponder.rsf.view.View;
 import uk.org.ponder.rsf.view.ViewComponentProducer;
 import uk.org.ponder.rsf.view.ViewResolver;
 import uk.org.ponder.rsf.viewstate.BaseURLProvider;
+import uk.org.ponder.rsf.viewstate.ViewParamUtil;
 import uk.org.ponder.rsf.viewstate.ViewParameters;
 import uk.org.ponder.rsf.viewstate.ViewStateHandler;
 import uk.org.ponder.util.Logger;
@@ -86,14 +87,13 @@ public class HelperHandlerHookBean {
 
     ARIResult ariresult = ari.interpretActionResult(viewParameters, beanReturn);
 
-    String urlToRedirectTo = vsh.getFullURL(ariresult.resultingview);
+    String urlToRedirectTo = ViewParamUtil.getAnyFullURL(ariresult.resultingview, vsh);
     try {
       response.sendRedirect(urlToRedirectTo);
     }
     catch (IOException e) {
       throw UniversalRuntimeException.accumulate(e,
-          "Error redirecting to view: " + ariresult.resultingview.viewID
-              + " url: " + urlToRedirectTo);
+          "Error redirecting to url: " + urlToRedirectTo);
     }
     return true;
   }

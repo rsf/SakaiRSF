@@ -32,7 +32,6 @@
   <bean id="consumerInfo" factory-bean="sakaiRequestParser"
     factory-method="getConsumerInfo">
   </bean>
-  
 
   <bean name="sakai-User"
     factory-bean="org.sakaiproject.user.api.UserDirectoryService"
@@ -43,12 +42,21 @@
   
   <bean name="sakai-UserEID"
     factory-bean="sakai-User" factory-method="getEid"/>
+    
+  <bean name="sakai-UserID"
+    factory-bean="sakai-User" factory-method="getId"/>
 
   <bean name="sakai-Locale" factory-bean="rsf-dummy-SakaiResourceLoader"
     factory-method="getLocale" />
 
   <bean name="sakai-Placement" factory-bean="sakaiRequestParser" 
     factory-method="getPlacement"/>
+    
+  <bean name="sakai-Site" factory-bean="sakaiRequestParser"
+    factory-method="getSite" />
+    
+  <bean name="sakai-Context" 
+    factory-bean="sakai-Placement" factory-method="getContext"/>
     
   <bean id="handlerHook" class="uk.ac.cam.caret.sakai.rsf.helper.HelperHandlerHook">
   	<property name="viewParameters" ref="viewParameters"/>

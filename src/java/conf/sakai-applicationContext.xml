@@ -44,10 +44,21 @@
 
   <bean parent="templateParseInterceptorParent">
     <property name="value">
-      <bean class="uk.ac.cam.caret.sakai.rsf.template.SakaiBodyTPI"/>
+      <bean class="uk.ac.cam.caret.sakai.rsf.template.SakaiBodyTPI" />
     </property>
+  </bean>
+
+  <bean id="sakai-PermissionChecker" class="uk.ac.cam.caret.sakai.rsf.util.PermissionChecker">
+    <property name="securityService" ref="org.sakaiproject.authz.api.SecurityService"/>
+    <property name="toolManager" ref="org.sakaiproject.tool.api.ToolManager" />
   </bean>
 
   <bean id="rsf-dummy-SakaiResourceLoader"
     class="org.sakaiproject.util.ResourceLoader" />
+
+  <bean id="frameAdjustingProducer"
+    class="uk.ac.cam.caret.sakai.rsf.producers.FrameAdjustingProducer">
+    <property name="toolManager"
+      ref="org.sakaiproject.tool.api.ToolManager" />
+  </bean>
 </beans>

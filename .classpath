@@ -15,5 +15,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/sakai22-user-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/sakai22-util-util"/>
 	<classpathentry kind="var" path="MAVEN_REPO/sakaiproject/jars/sakai-content-api-2.2.1.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/sakai22-authz-api"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
