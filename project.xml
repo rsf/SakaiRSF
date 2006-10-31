@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
   <pomVersion>3</pomVersion>
+  <extend>../master/project.xml</extend>
   <name>SakaiRSF</name>
   <groupId>sakairsf</groupId>
   <artifactId>sakairsf</artifactId>
+  <properties>
+    <!-- build a jar, no deploy -->
+    <deploy.type>jar</deploy.type>
+  </properties>
   <currentVersion>
     ${rsfutil.version}-sakai_${rsf.sakai.version}
   </currentVersion>
