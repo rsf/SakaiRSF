@@ -10,7 +10,7 @@
     <deploy.type>jar</deploy.type>
   </properties>
   <currentVersion>
-    ${rsfutil.version}-sakai_${rsf.sakai.version}
+    ${rsfutil.version}-sakai_${sakai.version}
   </currentVersion>
   <shortDescription>Sakai integration library for RSF</shortDescription>
   <description>
