@@ -14,6 +14,8 @@ import org.sakaiproject.user.api.PreferencesService;
 import org.sakaiproject.util.ResourceLoader;
 import org.springframework.beans.factory.FactoryBean;
 
+import uk.org.ponder.localeutil.LocaleUtil;
+
 /**
  * Determins the correct locale for the current request by searching the
  * following sources in order of preference:
@@ -27,16 +29,6 @@ import org.springframework.beans.factory.FactoryBean;
  */
 // See http://dev.ulan.jp/sakai/wiki/ResourceLoader
 public class SakaiLocaleDeterminer implements FactoryBean {
-  // Copied from Sakai UserPrefsTool
-  public static final Locale getLocaleFromString(String localeString) {
-    String[] locValues = localeString.trim().split("_");
-    if (locValues.length > 1)
-      return new Locale(locValues[0], locValues[1]); // language, country
-    else if (locValues.length == 1)
-      return new Locale(locValues[0]); // just language
-    else
-      return null;
-  }
 
   private SessionManager sessionmanager;
   private ServletRequest servletrequest;
@@ -48,7 +40,7 @@ public class SakaiLocaleDeterminer implements FactoryBean {
     ResourceProperties props = prefs
         .getProperties(ResourceLoader.APPLICATION_ID);
     String prefLocale = props.getProperty(ResourceLoader.LOCALE_KEY);
-    return getLocaleFromString(prefLocale);
+    return LocaleUtil.parseLocale(prefLocale);
   }
 
   public void setPreferencesService(PreferencesService prefsservice) {
