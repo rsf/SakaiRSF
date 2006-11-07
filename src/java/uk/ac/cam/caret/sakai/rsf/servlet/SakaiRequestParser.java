@@ -86,8 +86,11 @@ public class SakaiRequestParser {
     
     // Compute the ConsumerInfo object.
     site = SakaiNavConversion.siteForPID(siteservice, toolinstancepid);
+    // tc will be null for Mercury portal
     ToolConfiguration tc = siteservice.findTool(toolinstancepid);
-    sitepage = SakaiNavConversion.pageForToolConfig(siteservice, tc);
+    if (tc != null) {
+      sitepage = SakaiNavConversion.pageForToolConfig(siteservice, tc);
+    }
 
     consumerinfo = new ConsumerInfo();
     consumerinfo.urlbase = sbup.getBaseURL();
@@ -95,7 +98,8 @@ public class SakaiRequestParser {
     consumerinfo.consumertype = "sakai";
     consumerinfo.extraparameters = "&panel=Main";
 
-    consumerinfo.externalURL = URLUtil.deSpace(sitepage.getUrl());
+    consumerinfo.externalURL = sitepage == null? consumerinfo.urlbase : 
+      URLUtil.deSpace(sitepage.getUrl());
   }
 
   public Site getSite() {

@@ -3,7 +3,6 @@
  */
 package uk.ac.cam.caret.sakai.rsf.bridge;
 
-import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SitePage;
 import org.sakaiproject.site.api.SiteService;
@@ -22,7 +21,8 @@ public class SakaiNavConversion {
       String siteID = tc.getSiteId();
       togo = siteservice.getSite(siteID);
     }
-    catch (IdUnusedException iue) {
+    catch (Exception iue) {
+      // In Mercury, we may get an NPE since there is no ToolConfiguration
     }
     return togo;
   }
