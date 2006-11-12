@@ -3,8 +3,6 @@
  */
 package uk.ac.cam.caret.sakai.rsf.servlet;
 
-import java.net.URL;
-
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServlet;
@@ -34,6 +32,8 @@ public class ReasonableSakaiServlet extends HttpServlet {
     try {
       super.init(config);
       ServletContext context = getServletContext();
+      Logger.log.info("ReasonableSakaiServlet starting up for context "
+          + context.getRealPath(""));
 
       WebApplicationContext wac = WebApplicationContextUtils
           .getWebApplicationContext(context);
