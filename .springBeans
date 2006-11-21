@@ -13,12 +13,12 @@
 			<allowBeanDefinitionOverriding>true</allowBeanDefinitionOverriding>
 			<incomplete>true</incomplete>
 			<configs>
+				<config>src/java/conf/sakai-applicationContext.xml</config>
+				<config>src/java/conf/sakai-requestContext.xml</config>
 				<config>/J-RSFUtil/src/conf/blank-applicationContext.xml</config>
 				<config>/J-RSFUtil/src/conf/blank-requestContext.xml</config>
 				<config>/J-RSFUtil/src/conf/rsf-config.xml</config>
 				<config>/J-RSFUtil/src/conf/rsf-requestscope-config.xml</config>
-				<config>src/java/conf/sakai-applicationContext.xml</config>
-				<config>src/java/conf/sakai-requestContext.xml</config>
 			</configs>
 		</configSet>
 	</configSets>
