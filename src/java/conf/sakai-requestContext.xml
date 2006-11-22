@@ -44,7 +44,7 @@
   <bean name="sakai-UserID" factory-bean="sakai-User"
     factory-method="getId" />
 
-  <bean name="sakai-Locale" factory-bean="rsf-dummy-SakaiResourceLoader"
+  <bean name="requestLocale" factory-bean="rsf-dummy-SakaiResourceLoader"
     factory-method="getLocale" />
 
   <bean name="sakai-Placement" factory-bean="sakaiRequestParser"
