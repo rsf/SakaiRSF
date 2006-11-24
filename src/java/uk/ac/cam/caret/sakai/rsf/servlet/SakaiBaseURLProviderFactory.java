@@ -12,7 +12,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.context.WebApplicationContext;
 
-import uk.org.ponder.rsf.servlet.ServletContextCUP;
 import uk.org.ponder.rsf.viewstate.BaseURLProvider;
 import uk.org.ponder.rsf.viewstate.StaticBaseURLProvider;
 import uk.org.ponder.servletutil.ServletUtil;
@@ -49,7 +48,7 @@ public class SakaiBaseURLProviderFactory implements ApplicationContextAware, Fac
     // a whole new class and bean file for them.
     resourceurlbase = servletcontext.getInitParameter("resourceurlbase");
     if (resourceurlbase == null) {
-      resourceurlbase = ServletContextCUP.computeContextName(servletcontext);
+      resourceurlbase = ServletUtil.computeContextName(servletcontext);
     }
 
     // compute the baseURLprovider.
