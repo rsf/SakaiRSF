@@ -39,7 +39,7 @@
   <bean id="messageLocator"
     class="uk.org.ponder.springutil.SpringMessageLocator">
     <property name="messageSource" ref="messageSource" />
-    <property name="localeGetter" ref="sakai-LocaleProxy" />
+    <property name="localeGetter" ref="requestLocaleProxy" />
   </bean>
 
   <bean parent="templateParseInterceptorParent">
