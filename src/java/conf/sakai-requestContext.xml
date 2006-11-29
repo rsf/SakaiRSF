@@ -44,8 +44,12 @@
   <bean name="sakai-UserID" factory-bean="sakai-User"
     factory-method="getId" />
 
-  <bean name="requestLocale" factory-bean="rsf-dummy-SakaiResourceLoader"
+  <bean id="sakai-Locale" factory-bean="rsf-dummy-SakaiResourceLoader"
     factory-method="getLocale" />
+
+  <bean name="requestLocale" class="org.springframework.beans.factory.config.BeanReferenceFactoryBean">
+    <property name="targetBeanName" value="sakai-Locale"/>
+  </bean>
 
   <bean name="sakai-Placement" factory-bean="sakaiRequestParser"
     factory-method="getPlacement" />
