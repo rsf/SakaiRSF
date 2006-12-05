@@ -5,15 +5,15 @@ package uk.ac.cam.caret.sakai.rsf.genericdao;
 
 import java.io.Serializable;
 
-import org.sakaiproject.genericdao.api.GenericDao;
+import org.sakaiproject.genericdao.api.CoreGenericDao;
 
 import uk.org.ponder.rsf.state.entity.EntityHandler;
 
 public class GenericDAOEntityHandler implements EntityHandler {
-  private GenericDao genericDAO;
+  private CoreGenericDao genericDAO;
   private Class persistentclass;
 
-  public void setGenericDAO(GenericDao genericDAO) {
+  public void setGenericDAO(CoreGenericDao genericDAO) {
     this.genericDAO = genericDAO;
   }
   
@@ -24,7 +24,7 @@ public class GenericDAOEntityHandler implements EntityHandler {
   public boolean delete(Object key) {
     Object todelete = get(key);
     if (todelete != null) {
-      genericDAO.delete(key);
+      genericDAO.delete(persistentclass, (Serializable) key);
       return true;
     }
     else return false;
