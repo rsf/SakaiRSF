@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.sakaiproject.genericdao.api.CoreGenericDao;
+import org.sakaiproject.genericdao.api.InitializingCoreGenericDAO;
 
 import uk.org.ponder.beanutil.FallbackBeanLocator;
 import uk.org.ponder.rsf.state.entity.BasicObstinateEBL;
@@ -16,6 +17,7 @@ import uk.org.ponder.rsf.state.entity.EntityNameInferrer;
 import uk.org.ponder.saxalizer.AccessMethod;
 import uk.org.ponder.saxalizer.MethodAnalyser;
 import uk.org.ponder.saxalizer.SAXalizerMappingContext;
+import uk.org.ponder.util.ObjectFactory;
 
 public class GenericDAOEntityBeanManager implements FallbackBeanLocator,
     EntityNameInferrer {
@@ -54,6 +56,12 @@ public class GenericDAOEntityBeanManager implements FallbackBeanLocator,
       dem.setEntityClass(clazz);
       dem.setIDClass(idclazz);
       dem.setMappingContext(mappingcontext);
+      if (genericDAO instanceof InitializingCoreGenericDAO) {
+        dem.setObjectFactory(new ObjectFactory() {
+          public Object getObject() {
+            return ((InitializingCoreGenericDAO)genericDAO).instantiate();
+          }});
+      }
 
       GenericDAOEntityHandler gdeh = new GenericDAOEntityHandler();
       gdeh.setGenericDAO(genericDAO);
