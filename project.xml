@@ -159,9 +159,21 @@
 			<type>jar</type>
 		</dependency>
 	</dependencies>
+
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<resources>
+			<!-- include the readme.txt file and the java source files -->
+			<resource>
+				<directory>${basedir}</directory>
+				<includes>
+					<include>*.txt</include>
+					<include>src/**/*.java</include>
+					<include>src/**/*.html</include>
+					<include>src/**/*.xml</include>
+					<include>src/**/*.properties</include>
+				</includes>
+			</resource>
 			<resource>
 				<directory>src/java/</directory>
 				<targetPath>/</targetPath>
