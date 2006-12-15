@@ -2,97 +2,89 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
 	"http://www.springframework.org/dtd/spring-beans.dtd">
 <!-- Contains bean overrides and new definitions for request-scope beans
-	required for integration of RSF apps into Sakai -->
+  required for integration of RSF apps into Sakai -->
 <beans>
-	<bean name="httpServletFactory"
-		class="uk.ac.cam.caret.sakai.rsf.servlet.SakaiHttpServletFactory">
-		<property name="defaultView" ref="defaultView" />
-	</bean>
+  <bean name="httpServletFactory"
+    class="uk.ac.cam.caret.sakai.rsf.servlet.SakaiHttpServletFactory">
+    <property name="defaultView" ref="defaultView" />
+  </bean>
 
-	<bean name="baseURLProvider"
-		class="uk.ac.cam.caret.sakai.rsf.servlet.SakaiBaseURLProviderFactory">
-		<property name="httpServletRequest" ref="httpServletRequest" />
-	</bean>
+  <bean name="baseURLProvider"
+    class="uk.ac.cam.caret.sakai.rsf.servlet.SakaiBaseURLProviderFactory">
+    <property name="httpServletRequest" ref="httpServletRequest" />
+  </bean>
 
-	<bean name="sakaiRequestParser"
-		class="uk.ac.cam.caret.sakai.rsf.servlet.SakaiRequestParser"
-		init-method="init">
-		<property name="httpServletRequest" ref="httpServletRequest" />
-		<property name="siteService"
-			ref="org.sakaiproject.site.api.SiteService" />
-		<property name="baseURLProvider" ref="baseURLProvider" />
-	</bean>
+  <bean name="sakaiRequestParser"
+    class="uk.ac.cam.caret.sakai.rsf.servlet.SakaiRequestParser"
+    init-method="init">
+    <property name="httpServletRequest" ref="httpServletRequest" />
+    <property name="siteService"
+      ref="org.sakaiproject.site.api.SiteService" />
+    <property name="baseURLProvider" ref="baseURLProvider" />
+  </bean>
 
-	<bean id="consumerStaticRenderers" factory-bean="sakaiRequestParser"
-		factory-method="getConsumerStaticRenderers">
-	</bean>
+  <bean id="consumerStaticRenderers" factory-bean="sakaiRequestParser"
+    factory-method="getConsumerStaticRenderers">
+  </bean>
 
-	<bean id="consumerInfo" factory-bean="sakaiRequestParser"
-		factory-method="getConsumerInfo">
-	</bean>
+  <bean id="consumerInfo" factory-bean="sakaiRequestParser"
+    factory-method="getConsumerInfo">
+  </bean>
 
-	<bean name="sakai-User"
-		factory-bean="org.sakaiproject.user.api.UserDirectoryService"
-		factory-method="getCurrentUser" />
+  <bean name="sakai-User"
+    factory-bean="org.sakaiproject.user.api.UserDirectoryService"
+    factory-method="getCurrentUser" />
 
-	<bean name="sakai-UserDisplayName" factory-bean="sakai-User"
-		factory-method="getDisplayName" />
+  <bean name="sakai-UserDisplayName" factory-bean="sakai-User"
+    factory-method="getDisplayName" />
 
-	<bean name="sakai-UserEID" factory-bean="sakai-User"
-		factory-method="getEid" />
+  <bean name="sakai-UserEID" factory-bean="sakai-User"
+    factory-method="getEid" />
 
-	<bean name="sakai-UserID" factory-bean="sakai-User"
-		factory-method="getId" />
+  <bean name="sakai-UserID" factory-bean="sakai-User"
+    factory-method="getId" />
 
-	<bean id="sakai-Locale" factory-bean="rsf-dummy-SakaiResourceLoader"
-		factory-method="getLocale" />
+  <bean id="sakai-Locale" factory-bean="rsf-dummy-SakaiResourceLoader"
+    factory-method="getLocale" />
 
-	<bean name="requestLocale"
-		class="org.springframework.beans.factory.config.BeanReferenceFactoryBean">
-		<property name="targetBeanName" value="sakai-Locale" />
-	</bean>
+  <bean name="requestLocale"
+    class="org.springframework.beans.factory.config.BeanReferenceFactoryBean">
+    <property name="targetBeanName" value="sakai-Locale" />
+  </bean>
 
-	<bean name="sakai-Placement" factory-bean="sakaiRequestParser"
-		factory-method="getPlacement" />
+  <bean name="sakai-Placement" factory-bean="sakaiRequestParser"
+    factory-method="getPlacement" />
 
-	<bean name="sakai-Site" factory-bean="sakaiRequestParser"
-		factory-method="getSite" />
+  <bean name="sakai-Site" factory-bean="sakaiRequestParser"
+    factory-method="getSite" />
 
-	<bean name="sakai-Context" factory-bean="sakai-Placement"
-		factory-method="getContext" />
+  <bean name="sakai-Context" factory-bean="sakai-Placement"
+    factory-method="getContext" />
 
-	<bean id="genericDAOEntityBeanManagerParent"
-		class="uk.ac.cam.caret.sakai.rsf.genericdao.GenericDAOEntityBeanManager"
-		abstract="true" init-method="init">
-		<property name="mappingContext" ref="ELMappingContext" />
-	</bean>
+  <bean id="genericDAOEntityBeanManagerParent"
+    class="uk.ac.cam.caret.sakai.rsf.genericdao.GenericDAOEntityBeanManager"
+    abstract="true" init-method="init">
+    <property name="mappingContext" ref="ELMappingContext" />
+  </bean>
 
-	<bean id="handlerHook"
-		class="uk.ac.cam.caret.sakai.rsf.helper.HelperHandlerHook">
-		<property name="viewParameters" ref="viewParameters" />
-		<property name="helperHandlerHookBean"
-			ref="helperHandlerHookBean" />
-	</bean>
-	<alias alias="helperHandlerHook" name="handlerHook" />
-
-	<bean id="helperHandlerHookBean"
-		class="uk.ac.cam.caret.sakai.rsf.helper.HelperHandlerHookBean"
-		lazy-init="true">
-		<property name="activeToolManager"
-			ref="org.sakaiproject.tool.api.ActiveToolManager" />
-		<property name="actionResultInterpreter"
-			ref="actionResultInterpreter" />
-		<property name="beanLocator" ref="requestBeanLocator" />
-		<property name="beanModelAlterer" ref="DARApplier" />
-		<property name="httpServletRequest" ref="httpServletRequest" />
-		<property name="httpServletResponse" ref="httpServletResponse" />
-		<property name="statePreservationManager"
-			ref="statePreservationManager" />
-		<property name="tokenStateHolder" ref="flowTokenStateHolder" />
-		<property name="viewParameters" ref="viewParameters" />
-		<property name="viewResolver" ref="viewResolver" />
-		<property name="viewStateHandler" ref="viewStateHandler" />
-		<property name="baseURLProvider" ref="baseURLProvider" />
-		<property name="pathInfo" ref="requestPathInfo" />
-	</bean>
+  <bean id="helperHandlerHookBean"
+    class="uk.ac.cam.caret.sakai.rsf.helper.HelperHandlerHookBean"
+    lazy-init="true">
+    <property name="activeToolManager"
+      ref="org.sakaiproject.tool.api.ActiveToolManager" />
+    <property name="actionResultInterpreter"
+      ref="actionResultInterpreter" />
+    <property name="beanLocator" ref="requestBeanLocator" />
+    <property name="beanModelAlterer" ref="DARApplier" />
+    <property name="httpServletRequest" ref="httpServletRequest" />
+    <property name="httpServletResponse" ref="httpServletResponse" />
+    <property name="statePreservationManager"
+      ref="statePreservationManager" />
+    <property name="tokenStateHolder" ref="flowTokenStateHolder" />
+    <property name="viewParameters" ref="viewParameters" />
+    <property name="viewResolver" ref="viewResolver" />
+    <property name="viewStateHandler" ref="viewStateHandler" />
+    <property name="baseURLProvider" ref="baseURLProvider" />
+    <property name="pathInfo" ref="requestPathInfo" />
+  </bean>
 </beans>
