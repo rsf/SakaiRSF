@@ -14,6 +14,7 @@ import org.sakaiproject.tool.api.Tool;
 
 import uk.ac.cam.caret.sakai.rsf.bridge.SakaiNavConversion;
 import uk.ac.cam.caret.sakai.rsf.template.SakaiBodyTPI;
+import uk.ac.cam.caret.sakai.rsf.template.SakaiPortalMatterSCR;
 import uk.org.ponder.rsf.renderer.ComponentRenderer;
 import uk.org.ponder.rsf.renderer.scr.FlatSCR;
 import uk.org.ponder.rsf.renderer.scr.StaticRendererCollection;
@@ -38,7 +39,6 @@ public class SakaiRequestParser {
   private SitePage sitepage;
   private SiteService siteservice;
   
-  private FlatSCR bodyscr;
   private StaticRendererCollection src;
 
   private ConsumerInfo consumerinfo;
@@ -63,15 +63,18 @@ public class SakaiRequestParser {
 
     // Deliver the rewrite rule to the renderer that will invoke the relevant
     // Javascript magic to resize our frame.
-    bodyscr = new FlatSCR();
+    FlatSCR bodyscr = new FlatSCR();
     bodyscr.setName(SakaiBodyTPI.SAKAI_BODY);
     bodyscr.addNameValue(new NameValue("onload", (String) request
         .getAttribute("sakai.html.body.onload")));
     bodyscr.tag_type = ComponentRenderer.NESTING_TAG;
     
+    SakaiPortalMatterSCR matterscr = new SakaiPortalMatterSCR();
+    matterscr.setHeadMatter((String) request.getAttribute("sakai.html.head"));
+    
     src = new StaticRendererCollection();
     src.addSCR(bodyscr);
-
+    src.addSCR(matterscr);
 
     Tool tool = (Tool) request.getAttribute("sakai.tool");
     placement = (Placement) request.getAttribute("sakai.tool.placement");
