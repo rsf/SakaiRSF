@@ -68,14 +68,16 @@
     class="uk.ac.cam.caret.sakai.rsf.producers.FrameAdjustingProducer">
     <property name="toolManager" ref="org.sakaiproject.tool.api.ToolManager" />
   </bean>
-  
-  <bean id="helperHandlerHook" parent="handlerHookParent" 
-      class="uk.ac.cam.caret.sakai.rsf.helper.HelperHandlerHook">
-    <property name="viewParametersProxy" ref="viewParametersProxy" />
-    <property name="helperHandlerHookBean"
-      ref="helperHandlerHookBeanProxy" />
+
+  <bean parent="handlerHookParent">
+    <property name="value">
+		<bean class="uk.ac.cam.caret.sakai.rsf.helper.HelperHandlerHook">
+		  <property name="viewParametersProxy" ref="viewParametersProxy" />
+		  <property name="helperHandlerHookBean" ref="helperHandlerHookBeanProxy" />
+		</bean>
+    </property>
   </bean>
-  
+
   <bean id="helperHandlerHookBeanProxy" parent="RSACBridgeProxy">
     <property name="targetBeanName" value="helperHandlerHookBean"/>
   </bean>
