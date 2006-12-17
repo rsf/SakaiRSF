@@ -3,12 +3,15 @@
  */
 package uk.ac.cam.caret.sakai.rsf.servlet;
 
+import java.util.TimeZone;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.sakaiproject.site.api.Site;
 import org.sakaiproject.site.api.SitePage;
 import org.sakaiproject.site.api.SiteService;
 import org.sakaiproject.site.api.ToolConfiguration;
+import org.sakaiproject.time.api.TimeService;
 import org.sakaiproject.tool.api.Placement;
 import org.sakaiproject.tool.api.Tool;
 
@@ -45,7 +48,9 @@ public class SakaiRequestParser {
   
   private Placement placement;
 
-  private BaseURLProvider sbup; 
+  private BaseURLProvider sbup;
+
+  private TimeService timeservice; 
   
   public void setHttpServletRequest(HttpServletRequest request) {
     this.request = request;
@@ -53,6 +58,10 @@ public class SakaiRequestParser {
   
   public void setSiteService(SiteService siteservice) {
     this.siteservice = siteservice;
+  }
+  
+  public void setTimeService(TimeService timeservice) {
+    this.timeservice = timeservice;
   }
   
   public void setBaseURLProvider(BaseURLProvider bup) {
@@ -119,6 +128,10 @@ public class SakaiRequestParser {
 
   public ConsumerInfo getConsumerInfo() {
     return consumerinfo;
+  }
+  
+  public TimeZone getTimeZone() {
+    return timeservice.getLocalTimeZone();
   }
   
   public Placement getPlacement() {

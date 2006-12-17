@@ -52,6 +52,9 @@
     <property name="targetBeanName" value="sakai-Locale" />
   </bean>
 
+  <bean name="requestTimeZone" factory-bean="sakaiRequestParser"
+   factory-method="getTimeZone" />
+
   <bean name="sakai-Placement" factory-bean="sakaiRequestParser"
     factory-method="getPlacement" />
 
