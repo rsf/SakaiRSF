@@ -25,7 +25,7 @@ public class SakaiPortalMatterSCR implements BasicSCR {
     if (RenderUtil.isFirstSCR(lump, getName())) {
       xmlw.writeRaw(headmatter);
     }
-    return ComponentRenderer.NESTING_TAG;
+    return ComponentRenderer.LEAF_TAG;
   }
 
 }
