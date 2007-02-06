@@ -13,6 +13,7 @@ import org.sakaiproject.tool.api.ToolException;
 
 import uk.org.ponder.beanutil.BeanLocator;
 import uk.org.ponder.beanutil.BeanModelAlterer;
+import uk.org.ponder.rsf.components.ELReference;
 import uk.org.ponder.rsf.components.UICommand;
 import uk.org.ponder.rsf.components.UIOutput;
 import uk.org.ponder.rsf.flow.ARIResult;
@@ -79,9 +80,10 @@ public class HelperHandlerHookBean {
   private boolean handleHelperDone() {
     Logger.log.info("Done handling helper in view: " + viewParameters.viewID);
 
-    String methodBinding = (String) tsh.getTokenState(TOKEN_STATE_PREFIX
+    ELReference elref = (ELReference) tsh.getTokenState(TOKEN_STATE_PREFIX
         + viewParameters.viewID + HelperViewParameters.POST_HELPER_BINDING);
     statePreservationManager.scopeRestore();
+    String methodBinding = elref.value;
     Object beanReturn = methodBinding == null ? null
         : bma.invokeBeanMethod(methodBinding, beanLocator);
 
