@@ -89,7 +89,7 @@ public class HelperHandlerHookBean {
 
     ARIResult ariresult = ari.interpretActionResult(viewParameters, beanReturn);
 
-    String urlToRedirectTo = ViewParamUtil.getAnyFullURL(ariresult.resultingview, vsh);
+    String urlToRedirectTo = ViewParamUtil.getAnyFullURL(ariresult.resultingView, vsh);
     try {
       response.sendRedirect(urlToRedirectTo);
     }
