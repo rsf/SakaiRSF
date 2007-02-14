@@ -90,5 +90,6 @@
     <property name="viewStateHandler" ref="viewStateHandler" />
     <property name="baseURLProvider" ref="baseURLProvider" />
     <property name="pathInfo" ref="requestPathInfo" />
+    <property name="ariProcessor" ref="actionResultInterceptorProcessor" />
   </bean>
 </beans>

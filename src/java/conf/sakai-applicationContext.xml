@@ -53,6 +53,7 @@
     <property name="securityService"
       ref="org.sakaiproject.authz.api.SecurityService" />
     <property name="toolManager" ref="org.sakaiproject.tool.api.ToolManager" />
+    <property name="siteService" ref="org.sakaiproject.site.api.SiteService" />
   </bean>
 
   <bean id="rsf-dummy-SakaiResourceLoader"
