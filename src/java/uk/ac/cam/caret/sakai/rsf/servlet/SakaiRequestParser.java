@@ -108,7 +108,6 @@ public class SakaiRequestParser {
     consumerinfo.urlbase = sbup.getBaseURL();
     consumerinfo.resourceurlbase = sbup.getResourceBaseURL();
     consumerinfo.consumertype = "sakai";
-    consumerinfo.extraparameters = "&panel=Main";
 
     consumerinfo.externalURL = sitepage == null? consumerinfo.urlbase : 
       URLUtil.deSpace(sitepage.getUrl());
