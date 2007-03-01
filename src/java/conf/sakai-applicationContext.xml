@@ -55,6 +55,11 @@
     <property name="toolManager" ref="org.sakaiproject.tool.api.ToolManager" />
     <property name="siteService" ref="org.sakaiproject.site.api.SiteService" />
   </bean>
+  
+  <bean id="sakai-MimeIconFetcher"
+    class="uk.ac.cam.caret.sakai.rsf.util.MimeIconFetcher">
+    <property name="contentTypeImageService" ref="org.sakaiproject.content.api.ContentTypeImageService" />
+  </bean>
 
   <bean id="rsf-dummy-SakaiResourceLoader"
     class="org.sakaiproject.util.ResourceLoader" />
