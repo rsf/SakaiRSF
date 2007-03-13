@@ -31,10 +31,10 @@ public class SakaiBaseURLProviderFactory implements ApplicationContextAware, Fac
   
   private String resourceurlbase;
   
-  // SAKAI URL handling is ridiculous, in that the URL returned from
-  // req.getRequestURL() may simply be *wrong*. This method adjusts the
-  // protocol and port from a "correctly" computed URL to be closer to
-  // reality, via the hackery from Sakai "Web" utils.
+  // Sakai is a very poor URL environment, where the return from
+  // req.getRequestURL() may not actually be valid to access this server. 
+  // This method adjusts the  protocol and port from a "correctly" computed 
+  // URL to be closer to reality, via the hackery from Sakai "Web" utils.
   public static String fixSakaiURL(HttpServletRequest req, String computed) {
     String serverURL = Web.serverUrl(req);
     int endprotpos = computed.indexOf("://");
