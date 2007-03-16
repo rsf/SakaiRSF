@@ -35,6 +35,15 @@
   <bean id="sakai-ContextProxy" parent="RSACStringBridge">
     <property name="targetBeanName" value="sakai-Context" />
   </bean>
+  
+  <bean id="sakaiServletContextLocatorLocator" class="uk.ac.cam.caret.sakai.rsf.servlet.SakaiServletContextLocatorLocator">
+  </bean>
+  
+  <bean id="resourceLoader" class="uk.org.ponder.springutil.ExtraContextResourceLoader">
+    <property name="servletContextLocator">
+      <bean factory-bean="sakaiServletContextLocatorLocator" factory-method="getServletContextLocator"/>
+    </property>
+  </bean>
 
   <bean id="messageLocator"
     class="uk.org.ponder.springutil.SpringMessageLocator">
