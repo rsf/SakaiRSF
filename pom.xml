@@ -159,7 +159,6 @@
 				<filtering>false</filtering>
 			</resource>
 		</resources>
-		</unitTest>
 	</build>
 </project>
 
