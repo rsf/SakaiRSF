@@ -102,7 +102,7 @@ public class HelperHandlerHookBean {
         }
       }
     }
-    String methodBinding = elref.value;
+    String methodBinding = elref == null ? null : elref.value;
     Object beanReturn = methodBinding == null ? null
         : bma.invokeBeanMethod(methodBinding, beanLocator);
     
