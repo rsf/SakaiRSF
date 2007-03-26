@@ -9,6 +9,9 @@
     <property name="defaultView" ref="defaultView" />
   </bean>
 
+<!--  NB this does not coincide with the global BaseURLProvider, which is
+now in app scope! Actually used only to initialise the CRIBUP, rethink this.
+ -->
   <bean name="baseURLProvider"
     class="uk.ac.cam.caret.sakai.rsf.servlet.SakaiBaseURLProviderFactory">
     <property name="httpServletRequest" ref="httpServletRequest" />

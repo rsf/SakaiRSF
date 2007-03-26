@@ -16,6 +16,7 @@ import org.sakaiproject.tool.api.Placement;
 import org.sakaiproject.tool.api.Tool;
 
 import uk.ac.cam.caret.sakai.rsf.bridge.SakaiNavConversion;
+import uk.ac.cam.caret.sakai.rsf.producers.FrameAdjustingProducer;
 import uk.ac.cam.caret.sakai.rsf.template.SakaiBodyTPI;
 import uk.ac.cam.caret.sakai.rsf.template.SakaiPortalMatterSCR;
 import uk.org.ponder.rsf.renderer.ComponentRenderer;
@@ -69,13 +70,22 @@ public class SakaiRequestParser {
   }
   
   public void init() {
-
+    Tool tool = (Tool) request.getAttribute("sakai.tool");
+    placement = (Placement) request.getAttribute("sakai.tool.placement");
+    String toolid = tool.getId();
+    String toolinstancepid = placement.getId();
+    
+    String frameid = FrameAdjustingProducer.deriveFrameTitle(toolinstancepid);
+    
     // Deliver the rewrite rule to the renderer that will invoke the relevant
     // Javascript magic to resize our frame.
     FlatSCR bodyscr = new FlatSCR();
     bodyscr.setName(SakaiBodyTPI.SAKAI_BODY);
-    bodyscr.addNameValue(new NameValue("onload", (String) request
-        .getAttribute("sakai.html.body.onload")));
+    String sakaionload = 
+      (String) request.getAttribute("sakai.html.body.onload");
+    String hname = "addSakaiRSFDomModifyHook";
+    String fullonload = "if (" + hname + "){" + hname + "(" + frameid + ");};" + sakaionload;
+    bodyscr.addNameValue(new NameValue("onload", fullonload));
     bodyscr.tag_type = ComponentRenderer.NESTING_TAG;
     
     SakaiPortalMatterSCR matterscr = new SakaiPortalMatterSCR();
@@ -84,12 +94,6 @@ public class SakaiRequestParser {
     src = new StaticRendererCollection();
     src.addSCR(bodyscr);
     src.addSCR(matterscr);
-
-    Tool tool = (Tool) request.getAttribute("sakai.tool");
-    placement = (Placement) request.getAttribute("sakai.tool.placement");
-    String toolid = tool.getId();
-    String toolinstancepid = placement.getId();
-    
 
     Logger.log.info("Got tool dispatcher id of " + toolid
         + " resourceBaseURL " + sbup.getResourceBaseURL() 
