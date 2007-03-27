@@ -84,7 +84,9 @@ public class SakaiRequestParser {
     String sakaionload = 
       (String) request.getAttribute("sakai.html.body.onload");
     String hname = "addSakaiRSFDomModifyHook";
-    String fullonload = "if (" + hname + "){" + hname + "(" + frameid + ");};" + sakaionload;
+    //String fullonload = "if (" + hname + "){" + hname + "(\"" + frameid + "\");};" + sakaionload;
+    String fullonload = "if (typeof(" + hname + ") != 'undefined'){ " + 
+      hname + "('" + frameid + "');}" + sakaionload;
     bodyscr.addNameValue(new NameValue("onload", fullonload));
     bodyscr.tag_type = ComponentRenderer.NESTING_TAG;
     

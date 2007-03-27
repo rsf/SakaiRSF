@@ -26,7 +26,9 @@ public class SakaiServletContextLocatorLocator implements
   private ApplicationContext applicationContext;
 
   public ServletContextLocator getServletContextLocator() {
-    final Object bean = applicationContext.getBean(SAKAI_SCL);
+    final Object bean = applicationContext.containsBean(SAKAI_SCL) ? applicationContext
+        .getBean(SAKAI_SCL)
+        : null;
     final Method[] locateContext = new Method[1];
     try {
       locateContext[0] = bean == null ? null
