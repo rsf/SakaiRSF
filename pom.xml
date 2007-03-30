@@ -64,6 +64,13 @@
       </exclusions>
     </dependency>
     <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.3</version>
+      <type>jar</type>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>org.sakaiproject</groupId>
       <artifactId>generic-dao</artifactId>
       <version>0.9</version>
@@ -122,24 +129,6 @@
       <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-content-api</artifactId>
       <version>${sakai.version}</version>
-      <type>jar</type>
-      <scope>provided</scope>
-    </dependency>
-    <!-- This should be sufficient here to suppress from upstream
-     http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html
-     But it is not. The excludes are required, which is presumably a bug.
-       -->
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring</artifactId>
-      <version>${sakai.spring.version}</version>
-      <type>jar</type>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>cglib</groupId>
-      <artifactId>cglib-nodep</artifactId>
-      <version>2.1_3</version>
       <type>jar</type>
       <scope>provided</scope>
     </dependency>
