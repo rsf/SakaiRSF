@@ -5,12 +5,16 @@
                       http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <name>SakaiRSF</name>
+  <parent>
+    <artifactId>master</artifactId>
+    <groupId>org.sakaiproject</groupId>
+    <version>M2</version>
+    <relativePath>../master/pom.xml</relativePath>
+  </parent>
   <groupId>uk.org.ponder.sakairsf</groupId>
   <artifactId>SakaiRSF</artifactId>
   <packaging>jar</packaging>
-  <version>
-    ${rsfutil.version}-sakai_${sakairsf.sakai.version}
-  </version>
+  <version>${rsfutil.version}-sakai_${sakairsf.sakai.version}</version>
   <properties>
     <sakairsf.sakai.version>2.2.x</sakairsf.sakai.version>
     <rsfutil.version>0.7.1RC4</rsfutil.version>
@@ -28,9 +32,7 @@
       <email>antranig@caret.cam.ac.uk</email>
       <url></url>
       <organization>CARET</organization>
-      <organizationUrl>
-        http://www.caret.cam.ac.uk/
-      </organizationUrl>
+      <organizationUrl>http://www.caret.cam.ac.uk/</organizationUrl>
     </developer>
   </developers>
   <licenses>
@@ -46,69 +48,100 @@
   </organization>
   <dependencies>
     <dependency>
-      <groupId>rsfutil</groupId>
+      <groupId>uk.org.ponder.rsfutil</groupId>
       <artifactId>rsfutil</artifactId>
       <version>${rsfutil.version}</version>
       <type>jar</type>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework</groupId>
+          <artifactId>spring</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>cglib</groupId>
+          <artifactId>cglib-nodep</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
-      <groupId>generic-dao</groupId>
+      <groupId>org.sakaiproject</groupId>
       <artifactId>generic-dao</artifactId>
       <version>0.9</version>
+      <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>sakaiproject</groupId>
+      <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-entity-api</artifactId>
       <version>${sakai.version}</version>
       <type>jar</type>
+      <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>sakaiproject</groupId>
+      <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-authz-api</artifactId>
       <version>${sakai.version}</version>
       <type>jar</type>
+      <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>sakaiproject</groupId>
+      <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-site-api</artifactId>
       <version>${sakai.version}</version>
       <type>jar</type>
+      <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>sakaiproject</groupId>
+      <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-tool-api</artifactId>
       <version>${sakai.version}</version>
       <type>jar</type>
+      <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>sakaiproject</groupId>
+      <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-util-api</artifactId>
       <version>${sakai.version}</version>
       <type>jar</type>
+      <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>sakaiproject</groupId>
+      <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-util</artifactId>
       <version>${sakai.version}</version>
       <type>jar</type>
+      <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>sakaiproject</groupId>
+      <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-user-api</artifactId>
       <version>${sakai.version}</version>
       <type>jar</type>
+      <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>sakaiproject</groupId>
+      <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-content-api</artifactId>
       <version>${sakai.version}</version>
       <type>jar</type>
+      <scope>provided</scope>
     </dependency>
+    <!-- This should be sufficient here to suppress from upstream
+     http://maven.apache.org/guides/introduction/introduction-to-dependency-mechanism.html
+     But it is not. The excludes are required, which is presumably a bug.
+       -->
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring</artifactId>
       <version>${sakai.spring.version}</version>
       <type>jar</type>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>cglib</groupId>
+      <artifactId>cglib-nodep</artifactId>
+      <version>2.1_3</version>
+      <type>jar</type>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
 
