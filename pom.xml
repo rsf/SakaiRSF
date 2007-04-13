@@ -17,9 +17,9 @@
   <version>${rsfutil.version}-sakai_${sakairsf.sakai.version}</version>
   <properties>
     <sakairsf.sakai.version>2.2.x</sakairsf.sakai.version>
-    <rsfutil.version>0.7.1RC4</rsfutil.version>
-    <ponderutilcore.version>1.2.1RC4</ponderutilcore.version>
-    <jservletutil.version>1.2.1RC4</jservletutil.version>
+    <rsfutil.version>0.7.1RC5</rsfutil.version>
+    <ponderutilcore.version>1.2.1RC5</ponderutilcore.version>
+    <jservletutil.version>1.2.1RC5</jservletutil.version>
   </properties>
   <description>
     Abstracts over Sakai dispatch cycle and tool state holders
