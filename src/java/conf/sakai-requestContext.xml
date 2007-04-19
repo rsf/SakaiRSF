@@ -95,4 +95,14 @@ now in app scope! Actually used only to initialise the CRIBUP, rethink this.
     <property name="pathInfo" ref="requestPathInfo" />
     <property name="ariProcessor" ref="actionResultInterceptorProcessor" />
   </bean>
+  
+  <!-- This may belong in AppScope. Would need a proxy for the Sakai Flow TSH -->
+  <bean id="MultipartResolverFactory" 
+    class="uk.ac.cam.caret.sakai.rsf.helper.MultipartResolverFactoryBean">
+    <property name="tokenStateHolder" ref="flowTokenStateHolder" />
+    <property name="commonsMultipartResolver" ref="commonsMultipartResolver" />
+    <property name="blankMultipartResolver" ref="blankMultipartResolver" />
+  </bean>
+  <bean id="multipartResolver" factory-bean="MultipartResolverFactory"
+    factory-method="getMultipartResolver" />
 </beans>

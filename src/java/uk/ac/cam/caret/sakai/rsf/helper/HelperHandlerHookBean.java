@@ -46,6 +46,16 @@ public class HelperHandlerHookBean {
   private static final String POST_HELPER_ARI2_VIEWPARAMS = HelperViewParameters.POST_HELPER_BINDING + "ARI2RETPARAMS";
   private static final String HELPER_FINISHED_PATH = "/done";
   private static final String IN_HELPER_PATH = "/tool";
+  
+  /* This is currently being used to record the fact that we are in the Helper, for the sole sake
+   * of being able to decide whether or not to disable the MultipartResolver. It's horrible and needs
+   * to be replaced with something more robust. Actually, even the current setup has problems. If you go
+   * to another part of the tool with a URL, and go back to somewhere that launches the helper, the information
+   * is obviously still there.
+   * Actually, we could just camp out in the HelperHandlerHook and remove this anytime we return false
+   * from handled.
+   */
+  public static final String IN_HELPER_INDICATOR = TOKEN_STATE_PREFIX + "in-helper"; // Hack
 
   private HttpServletResponse response;
   private HttpServletRequest request;
@@ -87,6 +97,9 @@ public class HelperHandlerHookBean {
 
   private boolean handleHelperDone() {
     Logger.log.info("Done handling helper in view: " + viewParameters.viewID);
+    
+    // Removing hack
+    tsh.clearTokenState(IN_HELPER_INDICATOR);
 
     ELReference elref = (ELReference) tsh.getTokenState(TOKEN_STATE_PREFIX
         + viewParameters.viewID + HelperViewParameters.POST_HELPER_BINDING);
@@ -193,6 +206,9 @@ public class HelperHandlerHookBean {
         + POST_HELPER_ARI2_VIEWPARAMS,
         viewParameters);
 
+    // Hack to know if we're in the helper
+    tsh.putTokenState(IN_HELPER_INDICATOR, IN_HELPER_INDICATOR);
+    
     String helperToolPath = bup.getBaseURL() + viewParameters.viewID
         + IN_HELPER_PATH;
     tsh.putTokenState(helperId.getValue() + Tool.HELPER_DONE_URL, bup

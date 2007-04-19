@@ -26,11 +26,12 @@
       <value>10</value>
     </property>
   </bean>
-  <!--  no problem declaring this here since Sakai already has commons-upload 
-    in shared. -->
-  <bean id="multipartResolver"
-    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-  </bean>
+  <!--  Declaring Resolvers here. Decision must be made in Request Scope -->
+  <bean name="commonsMultipartResolver"
+     class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+  <bean name="blankMultipartResolver"
+     class="uk.org.ponder.springutil.BlankMultipartResolver" />
+    
 
   <bean id="sakai-ContextProxy" parent="RSACStringBridge">
     <property name="targetBeanName" value="sakai-Context" />
