@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+  "http://www.springframework.org/dtd/spring-beans.dtd">
+<!-- Contains bean overrides and new definitions for application-scope beans
+  required for integration of RSF apps into Sakai with the "Entity Broker" system -->
+<beans>
+
+  <bean id="sakai-entityReferenceProxy" parent="RSACStringBridge">
+    <property name="targetBeanName" value="sakai-entityReference" />
+  </bean>
+
+  <bean id="accessRegistrar"
+    class="uk.ac.cam.caret.sakai.rsf.entitybroker.AccessRegistrar">
+    <property name="accessProviderManager"
+      ref="org.sakaiproject.entitybroker.access.AccessProviderManager" />
+    <property name="RSACBeanLocator" ref="RSACBeanLocator" />
+  </bean>
+
+  <bean id="EVPIManager"
+    class="uk.ac.cam.caret.sakai.rsf.entitybroker.EVPIManager">
+    <property name="accessRegistrar" ref="accessRegistrar" />
+    <property name="sakaiReference" ref="sakai-entityReferenceProxy" />
+  </bean>
+
+  <bean class="uk.org.ponder.springutil.ByClassTLAB">
+    <property name="targetPath"
+      value="EVPIManager.entityViewParamsInferrers" />
+    <property name="targetClass"
+      value="uk.ac.cam.caret.sakai.rsf.entitybroker.EntityViewParamsInferrer" />
+  </bean>
+</beans>
