@@ -54,7 +54,7 @@ public class AccessRegistrar implements AccessProvider {
     EntityParse parsed = new EntityParse(oldpathinfo);
     int extent = parsed.toString().length();
     final String newpathinfo = extent < oldpathinfo.length()? 
-         oldpathinfo.substring(parsed.toString().length() + 1) : "";
+         oldpathinfo.substring(parsed.toString().length()) : "";
     
     return new HttpServletRequestWrapper(req) {
       public String getPathInfo() {
@@ -65,13 +65,14 @@ public class AccessRegistrar implements AccessProvider {
   
   public void handleAccess(HttpServletRequest req, HttpServletResponse res,
       String reference) {
-    RSACUtils.startServletRequest(wrapRequest(req), res, rsacbl,
-        RSACUtils.HTTP_SERVLET_FACTORY);
     try {
+      rsacbl.startRequest();
       // A request bean locator just good for this request.
       WriteableBeanLocator rbl = rsacbl.getBeanLocator();
       // inchuck entityReference
       rbl.set("sakai-entityReference", reference);
+      RSACUtils.startServletRequest(wrapRequest(req), res, rsacbl,
+          RSACUtils.HTTP_SERVLET_FACTORY);
       // pass the request to RSF.
       rbl.locateBean("rootHandlerBean");
     }
