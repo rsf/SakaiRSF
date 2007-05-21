@@ -4,9 +4,5 @@
 <!-- Contains bean overrides and new definitions for application-scope beans
   required for integration of RSF apps into Sakai with the "Entity Broker" system -->
 <beans>
-<!-- Placeholder bean for whatever the current URL information determines
-is the current entity for this access -->
-  <bean id="sakai-entityReference" class="java.lang.String"/>
-  
   
 </beans>

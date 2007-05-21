@@ -16,8 +16,15 @@
     <property name="RSACBeanLocator" ref="RSACBeanLocator" />
   </bean>
 
+<!-- use valueRef here to break load-time loop since EVPIManager is itself
+a TLAB of defaultViewInferrer as well as the target of the EVPI TLAB -->
+  <bean parent="defaultViewInferrerParent">
+    <property name="valueRef" value="EVPIManager" />
+  </bean>
+
   <bean id="EVPIManager"
-    class="uk.ac.cam.caret.sakai.rsf.entitybroker.EVPIManager">
+    class="uk.ac.cam.caret.sakai.rsf.entitybroker.EVPIManager"
+    init-method="init">
     <property name="accessRegistrar" ref="accessRegistrar" />
     <property name="sakaiReference" ref="sakai-entityReferenceProxy" />
   </bean>
@@ -27,5 +34,6 @@
       value="EVPIManager.entityViewParamsInferrers" />
     <property name="targetClass"
       value="uk.ac.cam.caret.sakai.rsf.entitybroker.EntityViewParamsInferrer" />
+    <property name="deliverBeans" value="true" />
   </bean>
 </beans>

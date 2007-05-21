@@ -13,12 +13,21 @@ import uk.org.ponder.util.Logger;
 public class SakaiHttpServletFactory extends StaticHttpServletFactory {
   private HttpServletRequest request;
   private HttpServletResponse response;
+
   public void setHttpServletRequest(HttpServletRequest request) {
     this.request = request;
   }
+
   public void setHttpServletResponse(HttpServletResponse response) {
     this.response = response;
   }
+
+  private String entityref = null;
+
+  public void setEntityReference(String entityref) {
+    this.entityref = entityref;
+  }
+
   /**
    * Since it seems we can no longer apply servlet mappings in our web.xml as of
    * Sakai 2.0, we perform this feat manually, using the resourceurlbase init
@@ -27,49 +36,51 @@ public class SakaiHttpServletFactory extends StaticHttpServletFactory {
    * and sent to the resourceurlbase.
    */
   public static final String FACES_PATH = "faces";
-  private String defaultview;
   private String extrapath;
-
-  public void setDefaultView(String defaultview) {
-    this.defaultview = defaultview;
-  }
 
   // Use old-style initialisation semantics since this bean is populated by
   // inchuck.
   private boolean initted = false;
+
   private void checkInit() {
     if (!initted) {
       initted = true;
       init();
     }
   }
-  
-  public void init() {
-    extrapath = computePathInfo(request);
-    final StringBuffer requesturl = request.getRequestURL();
-    if (extrapath.equals("")) {
-      extrapath = defaultview;
-      requesturl.append('/').append(FACES_PATH).append(extrapath);
-    }
 
-    HttpServletRequestWrapper wrapper = new HttpServletRequestWrapper(request) {
-      public String getPathInfo() {
-        return extrapath;
-      }
-      public StringBuffer getRequestURL() {
-        StringBuffer togo = new StringBuffer();
-        togo.append(requesturl);
-        return togo;
-      }
-    };
-    request = wrapper;
+  public void init() {
+    // only need to perform request demunging if this has not come to us
+    // via the AccessRegistrar.
+    if (entityref.equals("")) {
+      extrapath = computePathInfo(request);
+      final StringBuffer requesturl = request.getRequestURL();
+      // now handled with implicitNullPathRedirect in RSF proper
+//      if (extrapath.equals("")) {
+//        extrapath = defaultview;
+//        requesturl.append('/').append(FACES_PATH).append(extrapath);
+//      }
+
+      HttpServletRequestWrapper wrapper = new HttpServletRequestWrapper(request) {
+        public String getPathInfo() {
+          return extrapath;
+        }
+
+        public StringBuffer getRequestURL() {
+          StringBuffer togo = new StringBuffer();
+          togo.append(requesturl);
+          return togo;
+        }
+      };
+      request = wrapper;
+    }
   }
 
   public HttpServletRequest getHttpServletRequest() {
     checkInit();
     return request;
   }
-  
+
   public HttpServletResponse getHttpServletResponse() {
     checkInit();
     return response;
@@ -102,5 +113,5 @@ public class SakaiHttpServletFactory extends StaticHttpServletFactory {
 
     return extrapath;
   }
-  
+
 }

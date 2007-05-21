@@ -5,6 +5,13 @@
   required for integration of RSF apps into Sakai -->
 <beans>
 
+<!-- In the two main Sakai environments (portal tools, and entity handlers)
+  we are more concerned with rapid and unambiguous response than we are with URL
+  consistency -->
+  <bean id="implicitNullRedirect" class="uk.org.ponder.springutil.BooleanFactory">
+     <property name="value" value="true" />
+  </bean>
+
   <bean id="flowTokenStateHolder"
     class="uk.ac.cam.caret.sakai.rsf.state.InSakaiSessionTSH">
     <property name="sessionManager"

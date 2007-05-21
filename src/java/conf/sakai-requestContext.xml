@@ -6,8 +6,13 @@
 <beans>
   <bean name="httpServletFactory"
     class="uk.ac.cam.caret.sakai.rsf.servlet.SakaiHttpServletFactory">
-    <property name="defaultView" ref="defaultView" />
+    <property name="entityReference" ref="sakai-entityReference"/>
   </bean>
+
+<!-- Placeholder bean for whatever the current URL information determines
+is the current entity for this access -->
+  <bean id="sakai-entityReference" class="java.lang.String"/>
+  
 
 <!--  NB this does not coincide with the global BaseURLProvider, which is
 now in app scope! Actually used only to initialise the CRIBUP, rethink this.

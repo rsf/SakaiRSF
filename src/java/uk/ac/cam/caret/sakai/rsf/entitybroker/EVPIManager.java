@@ -9,12 +9,12 @@ import java.util.Map;
 
 import org.sakaiproject.entitybroker.EntityParse;
 
-import uk.org.ponder.rsf.flow.errors.ViewExceptionStrategy;
 import uk.org.ponder.rsf.viewstate.ViewParameters;
+import uk.org.ponder.rsf.viewstate.ViewParamsReporter;
 import uk.org.ponder.stringutil.StringGetter;
 import uk.org.ponder.stringutil.StringList;
 
-public class EVPIManager implements ViewExceptionStrategy {
+public class EVPIManager implements ViewParamsReporter {
   private List inferrers;
   private AccessRegistrar accessRegistrar;
   private StringGetter reference;
@@ -47,12 +47,13 @@ public class EVPIManager implements ViewExceptionStrategy {
     this.reference = reference;
   }
 
-  public ViewParameters handleException(Exception e, ViewParameters incoming) {
+  public ViewParameters getViewParameters() {
     String requestref = reference.get();
-    EntityParse parsed = new EntityParse(requestref);
-    EntityViewParamsInferrer evpi = 
-      (EntityViewParamsInferrer) inferrermap.get(parsed.prefix);
-    
+    EntityViewParamsInferrer evpi = null;
+    if (!(requestref.equals(""))) {
+      EntityParse parsed = new EntityParse(requestref);
+      evpi = (EntityViewParamsInferrer) inferrermap.get(parsed.prefix);
+    }
     return evpi == null? null : evpi.inferDefaultViewParameters(requestref);
   }
 }
