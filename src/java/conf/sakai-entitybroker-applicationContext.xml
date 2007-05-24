@@ -34,6 +34,5 @@ a TLAB of defaultViewInferrer as well as the target of the EVPI TLAB -->
       value="EVPIManager.entityViewParamsInferrers" />
     <property name="targetClass"
       value="uk.ac.cam.caret.sakai.rsf.entitybroker.EntityViewParamsInferrer" />
-    <property name="deliverBeans" value="true" />
   </bean>
 </beans>
