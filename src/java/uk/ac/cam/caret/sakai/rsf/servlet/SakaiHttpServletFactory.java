@@ -53,7 +53,7 @@ public class SakaiHttpServletFactory extends StaticHttpServletFactory {
     // only need to perform request demunging if this has not come to us
     // via the AccessRegistrar.
     if (entityref.equals("")) {
-      extrapath = computePathInfo(request);
+      extrapath = "/" + computePathInfo(request);
       final StringBuffer requesturl = request.getRequestURL();
       // now handled with implicitNullPathRedirect in RSF proper
 //      if (extrapath.equals("")) {

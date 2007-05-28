@@ -4,7 +4,7 @@
 <!-- Contains bean overrides and new definitions for request-scope beans
   required for integration of RSF apps into Sakai -->
 <beans>
-  <bean name="httpServletFactory"
+  <bean id="httpServletFactory"
     class="uk.ac.cam.caret.sakai.rsf.servlet.SakaiHttpServletFactory">
     <property name="entityReference" ref="sakai-entityReference"/>
   </bean>
@@ -17,12 +17,12 @@ is the current entity for this access -->
 <!--  NB this does not coincide with the global BaseURLProvider, which is
 now in app scope! Actually used only to initialise the CRIBUP, rethink this.
  -->
-  <bean name="baseURLProvider"
+  <bean id="baseURLProvider"
     class="uk.ac.cam.caret.sakai.rsf.servlet.SakaiBaseURLProviderFactory">
     <property name="httpServletRequest" ref="httpServletRequest" />
   </bean>
 
-  <bean name="sakaiRequestParser"
+  <bean id="sakaiRequestParser"
     class="uk.ac.cam.caret.sakai.rsf.servlet.SakaiRequestParser"
     init-method="init">
     <property name="httpServletRequest" ref="httpServletRequest" />
@@ -40,37 +40,40 @@ now in app scope! Actually used only to initialise the CRIBUP, rethink this.
     factory-method="getConsumerInfo">
   </bean>
 
-  <bean name="sakai-User"
+  <bean id="sakai-User"
     factory-bean="org.sakaiproject.user.api.UserDirectoryService"
     factory-method="getCurrentUser" />
 
-  <bean name="sakai-UserDisplayName" factory-bean="sakai-User"
+  <bean id="sakai-UserDisplayName" factory-bean="sakai-User"
     factory-method="getDisplayName" />
 
-  <bean name="sakai-UserEID" factory-bean="sakai-User"
+  <bean id="sakai-UserEID" factory-bean="sakai-User"
     factory-method="getEid" />
 
-  <bean name="sakai-UserID" factory-bean="sakai-User"
-    factory-method="getId" />
+  <bean id="sakai-UserID" factory-bean="org.sakaiproject.tool.api.SessionManager"
+    factory-method="getCurrentSessionUserId" />
 
   <bean id="sakai-Locale" factory-bean="rsf-dummy-SakaiResourceLoader"
     factory-method="getLocale" />
 
-  <bean name="requestLocale"
+  <bean id="requestLocale"
     class="org.springframework.beans.factory.config.BeanReferenceFactoryBean">
     <property name="targetBeanName" value="sakai-Locale" />
   </bean>
 
-  <bean name="requestTimeZone" factory-bean="sakaiRequestParser"
+  <bean id="requestTimeZone" factory-bean="sakaiRequestParser"
    factory-method="getTimeZone" />
 
-  <bean name="sakai-Placement" factory-bean="sakaiRequestParser"
+  <bean id="sakai-Placement" factory-bean="sakaiRequestParser"
     factory-method="getPlacement" />
 
-  <bean name="sakai-Site" factory-bean="sakaiRequestParser"
+  <bean id="sakai-Site" factory-bean="sakaiRequestParser"
     factory-method="getSite" />
 
-  <bean name="sakai-Context" factory-bean="sakai-Placement"
+  <bean id="sakai-sitePage" factory-bean="sakaiRequestParser"
+    factory-method="getSitePage" />
+
+  <bean id="sakai-Context" factory-bean="sakai-Placement"
     factory-method="getContext" />
 
   <bean id="genericDAOEntityBeanManagerParent"
