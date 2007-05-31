@@ -70,7 +70,7 @@ public class AccessRegistrar implements AccessProvider {
       // A request bean locator just good for this request.
       WriteableBeanLocator rbl = rsacbl.getBeanLocator();
       // inchuck entityReference
-      rbl.set("sakai-entityReference", reference);
+      rbl.set("sakai-entityReference", new EntityParse(reference).toString());
       RSACUtils.startServletRequest(wrapRequest(req), res, rsacbl,
           RSACUtils.HTTP_SERVLET_FACTORY);
       // pass the request to RSF.
