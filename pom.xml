@@ -17,9 +17,9 @@
   <version>${rsfutil.version}-sakai_${sakairsf.sakai.version}</version>
   <properties>
     <sakairsf.sakai.version>2.2.x</sakairsf.sakai.version>
-    <rsfutil.version>"0.7.2M1"</rsfutil.version>
-    <ponderutilcore.version>""</ponderutilcore.version>
-    <jservletutil.version>""</jservletutil.version>
+    <rsfutil.version>0.7.2M1</rsfutil.version>
+    <ponderutilcore.version>1.2.2M1</ponderutilcore.version>
+    <jservletutil.version>1.2.2M1</jservletutil.version>
   </properties>
   <description>
     Abstracts over Sakai dispatch cycle and tool state holders
@@ -79,6 +79,13 @@
     <dependency>
       <groupId>org.sakaiproject</groupId>
       <artifactId>sakai-entity-api</artifactId>
+      <version>${sakai.version}</version>
+      <type>jar</type>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.sakaiproject</groupId>
+      <artifactId>sakai-entitybroker-api</artifactId>
       <version>${sakai.version}</version>
       <type>jar</type>
       <scope>provided</scope>
