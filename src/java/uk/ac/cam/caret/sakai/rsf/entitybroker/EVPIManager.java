@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.sakaiproject.entitybroker.EntityParse;
+import org.sakaiproject.entitybroker.EntityID;
 
 import uk.org.ponder.rsf.viewstate.ViewParameters;
 import uk.org.ponder.rsf.viewstate.ViewParamsReporter;
@@ -51,7 +51,7 @@ public class EVPIManager implements ViewParamsReporter {
     String requestref = reference.get();
     EntityViewParamsInferrer evpi = null;
     if (!(requestref.equals(""))) {
-      EntityParse parsed = new EntityParse(requestref);
+      EntityID parsed = new EntityID(requestref);
       evpi = (EntityViewParamsInferrer) inferrermap.get(parsed.prefix);
     }
     return evpi == null? null : evpi.inferDefaultViewParameters(requestref);

@@ -12,7 +12,7 @@
   <bean id="accessRegistrar"
     class="uk.ac.cam.caret.sakai.rsf.entitybroker.AccessRegistrar">
     <property name="accessProviderManager"
-      ref="org.sakaiproject.entitybroker.access.AccessProviderManager" />
+      ref="org.sakaiproject.entitybroker.access.HttpServletAccessProviderManager" />
     <property name="RSACBeanLocator" ref="RSACBeanLocator" />
   </bean>
 
@@ -35,4 +35,19 @@ a TLAB of defaultViewInferrer as well as the target of the EVPI TLAB -->
     <property name="targetClass"
       value="uk.ac.cam.caret.sakai.rsf.entitybroker.EntityViewParamsInferrer" />
   </bean>
+  
+  
+  <bean id="fatalErrorHandler"
+    class="uk.org.ponder.rsf.processor.DefaultFatalErrorHandler">
+     <property name="propagatedExceptions" value="java.lang.SecurityException"/>
+  </bean>
+  
+  <bean parent="viewExceptionStrategyParent">
+    <property name="value">
+      <bean class="uk.org.ponder.rsf.flow.errors.PropagatingViewExceptionStrategy">
+        <property name="propagatedExceptions" value="java.lang.SecurityException"/>
+      </bean>
+     </property>
+  </bean>
+  
 </beans>
