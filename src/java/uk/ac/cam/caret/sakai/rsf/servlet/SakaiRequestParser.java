@@ -55,6 +55,8 @@ public class SakaiRequestParser {
 
   private TimeService timeservice;
 
+  private String urlEntityReference;
+
   public void setHttpServletRequest(HttpServletRequest request) {
     this.request = request;
   }
@@ -71,6 +73,10 @@ public class SakaiRequestParser {
     this.bup = bup;
   }
 
+  public void setUrlEntityReference(String urlEntityReference) {
+    this.urlEntityReference = urlEntityReference;
+  }
+  
   public void init() {
     Tool tool = (Tool) request.getAttribute("sakai.tool");
     placement = (Placement) request.getAttribute("sakai.tool.placement");
@@ -144,5 +150,16 @@ public class SakaiRequestParser {
 
   public Placement getPlacement() {
     return placement;
+  }
+  
+  // Make sure we always return a valid context reference, since so much depends on it
+  public String getContext() {
+    return placement == null? "" : placement.getContext();
+  }
+  
+  public String getEntityReference() {
+    return urlEntityReference == null? 
+        (site == null? "" : site.getReference())
+        : urlEntityReference;
   }
 }
