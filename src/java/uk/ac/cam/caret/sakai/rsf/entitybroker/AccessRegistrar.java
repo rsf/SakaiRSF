@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
-import org.sakaiproject.entitybroker.EntityID;
+import org.sakaiproject.entitybroker.EntityBroker;
 import org.sakaiproject.entitybroker.EntityReference;
 import org.sakaiproject.entitybroker.access.HttpServletAccessProvider;
 import org.sakaiproject.entitybroker.access.HttpServletAccessProviderManager;
@@ -20,8 +20,13 @@ import uk.org.ponder.util.UniversalRuntimeException;
 
 public class AccessRegistrar implements HttpServletAccessProvider {
   private HttpServletAccessProviderManager accessProviderManager;
+  private EntityBroker entityBroker;
   private RSACBeanLocator rsacbl;
   private String[] prefixes;
+
+  public void setEntityBroker(EntityBroker entityBroker) {
+    this.entityBroker = entityBroker;
+  }
 
   public void setAccessProviderManager(
       HttpServletAccessProviderManager accessProviderManager) {
@@ -52,7 +57,7 @@ public class AccessRegistrar implements HttpServletAccessProvider {
   // determiner by getBaseURL2.
   private HttpServletRequest wrapRequest(HttpServletRequest req) {
     String oldpathinfo = req.getPathInfo();
-    EntityID parsed = new EntityID(oldpathinfo);
+    EntityReference parsed = entityBroker.parseReference(oldpathinfo);
     int extent = parsed.toString().length();
     final String newpathinfo = extent < oldpathinfo.length()? 
          oldpathinfo.substring(parsed.toString().length()) : "";
