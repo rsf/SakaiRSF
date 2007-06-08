@@ -14,6 +14,7 @@
     <property name="accessProviderManager"
       ref="org.sakaiproject.entitybroker.access.HttpServletAccessProviderManager" />
     <property name="RSACBeanLocator" ref="RSACBeanLocator" />
+    <property name="entityBroker" ref="org.sakaiproject.entitybroker.EntityBroker"/>
   </bean>
 
 <!-- use valueRef here to break load-time loop since EVPIManager is itself
