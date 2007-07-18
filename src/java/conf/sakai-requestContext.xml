@@ -10,11 +10,10 @@
   </bean>
 
 <!-- Placeholder bean for whatever the current URL information determines
-is the current entity for this access -- currently disused, both sources of into
+is the current entity for this access - currently disused, both sources of into
 overlay onto EntityReference -->
   <bean id="sakai-UrlEntityReference" class="java.lang.String"/>
   
-
 <!--  NB this does not coincide with the global BaseURLProvider, which is
 now in app scope! Actually used only to initialise the CRIBUP.
 When running locally, it can be the global BUP once more.

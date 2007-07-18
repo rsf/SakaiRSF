@@ -53,12 +53,6 @@
     </property>
   </bean>
 
-  <bean id="messageLocator"
-    class="uk.org.ponder.springutil.SpringMessageLocator">
-    <property name="messageSource" ref="messageSource" />
-    <property name="localeGetter" ref="requestLocaleProxy" />
-  </bean>
-
   <bean parent="templateParseInterceptorParent">
     <property name="value">
       <bean class="uk.ac.cam.caret.sakai.rsf.template.SakaiBodyTPI" />
@@ -77,9 +71,6 @@
     class="uk.ac.cam.caret.sakai.rsf.util.MimeIconFetcher">
     <property name="contentTypeImageService" ref="org.sakaiproject.content.api.ContentTypeImageService" />
   </bean>
-
-  <bean id="rsf-dummy-SakaiResourceLoader"
-    class="org.sakaiproject.util.ResourceLoader" />
 
   <bean id="sakai-LocaleSetter"
     class="uk.ac.cam.caret.sakai.rsf.locale.SakaiLocaleSetter">
