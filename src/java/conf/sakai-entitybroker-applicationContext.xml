@@ -5,8 +5,8 @@
   required for integration of RSF apps into Sakai with the "Entity Broker" system -->
 <beans>
 
-  <bean id="sakai-entityReferenceProxy" parent="RSACStringBridge">
-    <property name="targetBeanName" value="sakai-entityReference" />
+  <bean id="sakai-EntityReferenceProxy" parent="RSACStringBridge">
+    <property name="targetBeanName" value="sakai-EntityReference" />
   </bean>
 
   <bean id="accessRegistrar"
@@ -27,7 +27,7 @@ a TLAB of defaultViewInferrer as well as the target of the EVPI TLAB -->
     class="uk.ac.cam.caret.sakai.rsf.entitybroker.EVPIManager"
     init-method="init">
     <property name="accessRegistrar" ref="accessRegistrar" />
-    <property name="sakaiReference" ref="sakai-entityReferenceProxy" />
+    <property name="sakaiReference" ref="sakai-EntityReferenceProxy" />
   </bean>
 
   <bean class="uk.org.ponder.springutil.ByClassTLAB">

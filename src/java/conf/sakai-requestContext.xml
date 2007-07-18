@@ -10,7 +10,8 @@
   </bean>
 
 <!-- Placeholder bean for whatever the current URL information determines
-is the current entity for this access -->
+is the current entity for this access -- currently disused, both sources of into
+overlay onto EntityReference -->
   <bean id="sakai-UrlEntityReference" class="java.lang.String"/>
   
 
@@ -18,7 +19,7 @@ is the current entity for this access -->
 now in app scope! Actually used only to initialise the CRIBUP.
 When running locally, it can be the global BUP once more.
  -->
-  <bean id="sakai-baseURLProvider"
+  <bean id="sakai-BaseURLProvider"
     class="uk.ac.cam.caret.sakai.rsf.servlet.SakaiBaseURLProviderFactory">
     <property name="httpServletRequest" ref="httpServletRequest" />
   </bean>
@@ -73,13 +74,13 @@ When running locally, it can be the global BUP once more.
   <bean id="sakai-Site" factory-bean="sakaiRequestParser"
     factory-method="getSite" />
 
-  <bean id="sakai-sitePage" factory-bean="sakaiRequestParser"
+  <bean id="sakai-SitePage" factory-bean="sakaiRequestParser"
     factory-method="getSitePage" />
 
   <bean id="sakai-Context" factory-bean="sakaiRequestParser"
     factory-method="getContext" />
     
-  <bean id="sakai-entityReference" factory-bean="sakaiRequestParser"
+  <bean id="sakai-EntityReference" factory-bean="sakaiRequestParser"
     factory-method="getEntityReference" />
 
   <bean id="genericDAOEntityBeanManagerParent"
