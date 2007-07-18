@@ -53,8 +53,11 @@ When running locally, it can be the global BUP once more.
   <bean id="sakai-UserID" factory-bean="org.sakaiproject.tool.api.SessionManager"
     factory-method="getCurrentSessionUserId" />
 
-  <bean id="sakai-Locale" factory-bean="rsf-dummy-SakaiResourceLoader"
-    factory-method="getLocale" />
+  <bean id="sakai-Locale" class="uk.ac.cam.caret.sakai.rsf.locale.SakaiLocaleDeterminer">
+    <property name="preferencesService" ref="org.sakaiproject.user.api.PreferencesService"/>
+    <property name="servletRequest" ref="httpServletRequest"/>
+    <property name="sessionManager" ref="org.sakaiproject.tool.api.SessionManager"/>
+  </bean>
 
   <bean id="requestLocale"
     class="org.springframework.beans.factory.config.BeanReferenceFactoryBean">
