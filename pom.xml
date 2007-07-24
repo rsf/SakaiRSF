@@ -77,16 +77,6 @@
       </notifiers>
    </ciManagement>
 
-
-   <!-- define the license -->
-   <licenses>
-      <license>
-         <name>BSD License</name>
-         <url>http://www.opensource.org/licenses/bsd-license.php</url>
-         <distribution>repo</distribution>
-      </license>
-   </licenses>
-
    <!-- define source code repository -->
    <scm>
       <connection>
@@ -97,6 +87,15 @@
       </developerConnection>
       <url>https://saffron.caret.cam.ac.uk/svn/projects/SakaiRSF/trunk/</url>
    </scm>
+
+   <!-- define the license -->
+   <licenses>
+      <license>
+         <name>BSD License</name>
+         <url>http://www.opensource.org/licenses/bsd-license.php</url>
+         <distribution>repo</distribution>
+      </license>
+   </licenses>
 
    <!-- define javadocs and jxr docs -->
    <reporting>
