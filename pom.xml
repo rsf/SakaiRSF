@@ -289,7 +289,6 @@
          <artifactId>sakai-util</artifactId>
          <version>${sakai.version}</version>
          <type>jar</type>
-         <scope>provided</scope>
       </dependency>
       <dependency>
          <groupId>org.sakaiproject</groupId>

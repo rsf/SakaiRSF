@@ -15,8 +15,8 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/sakai24-tool-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/sakai24-user-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/sakai24-util-api"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/sakai24-util-util"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/entity-broker"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/sakai24-content-api"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/sakai24-util-util"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
