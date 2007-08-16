@@ -13,6 +13,7 @@ import org.sakaiproject.tool.api.ToolException;
 
 import uk.org.ponder.beanutil.BeanLocator;
 import uk.org.ponder.beanutil.BeanModelAlterer;
+import uk.org.ponder.mapping.ShellInfo;
 import uk.org.ponder.rsf.components.ELReference;
 import uk.org.ponder.rsf.components.ParameterList;
 import uk.org.ponder.rsf.components.UICommand;
@@ -115,8 +116,11 @@ public class HelperHandlerHookBean {
       }
     }
     String methodBinding = elref == null ? null : elref.value;
-    Object beanReturn = methodBinding == null ? null
-        : bma.invokeBeanMethod(methodBinding, beanLocator);
+    Object beanReturn = null;
+    if (methodBinding != null) {
+      ShellInfo shells = bma.fetchShells(methodBinding, beanLocator);
+      beanReturn = bma.invokeBeanMethod(shells, null);
+    }
     
     ViewParameters originParams = (ViewParameters) tsh.getTokenState(TOKEN_STATE_PREFIX
         + viewParameters.viewID + POST_HELPER_ARI2_VIEWPARAMS);
