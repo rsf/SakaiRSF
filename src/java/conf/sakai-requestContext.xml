@@ -29,7 +29,7 @@ When running locally, it can be the global BUP once more.
     <property name="siteService"
       ref="org.sakaiproject.site.api.SiteService" />
     <property name="timeService" ref="org.sakaiproject.time.api.TimeService"/>
-    <property name="baseURLProvider" ref="sakai-baseURLProvider" />
+    <property name="baseURLProvider" ref="sakai-BaseURLProvider" />
   </bean>
 
   <bean id="consumerStaticRenderers" factory-bean="sakaiRequestParser"

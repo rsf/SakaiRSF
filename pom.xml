@@ -4,10 +4,12 @@
    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
                       http://maven.apache.org/maven-v4_0_0.xsd">
    <modelVersion>4.0.0</modelVersion>
-   <artifactId>sakairsf</artifactId>
+
    <packaging>jar</packaging>
    <name>SakaiRSF</name>
    <groupId>uk.org.ponder.sakairsf</groupId>
+   <artifactId>sakairsf</artifactId>
+   <version>${rsfutil.version}-sakai_${sakairsf.sakai.version}</version>
    <properties>
       <sakairsf.sakai.version>2.2.x</sakairsf.sakai.version>
       <rsfutil.version>0.7.2M5-SNAPSHOT</rsfutil.version>
@@ -21,7 +23,6 @@
    <inceptionYear>2005</inceptionYear>
    <url>http://www2.caret.cam.ac.uk/rsfwiki/Wiki.jsp?page=SakaiRSF</url>
    <description>Abstracts over Sakai dispatch cycle and tool state holders</description>
-   <version>${rsfutil.version}-sakai_${sakairsf.sakai.version}</version>
 
    <parent>
       <artifactId>master</artifactId>
@@ -226,6 +227,10 @@
             <exclusion>
                <groupId>cglib</groupId>
                <artifactId>cglib-nodep</artifactId>
+            </exclusion>
+                <exclusion>
+               <groupId>cglib</groupId>
+               <artifactId>cglib</artifactId>
             </exclusion>
          </exclusions>
       </dependency>

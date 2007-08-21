@@ -40,7 +40,7 @@ public class SakaiLocaleDeterminer implements FactoryBean {
     ResourceProperties props = prefs
         .getProperties(ResourceLoader.APPLICATION_ID);
     String prefLocale = props.getProperty(ResourceLoader.LOCALE_KEY);
-    return LocaleUtil.parseLocale(prefLocale);
+    return prefLocale == null? null : LocaleUtil.parseLocale(prefLocale);
   }
 
   public void setPreferencesService(PreferencesService prefsservice) {
