@@ -48,6 +48,14 @@
       </developer>
    </developers>
 
+  <repositories>
+    <repository>
+      <id>CARET-Maven2</id>
+      <name>CARET Maven 2 Repository</name>
+      <url>http://www2.caret.cam.ac.uk/maven2</url>
+    </repository>
+  </repositories>  
+
    <distributionManagement>
       <repository>
          <id>CARET-Maven2-dev</id>
