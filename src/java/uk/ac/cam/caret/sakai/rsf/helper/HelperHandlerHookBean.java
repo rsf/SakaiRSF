@@ -118,7 +118,7 @@ public class HelperHandlerHookBean {
     String methodBinding = elref == null ? null : elref.value;
     Object beanReturn = null;
     if (methodBinding != null) {
-      ShellInfo shells = bma.fetchShells(methodBinding, beanLocator);
+      ShellInfo shells = bma.fetchShells(methodBinding, beanLocator, true);
       beanReturn = bma.invokeBeanMethod(shells, null);
     }
     
