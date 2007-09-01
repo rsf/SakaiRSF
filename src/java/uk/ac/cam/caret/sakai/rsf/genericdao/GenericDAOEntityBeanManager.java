@@ -11,9 +11,9 @@ import org.sakaiproject.genericdao.api.CoreGenericDao;
 import org.sakaiproject.genericdao.api.InitializingCoreGenericDAO;
 
 import uk.org.ponder.beanutil.FallbackBeanLocator;
-import uk.org.ponder.rsf.state.entity.BasicObstinateEBL;
 import uk.org.ponder.rsf.state.entity.DefaultEntityMapper;
 import uk.org.ponder.rsf.state.entity.EntityNameInferrer;
+import uk.org.ponder.rsf.state.entity.support.BasicObstinateEBL;
 import uk.org.ponder.saxalizer.AccessMethod;
 import uk.org.ponder.saxalizer.MethodAnalyser;
 import uk.org.ponder.saxalizer.SAXalizerMappingContext;
