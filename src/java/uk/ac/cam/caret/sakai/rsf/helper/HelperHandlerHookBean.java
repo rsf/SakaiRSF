@@ -22,7 +22,7 @@ import uk.org.ponder.rsf.components.UIOutput;
 import uk.org.ponder.rsf.components.UIParameter;
 import uk.org.ponder.rsf.flow.ARIResult;
 import uk.org.ponder.rsf.flow.ActionResultInterpreter;
-import uk.org.ponder.rsf.flow.support.ARIProcessor;
+import uk.org.ponder.rsf.flow.support.ARI2Processor;
 import uk.org.ponder.rsf.preservation.StatePreservationManager;
 import uk.org.ponder.rsf.state.TokenStateHolder;
 import uk.org.ponder.rsf.view.View;
@@ -67,7 +67,7 @@ public class HelperHandlerHookBean {
   private BeanModelAlterer bma;
   private BeanLocator beanLocator;
   private ActionResultInterpreter ari;
-  private ARIProcessor ariprocessor;
+  private ARI2Processor ariprocessor;
   private ActiveToolManager activeToolManager;
   private BaseURLProvider bup;
   private String pathInfo;
@@ -282,7 +282,7 @@ public class HelperHandlerHookBean {
     this.pathInfo = pathInfo;
   }
   
-  public void setAriProcessor(ARIProcessor ari2p) {
+  public void setAriProcessor(ARI2Processor ari2p) {
     this.ariprocessor = ari2p;
   }
 }

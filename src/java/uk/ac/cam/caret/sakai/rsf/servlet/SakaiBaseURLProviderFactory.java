@@ -13,7 +13,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.web.context.WebApplicationContext;
 
 import uk.org.ponder.rsf.viewstate.BaseURLProvider;
-import uk.org.ponder.rsf.viewstate.StaticBaseURLProvider;
+import uk.org.ponder.rsf.viewstate.support.StaticBaseURLProvider;
 import uk.org.ponder.servletutil.ServletUtil;
 
 public class SakaiBaseURLProviderFactory implements ApplicationContextAware, FactoryBean {
