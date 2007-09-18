@@ -12,9 +12,9 @@
    <version>${rsfutil.version}-sakai_${sakairsf.sakai.version}</version>
    <properties>
       <sakairsf.sakai.version>2.2.x</sakairsf.sakai.version>
-      <rsfutil.version>0.7.2RC2</rsfutil.version>
-      <jservletutil.version>1.2.2RC2</jservletutil.version>
-      <ponderutilcore.version>1.2.2RC2</ponderutilcore.version>
+      <rsfutil.version>0.7.2</rsfutil.version>
+      <jservletutil.version>1.2.2</jservletutil.version>
+      <ponderutilcore.version>1.2.2</ponderutilcore.version>
    </properties>
    <organization>
       <name>CARET, University of Cambridge</name>
@@ -53,6 +53,11 @@
       <id>CARET-Maven2</id>
       <name>CARET Maven 2 Repository</name>
       <url>http://www2.caret.cam.ac.uk/maven2</url>
+    </repository>
+    <repository>
+      <id>Sakaiproject-Maven2</id>
+      <name>Sakaiproject Maven 2 Repository</name>
+      <url>https://source.sakaiproject.org/maven2</url>
     </repository>
   </repositories>  
 
@@ -252,7 +257,7 @@
       <dependency>
          <groupId>org.sakaiproject</groupId>
          <artifactId>generic-dao</artifactId>
-         <version>0.9</version>
+         <version>0.9.1</version>
          <scope>provided</scope>
       </dependency>
       <dependency>
@@ -262,15 +267,13 @@
          <type>jar</type>
          <scope>provided</scope>
       </dependency>
-
       <dependency>
          <groupId>org.sakaiproject.entitybroker</groupId>
          <artifactId>entitybroker-api</artifactId>
-         <version>1.0.0-RC1</version>
+         <version>1.1.1</version>
          <type>jar</type>
          <scope>provided</scope>
       </dependency>
-
       <dependency>
          <groupId>org.sakaiproject</groupId>
          <artifactId>sakai-authz-api</artifactId>
