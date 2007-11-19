@@ -12,9 +12,9 @@
    <version>${rsfutil.version}-sakai_${sakairsf.sakai.version}</version>
    <properties>
       <sakairsf.sakai.version>2.2.x</sakairsf.sakai.version>
-      <rsfutil.version>0.7.2</rsfutil.version>
-      <jservletutil.version>1.2.2</jservletutil.version>
-      <ponderutilcore.version>1.2.2</ponderutilcore.version>
+      <rsfutil.version>0.7.3M1-SNAPSHOT</rsfutil.version>
+      <jservletutil.version>1.2.3M1-SNAPSHOT</jservletutil.version>
+      <ponderutilcore.version>1.2.3M1-SNAPSHOT</ponderutilcore.version>
    </properties>
    <organization>
       <name>CARET, University of Cambridge</name>
@@ -236,6 +236,10 @@
             <exclusion>
                <groupId>org.springframework</groupId>
                <artifactId>spring</artifactId>
+            </exclusion>
+            <exclusion>
+               <groupId>commons-logging</groupId>
+               <artifactId>commons-logging</artifactId>
             </exclusion>
             <exclusion>
                <groupId>cglib</groupId>
