@@ -15,7 +15,7 @@ import uk.org.ponder.rsf.state.entity.DefaultEntityMapper;
 import uk.org.ponder.rsf.state.entity.EntityNameInferrer;
 import uk.org.ponder.rsf.state.entity.support.BasicObstinateEBL;
 import uk.org.ponder.saxalizer.AccessMethod;
-import uk.org.ponder.saxalizer.MethodAnalyser;
+import uk.org.ponder.saxalizer.support.MethodAnalyser;
 import uk.org.ponder.saxalizer.SAXalizerMappingContext;
 import uk.org.ponder.util.ObjectFactory;
 
