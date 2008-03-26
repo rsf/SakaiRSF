@@ -39,7 +39,7 @@ a TLAB of defaultViewInferrer as well as the target of the EVPI TLAB -->
   
   
   <bean id="fatalErrorHandler"
-    class="uk.org.ponder.rsf.processor.DefaultFatalErrorHandler">
+    class="uk.org.ponder.rsf.processor.support.DefaultFatalErrorHandler">
      <property name="propagatedExceptions" value="java.lang.SecurityException"/>
   </bean>
   
