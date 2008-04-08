@@ -12,9 +12,10 @@
    <version>${rsfutil.version}-sakai_${sakairsf.sakai.version}</version>
    <properties>
       <sakairsf.sakai.version>2.2.x</sakairsf.sakai.version>
-      <rsfutil.version>0.7.3M1-SNAPSHOT</rsfutil.version>
-      <jservletutil.version>1.2.3M1-SNAPSHOT</jservletutil.version>
-      <ponderutilcore.version>1.2.3M1-SNAPSHOT</ponderutilcore.version>
+      <rsfutil.version>0.7.3M2-SNAPSHOT</rsfutil.version>
+      <jservletutil.version>1.2.3M2-SNAPSHOT</jservletutil.version>
+      <ponderutilcore.version>1.2.3M2-SNAPSHOT</ponderutilcore.version>
+      <sakai.version>SNAPSHOT</sakai.version>
    </properties>
    <organization>
       <name>CARET, University of Cambridge</name>
@@ -23,13 +24,6 @@
    <inceptionYear>2005</inceptionYear>
    <url>http://www2.caret.cam.ac.uk/rsfwiki/Wiki.jsp?page=SakaiRSF</url>
    <description>Abstracts over Sakai dispatch cycle and tool state holders</description>
-
-   <parent>
-      <artifactId>master</artifactId>
-      <groupId>org.sakaiproject</groupId>
-      <version>M2</version>
-      <relativePath>../master/pom.xml</relativePath>
-   </parent>
 
    <developers>
       <developer>
