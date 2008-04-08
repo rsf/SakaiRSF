@@ -12,9 +12,9 @@
    <version>${rsfutil.version}-sakai_${sakairsf.sakai.version}</version>
    <properties>
       <sakairsf.sakai.version>2.2.x</sakairsf.sakai.version>
-      <rsfutil.version>0.7.3M2-SNAPSHOT</rsfutil.version>
-      <jservletutil.version>1.2.3M2-SNAPSHOT</jservletutil.version>
-      <ponderutilcore.version>1.2.3M2-SNAPSHOT</ponderutilcore.version>
+      <rsfutil.version>0.7.3M2</rsfutil.version>
+      <jservletutil.version>1.2.3M2</jservletutil.version>
+      <ponderutilcore.version>1.2.3M2</ponderutilcore.version>
       <sakai.version>SNAPSHOT</sakai.version>
    </properties>
    <organization>
