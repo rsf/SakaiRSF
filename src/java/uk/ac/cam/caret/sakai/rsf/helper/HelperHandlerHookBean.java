@@ -11,6 +11,7 @@ import org.sakaiproject.tool.api.ActiveToolManager;
 import org.sakaiproject.tool.api.Tool;
 import org.sakaiproject.tool.api.ToolException;
 
+import uk.org.ponder.arrayutil.ArrayUtil;
 import uk.org.ponder.beanutil.BeanLocator;
 import uk.org.ponder.beanutil.BeanModelAlterer;
 import uk.org.ponder.mapping.ShellInfo;
@@ -32,6 +33,7 @@ import uk.org.ponder.rsf.viewstate.BaseURLProvider;
 import uk.org.ponder.rsf.viewstate.ViewParamUtil;
 import uk.org.ponder.rsf.viewstate.ViewParameters;
 import uk.org.ponder.rsf.viewstate.ViewStateHandler;
+import uk.org.ponder.stringutil.URLUtil;
 import uk.org.ponder.util.Logger;
 import uk.org.ponder.util.UniversalRuntimeException;
 
@@ -70,15 +72,16 @@ public class HelperHandlerHookBean {
   private ARI2Processor ariprocessor;
   private ActiveToolManager activeToolManager;
   private BaseURLProvider bup;
-  private String pathInfo;
+  private String[] pathInfo;
 
   public boolean handle() {
     String viewID = viewParameters.viewID;
     Logger.log.info("Handling view: " + viewID);
 
     String pathBeyondViewID = "";
-    if (pathInfo.length() > viewID.length() + 1) {
-      pathBeyondViewID = pathInfo.substring(viewParameters.viewID.length() + 1);
+    if (pathInfo.length > 1) {
+      pathBeyondViewID = URLUtil.toPathInfo(
+          (String[]) ArrayUtil.subArray(pathInfo, 1, pathInfo.length));
     }
     if (Logger.log.isInfoEnabled()) {
       Logger.log.info("pathInfo: " + pathInfo + " pathBeyondViewID: "
@@ -278,7 +281,7 @@ public class HelperHandlerHookBean {
     this.bup = bup;
   }
 
-  public void setPathInfo(String pathInfo) {
+  public void setPathInfo(String[] pathInfo) {
     this.pathInfo = pathInfo;
   }
   
