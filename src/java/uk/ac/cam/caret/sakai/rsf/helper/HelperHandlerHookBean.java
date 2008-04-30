@@ -158,8 +158,7 @@ public class HelperHandlerHookBean {
     String contextPath = baseUrl.substring(hostEnd);
     contextPath += viewParameters.viewID;
     contextPath += IN_HELPER_PATH;
-    String helperPathInfo = pathInfo.substring(1
-        + viewParameters.viewID.length() + IN_HELPER_PATH.length());
+    String helperPathInfo = pathInfo[0] + "/" + pathInfo[1];
 
     request.removeAttribute(Tool.NATIVE_URL);
 
