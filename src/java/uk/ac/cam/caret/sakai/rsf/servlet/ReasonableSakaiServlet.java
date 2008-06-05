@@ -16,6 +16,7 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import uk.org.ponder.beanutil.BeanLocator;
 import uk.org.ponder.rsac.RSACBeanLocator;
 import uk.org.ponder.rsac.servlet.RSACUtils;
+import uk.org.ponder.rsf.processor.ForcibleException;
 import uk.org.ponder.util.Logger;
 import uk.org.ponder.util.UniversalRuntimeException;
 
@@ -64,6 +65,12 @@ public class ReasonableSakaiServlet extends HttpServlet {
       rbl.locateBean("rootHandlerBean");
     }
     catch (Throwable t) {
+      if (t instanceof UniversalRuntimeException) {
+        UniversalRuntimeException ure = (UniversalRuntimeException) t;
+        if (ForcibleException.class.isAssignableFrom(ure.getCategory())) {
+          throw (ure);
+        }
+      }
       Logger.log.warn("Error servicing SakaiRSF request ", t);
       try {
         res.getWriter().println(
