@@ -8,10 +8,10 @@ import java.util.Locale;
 import javax.servlet.ServletRequest;
 
 import org.sakaiproject.entity.api.ResourceProperties;
+import org.sakaiproject.i18n.InternationalizedMessages;
 import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.user.api.Preferences;
 import org.sakaiproject.user.api.PreferencesService;
-import org.sakaiproject.util.ResourceLoader;
 import org.springframework.beans.factory.FactoryBean;
 
 import uk.org.ponder.localeutil.LocaleUtil;
@@ -38,8 +38,8 @@ public class SakaiLocaleDeterminer implements FactoryBean {
     String userid = sessionmanager.getCurrentSessionUserId();
     Preferences prefs = prefsservice.getPreferences(userid);
     ResourceProperties props = prefs
-        .getProperties(ResourceLoader.APPLICATION_ID);
-    String prefLocale = props.getProperty(ResourceLoader.LOCALE_KEY);
+        .getProperties(InternationalizedMessages.APPLICATION_ID);
+    String prefLocale = props.getProperty(InternationalizedMessages.LOCALE_KEY);
     return prefLocale == null? null : LocaleUtil.parseLocale(prefLocale);
   }
 

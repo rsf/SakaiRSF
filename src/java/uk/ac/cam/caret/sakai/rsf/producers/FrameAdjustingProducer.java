@@ -4,8 +4,8 @@
 package uk.ac.cam.caret.sakai.rsf.producers;
 
 import org.sakaiproject.tool.api.ToolManager;
-import org.sakaiproject.util.Web;
 
+import uk.ac.cam.caret.sakai.rsf.copies.Web;
 import uk.org.ponder.rsf.components.UIContainer;
 import uk.org.ponder.rsf.components.UIVerbatim;
 
