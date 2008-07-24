@@ -12,9 +12,9 @@
    <version>${rsfutil.version}-sakai_${sakairsf.sakai.version}</version>
    <properties>
       <sakairsf.sakai.version>2.2.x</sakairsf.sakai.version>
-      <rsfutil.version>0.7.3RC1</rsfutil.version>
-      <jservletutil.version>1.2.3RC1</jservletutil.version>
-      <ponderutilcore.version>1.2.3RC1</ponderutilcore.version>
+      <rsfutil.version>0.7.3</rsfutil.version>
+      <jservletutil.version>1.2.3</jservletutil.version>
+      <ponderutilcore.version>1.2.3</ponderutilcore.version>
       <sakai.version>SNAPSHOT</sakai.version>
    </properties>
    <organization>
@@ -228,8 +228,24 @@
          <type>jar</type>
          <exclusions>
             <exclusion>
+               <groupId>aopalliance</groupId>
+               <artifactId>aopalliance</artifactId>
+            </exclusion>
+            <exclusion>
                <groupId>org.springframework</groupId>
                <artifactId>spring</artifactId>
+            </exclusion>
+            <exclusion>
+               <groupId>org.springframework</groupId>
+               <artifactId>spring-aop</artifactId>
+            </exclusion>
+            <exclusion>
+               <groupId>org.springframework</groupId>
+               <artifactId>spring-beans</artifactId>
+            </exclusion>
+            <exclusion>
+               <groupId>org.springframework</groupId>
+               <artifactId>spring-core</artifactId>
             </exclusion>
             <exclusion>
                <groupId>commons-logging</groupId>
@@ -268,7 +284,7 @@
       <dependency>
          <groupId>org.sakaiproject.entitybroker</groupId>
          <artifactId>entitybroker-api</artifactId>
-         <version>1.1.1</version>
+         <version>1.3.3</version>
          <type>jar</type>
          <scope>provided</scope>
       </dependency>

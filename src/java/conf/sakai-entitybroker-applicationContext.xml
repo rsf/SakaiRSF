@@ -10,12 +10,14 @@
   </bean>
 
   <bean id="accessRegistrar"
-    class="uk.ac.cam.caret.sakai.rsf.entitybroker.AccessRegistrar">
+    class="uk.ac.cam.caret.sakai.rsf.entitybroker.AccessRegistrar" init-method="init">
     <property name="accessProviderManager"
       ref="org.sakaiproject.entitybroker.access.HttpServletAccessProviderManager" />
     <property name="RSACBeanLocator" ref="RSACBeanLocator" />
     <property name="entityBroker" ref="org.sakaiproject.entitybroker.EntityBroker"/>
   </bean>
+
+  <bean id="commonAccessProvider" factory-bean="accessRegistrar" factory-method="getCommonAccessHandler"/>
 
 <!-- use valueRef here to break load-time loop since EVPIManager is itself
 a TLAB of defaultViewInferrer as well as the target of the EVPI TLAB -->

@@ -20,7 +20,9 @@ import uk.ac.cam.caret.sakai.rsf.producers.FrameAdjustingProducer;
 import uk.ac.cam.caret.sakai.rsf.template.SakaiBodyTPI;
 import uk.ac.cam.caret.sakai.rsf.template.SakaiPortalMatterSCR;
 import uk.org.ponder.rsf.renderer.ComponentRenderer;
+import uk.org.ponder.rsf.renderer.scr.BasicSCR;
 import uk.org.ponder.rsf.renderer.scr.FlatSCR;
+import uk.org.ponder.rsf.renderer.scr.NullRewriteSCR;
 import uk.org.ponder.rsf.renderer.scr.StaticRendererCollection;
 import uk.org.ponder.rsf.viewstate.BaseURLProvider;
 import uk.org.ponder.stringutil.URLUtil;
@@ -80,6 +82,10 @@ public class SakaiRequestParser {
   public void init() {
     Tool tool = (Tool) request.getAttribute("sakai.tool");
     placement = (Placement) request.getAttribute("sakai.tool.placement");
+
+    SakaiPortalMatterSCR matterscr = new SakaiPortalMatterSCR();
+    matterscr.setHeadMatter((String) request.getAttribute("sakai.html.head"));
+    
     if (tool != null && placement != null) {
       String toolid = tool.getId();
       String toolinstancepid = placement.getId();
@@ -88,8 +94,7 @@ public class SakaiRequestParser {
 
       // Deliver the rewrite rule to the renderer that will invoke the relevant
       // Javascript magic to resize our frame.
-      FlatSCR bodyscr = new FlatSCR();
-      bodyscr.setName(SakaiBodyTPI.SAKAI_BODY);
+
       String sakaionload = (String) request
           .getAttribute("sakai.html.body.onload");
       String hname = "addSakaiRSFDomModifyHook";
@@ -97,14 +102,10 @@ public class SakaiRequestParser {
       // "\");};" + sakaionload;
       String fullonload = "if (typeof(" + hname + ") != 'undefined'){ " + hname
           + "('" + frameid + "');}" + sakaionload;
+      
+      FlatSCR bodyscr = new FlatSCR();
       bodyscr.addNameValue(new NameValue("onload", fullonload));
       bodyscr.tag_type = ComponentRenderer.NESTING_TAG;
-
-      SakaiPortalMatterSCR matterscr = new SakaiPortalMatterSCR();
-      matterscr.setHeadMatter((String) request.getAttribute("sakai.html.head"));
-
-      src.addSCR(bodyscr);
-      src.addSCR(matterscr);
 
       Logger.log.info("Got tool dispatcher id of " + toolid
           + " resourceBaseURL " + bup.getResourceBaseURL() + " baseURL "
@@ -117,8 +118,18 @@ public class SakaiRequestParser {
       if (tc != null) {
         sitepage = SakaiNavConversion.pageForToolConfig(siteservice, tc);
       }
+      bodyscr.setName(SakaiBodyTPI.SAKAI_BODY);
+      
+      src.addSCR(bodyscr);
+    }
+    else {
+      NullRewriteSCR bodyscr2 = new NullRewriteSCR();
+      bodyscr2.setName(SakaiBodyTPI.SAKAI_BODY);
+      src.addSCR(bodyscr2);
     }
 
+    src.addSCR(matterscr);
+    
     consumerinfo = new ConsumerInfo();
     consumerinfo.urlbase = bup.getBaseURL();
     consumerinfo.resourceurlbase = bup.getResourceBaseURL();

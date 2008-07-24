@@ -33,17 +33,7 @@ import uk.org.ponder.rsf.viewstate.ViewParameters;
  * @author Antranig Basman
  * @author AZ (commenting)
  */
-public interface EntityViewParamsInferrer {
-
-	/**
-	 * Allows you to define all the entity prefixes that this inferrer should deal with, this
-	 * can be more that one prefix but it is better to have one inferrer per entity,<br/>
-	 * recommend you use the ENTITY_PREFIX static string from your provider if you are
-	 * following best practices
-	 * 
-	 * @return an array of all handled prefixes
-	 */
-	public String[] getHandledPrefixes();
+public interface EntityViewParamsInferrer extends PrefixHandler {
 
 	/**
 	 * Allows you to define where (view) in the tool a entity url should direct the user when it

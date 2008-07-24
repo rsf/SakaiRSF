@@ -29,17 +29,7 @@ public class EVPIManager implements ViewParamsReporter {
   }
   
   public void init() {
-    StringList allprefixes = new StringList();
-    if (inferrers != null && inferrers.size() > 0) {
-      for (int i = 0; i < inferrers.size(); ++ i) {
-        EntityViewParamsInferrer evpi = (EntityViewParamsInferrer) inferrers.get(i);
-        String[] prefixes = evpi.getHandledPrefixes();
-        allprefixes.append(prefixes);
-        for (int j = 0; j < prefixes.length; ++ j) {
-          inferrermap.put(prefixes[j], evpi);
-        }
-      }
-    }
+    StringList allprefixes = RegistrationUtil.collectPrefixes(inferrers, inferrermap);
     accessRegistrar.registerPrefixes(allprefixes.toStringArray());
   }
 

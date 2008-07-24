@@ -21,7 +21,7 @@ public class SakaiPortalMatterSCR implements BasicSCR {
   }
   
   public int render(TagRenderContext trc) {
-    if (RenderUtil.isFirstSCR(trc.uselump, getName())) {
+    if (RenderUtil.isFirstSCR(trc.uselump, getName()) && headmatter != null) {
       trc.xmlw.writeRaw(headmatter);
     }
     return ComponentRenderer.LEAF_TAG;
