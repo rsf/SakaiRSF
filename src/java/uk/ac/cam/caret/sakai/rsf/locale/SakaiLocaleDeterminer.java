@@ -17,13 +17,14 @@ import org.springframework.beans.factory.FactoryBean;
 import uk.org.ponder.localeutil.LocaleUtil;
 
 /**
- * Determins the correct locale for the current request by searching the
- * following sources in order of preference:
+ * Determins the correct locale for the current request by searching the following sources
+ * in order of preference:
  * <ol>
  * <li>The User's preferences
  * <li>The current ServletRequest
  * <li>The Sakai Session
  * </ol>
+ * 
  * @author Antranig Basman (amb26@ponder.org.uk)
  * 
  */
@@ -40,7 +41,8 @@ public class SakaiLocaleDeterminer implements FactoryBean {
     ResourceProperties props = prefs
         .getProperties(InternationalizedMessages.APPLICATION_ID);
     String prefLocale = props.getProperty(InternationalizedMessages.LOCALE_KEY);
-    return prefLocale == null? null : LocaleUtil.parseLocale(prefLocale);
+    return prefLocale == null ? null
+        : LocaleUtil.parseLocale(prefLocale);
   }
 
   public void setPreferencesService(PreferencesService prefsservice) {
@@ -56,24 +58,26 @@ public class SakaiLocaleDeterminer implements FactoryBean {
   }
 
   public Object getObject() {
-    Locale togo  = getPreferencesLocale();
+    Locale togo = getPreferencesLocale();
     if (togo == null) {
       try {
-       togo = servletrequest.getLocale();
+        togo = (Locale) sessionmanager.getCurrentSession().getAttribute("locale");
       }
-      catch (Exception e) {}
+      catch (Exception e) {
+      }
     }
     if (togo == null) {
       try {
-       togo = (Locale) sessionmanager.getCurrentSession().getAttribute("locale");
+        togo = servletrequest.getLocale();
       }
-      catch (Exception e) {}
+      catch (Exception e) {
+      }
     }
     if (togo == null) {
       togo = Locale.getDefault();
     }
     return togo;
-  }  
+  }
 
   public Class getObjectType() {
     return Locale.class;
