@@ -88,12 +88,12 @@
    <!-- define source code repository -->
    <scm>
       <connection>
-         scm:svn:https://saffron.caret.cam.ac.uk/svn/projects/SakaiRSF/trunk/
+         scm:svn:https://source.caret.cam.ac.uk/rsf/projects/SakaiRSF/trunk/
       </connection>
       <developerConnection>
-         scm:svn:https://saffron.caret.cam.ac.uk/svn/projects/SakaiRSF/trunk/
+         scm:svn:https://source.caret.cam.ac.uk/rsf/projects/SakaiRSF/trunk/
       </developerConnection>
-      <url>https://saffron.caret.cam.ac.uk/svn/projects/SakaiRSF/trunk/</url>
+      <url>https://source.caret.cam.ac.uk/rsf/projects/SakaiRSF/trunk/</url>
    </scm>
 
    <!-- define the license -->
