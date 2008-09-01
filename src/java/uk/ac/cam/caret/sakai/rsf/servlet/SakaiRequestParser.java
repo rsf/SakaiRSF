@@ -16,6 +16,7 @@ import org.sakaiproject.tool.api.Placement;
 import org.sakaiproject.tool.api.Tool;
 
 import uk.ac.cam.caret.sakai.rsf.bridge.SakaiNavConversion;
+import uk.ac.cam.caret.sakai.rsf.copies.DefaultPortalMatter;
 import uk.ac.cam.caret.sakai.rsf.producers.FrameAdjustingProducer;
 import uk.ac.cam.caret.sakai.rsf.template.SakaiBodyTPI;
 import uk.ac.cam.caret.sakai.rsf.template.SakaiPortalMatterSCR;
@@ -84,7 +85,11 @@ public class SakaiRequestParser {
     placement = (Placement) request.getAttribute("sakai.tool.placement");
 
     SakaiPortalMatterSCR matterscr = new SakaiPortalMatterSCR();
-    matterscr.setHeadMatter((String) request.getAttribute("sakai.html.head"));
+    String headMatter = (String) request.getAttribute("sakai.html.head");
+    if (headMatter == null) {
+      headMatter = DefaultPortalMatter.getDefaultPortalMatter();
+    }
+    matterscr.setHeadMatter(headMatter);
     
     if (tool != null && placement != null) {
       String toolid = tool.getId();

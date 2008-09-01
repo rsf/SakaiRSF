@@ -4,7 +4,12 @@
    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
                       http://maven.apache.org/maven-v4_0_0.xsd">
    <modelVersion>4.0.0</modelVersion>
-
+   <parent>
+     <artifactId>master</artifactId>
+     <groupId>org.sakaiproject</groupId>
+     <version>2.5.2</version>
+     <relativePath>../master/pom.xml</relativePath>
+   </parent>
    <packaging>jar</packaging>
    <name>SakaiRSF</name>
    <groupId>uk.org.ponder.sakairsf</groupId>
@@ -15,7 +20,7 @@
       <rsfutil.version>0.7.4-SNAPSHOT</rsfutil.version>
       <jservletutil.version>1.2.4-SNAPSHOT</jservletutil.version>
       <ponderutilcore.version>1.2.4-SNAPSHOT</ponderutilcore.version>
-      <sakai.version>SNAPSHOT</sakai.version>
+      <sakai.version>[2.2.0,2.7.0)</sakai.version>
    </properties>
    <organization>
       <name>CARET, University of Cambridge</name>
@@ -307,44 +312,30 @@
       <dependency>
          <groupId>org.sakaiproject</groupId>
          <artifactId>sakai-authz-api</artifactId>
-         <version>${sakai.version}</version>
-         <type>jar</type>
-         <scope>provided</scope>
       </dependency>
       <dependency>
          <groupId>org.sakaiproject</groupId>
          <artifactId>sakai-site-api</artifactId>
-         <version>${sakai.version}</version>
-         <type>jar</type>
-         <scope>provided</scope>
       </dependency>
       <dependency>
          <groupId>org.sakaiproject</groupId>
          <artifactId>sakai-tool-api</artifactId>
-         <version>${sakai.version}</version>
-         <type>jar</type>
-         <scope>provided</scope>
       </dependency>
       <dependency>
          <groupId>org.sakaiproject</groupId>
          <artifactId>sakai-util-api</artifactId>
-         <version>${sakai.version}</version>
-         <type>jar</type>
-         <scope>provided</scope>
       </dependency>
       <dependency>
          <groupId>org.sakaiproject</groupId>
          <artifactId>sakai-user-api</artifactId>
-         <version>${sakai.version}</version>
-         <type>jar</type>
-         <scope>provided</scope>
       </dependency>
       <dependency>
          <groupId>org.sakaiproject</groupId>
          <artifactId>sakai-content-api</artifactId>
-         <version>${sakai.version}</version>
-         <type>jar</type>
-         <scope>provided</scope>
+      </dependency>
+      <dependency>
+         <groupId>org.sakaiproject</groupId>
+         <artifactId>sakai-component-api</artifactId>
       </dependency>
    </dependencies>
 

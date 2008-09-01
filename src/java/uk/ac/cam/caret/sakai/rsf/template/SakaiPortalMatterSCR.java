@@ -8,6 +8,7 @@ import uk.org.ponder.rsf.renderer.ComponentRenderer;
 import uk.org.ponder.rsf.renderer.RenderUtil;
 import uk.org.ponder.rsf.renderer.TagRenderContext;
 import uk.org.ponder.rsf.renderer.scr.BasicSCR;
+import uk.org.ponder.rsf.renderer.scr.NullRewriteSCR;
 
 public class SakaiPortalMatterSCR implements BasicSCR {
   private String headmatter;
@@ -21,10 +22,15 @@ public class SakaiPortalMatterSCR implements BasicSCR {
   }
   
   public int render(TagRenderContext trc) {
-    if (RenderUtil.isFirstSCR(trc.uselump, getName()) && headmatter != null) {
-      trc.xmlw.writeRaw(headmatter);
+    if (headmatter == null) {
+      return NullRewriteSCR.instance.render(trc);
     }
-    return ComponentRenderer.LEAF_TAG;
+    else {
+      if (RenderUtil.isFirstSCR(trc.uselump, getName())) {
+        trc.xmlw.writeRaw(headmatter);
+      }
+      return ComponentRenderer.LEAF_TAG;
+    }
   }
 
 }

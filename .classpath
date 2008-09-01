@@ -18,5 +18,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/entity-broker"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/sakai24-content-api"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/sakai24-util-util"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/sakai24-component-api"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
