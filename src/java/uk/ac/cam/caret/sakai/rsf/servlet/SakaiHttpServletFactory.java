@@ -3,6 +3,9 @@
  */
 package uk.ac.cam.caret.sakai.rsf.servlet;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
@@ -86,6 +89,8 @@ public class SakaiHttpServletFactory extends StaticHttpServletFactory {
     return response;
   }
 
+  private static final String PORTAL_TOOL = "/portal/tool/";
+  
   public static String computePathInfo(HttpServletRequest request) {
     String requesturl = request.getRequestURL().toString();
     String extrapath = request.getPathInfo();
@@ -107,6 +112,20 @@ public class SakaiHttpServletFactory extends StaticHttpServletFactory {
       extrapath = extrapath.substring(FACES_PATH.length());
     }
 
+    try { // Resolve RSF-129. Override all previous decisions if we can detect a global /portal/tool request
+      URL url = new URL(requesturl);
+      String path = url.getPath();
+      if (path.startsWith(PORTAL_TOOL)) {
+        int nextslashpos = path.indexOf('/', PORTAL_TOOL.length() + 1);
+        if (nextslashpos != -1) {
+          extrapath = path.substring(nextslashpos + 1);
+        }
+      }
+    }
+    catch (MalformedURLException e) {
+      Logger.log.info("Malformed input request URL", e);
+    }
+    
     Logger.log
         .info("Beginning ToolSinkTunnelServlet service with requestURL of "
             + requesturl + " and extra path of " + extrapath);
