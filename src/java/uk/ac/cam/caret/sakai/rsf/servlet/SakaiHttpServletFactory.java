@@ -120,6 +120,9 @@ public class SakaiHttpServletFactory extends StaticHttpServletFactory {
         if (nextslashpos != -1) {
           extrapath = path.substring(nextslashpos + 1);
         }
+        else {
+          extrapath = "";
+        }
       }
     }
     catch (MalformedURLException e) {
