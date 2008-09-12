@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 
+import org.sakaiproject.component.cover.ServerConfigurationService;
+
 import uk.org.ponder.rsac.servlet.StaticHttpServletFactory;
 import uk.org.ponder.util.Logger;
 
@@ -32,11 +34,10 @@ public class SakaiHttpServletFactory extends StaticHttpServletFactory {
   }
 
   /**
-   * Since it seems we can no longer apply servlet mappings in our web.xml as of
-   * Sakai 2.0, we perform this feat manually, using the resourceurlbase init
-   * parameter, and this string which represents the offset path for resource
-   * handled by RSF. Any paths falling outside this will be treated as static,
-   * and sent to the resourceurlbase.
+   * Since it seems we can no longer apply servlet mappings in our web.xml as of Sakai
+   * 2.0, we perform this feat manually, using the resourceurlbase init parameter, and
+   * this string which represents the offset path for resource handled by RSF. Any paths
+   * falling outside this will be treated as static, and sent to the resourceurlbase.
    */
   public static final String FACES_PATH = "faces";
   private String extrapath;
@@ -59,10 +60,10 @@ public class SakaiHttpServletFactory extends StaticHttpServletFactory {
       extrapath = "/" + computePathInfo(request);
       final StringBuffer requesturl = request.getRequestURL();
       // now handled with implicitNullPathRedirect in RSF proper
-//      if (extrapath.equals("")) {
-//        extrapath = defaultview;
-//        requesturl.append('/').append(FACES_PATH).append(extrapath);
-//      }
+      // if (extrapath.equals("")) {
+      // extrapath = defaultview;
+      // requesturl.append('/').append(FACES_PATH).append(extrapath);
+      // }
 
       HttpServletRequestWrapper wrapper = new HttpServletRequestWrapper(request) {
         public String getPathInfo() {
@@ -90,7 +91,7 @@ public class SakaiHttpServletFactory extends StaticHttpServletFactory {
   }
 
   private static final String PORTAL_TOOL = "/portal/tool/";
-  
+
   public static String computePathInfo(HttpServletRequest request) {
     String requesturl = request.getRequestURL().toString();
     String extrapath = request.getPathInfo();
@@ -111,27 +112,41 @@ public class SakaiHttpServletFactory extends StaticHttpServletFactory {
     if (extrapath.startsWith(FACES_PATH)) {
       extrapath = extrapath.substring(FACES_PATH.length());
     }
-
-    try { // Resolve RSF-129. Override all previous decisions if we can detect a global /portal/tool request
-      URL url = new URL(requesturl);
-      String path = url.getPath();
-      if (path.startsWith(PORTAL_TOOL)) {
-        int nextslashpos = path.indexOf('/', PORTAL_TOOL.length() + 1);
-        if (nextslashpos != -1) {
-          extrapath = path.substring(nextslashpos + 1);
-        }
-        else {
-          extrapath = "";
+    // The Websphere dispatching environment is entirely broken, and never gives us 
+    // any information on pathinfo. Make our best attempt to guess what it should be
+    // in certain common situations.
+    if ("websphere".equals(ServerConfigurationService.getString("servlet.container"))) {
+      try { // Resolve RSF-129. Override all previous decisions if we can detect a global
+            // /portal/tool request
+        URL url = new URL(requesturl);
+        String path = url.getPath();
+        if (path.startsWith(PORTAL_TOOL)) {
+          int nextslashpos = path.indexOf('/', PORTAL_TOOL.length() + 1);
+          if (nextslashpos != -1) {
+            extrapath = path.substring(nextslashpos + 1);
+            int furtherslashpos = extrapath.indexOf('/');
+            int helperpos = extrapath.indexOf(".helper");
+            if (helperpos != -1) {
+              if (helperpos < furtherslashpos) {
+                extrapath = extrapath.substring(furtherslashpos + 1);  
+              }
+              else if (furtherslashpos == -1) {
+                extrapath = "";
+              }
+            }
+          }
+          else {
+            extrapath = "";
+          }
         }
       }
+      catch (MalformedURLException e) {
+        Logger.log.info("Malformed input request URL", e);
+      }
     }
-    catch (MalformedURLException e) {
-      Logger.log.info("Malformed input request URL", e);
-    }
-    
-    Logger.log
-        .info("Beginning ToolSinkTunnelServlet service with requestURL of "
-            + requesturl + " and extra path of " + extrapath);
+
+    Logger.log.info("Beginning ToolSinkTunnelServlet service with requestURL of "
+        + requesturl + " and extra path of " + extrapath);
 
     return extrapath;
   }
