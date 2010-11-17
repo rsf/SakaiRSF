@@ -149,6 +149,39 @@ public class HelperHandlerHookBean {
     String helperId = (String) tsh.getTokenState(TOKEN_STATE_PREFIX
         + viewParameters.viewID + HelperViewParameters.HELPER_ID);
 
+    if (pathBeyondViewID.endsWith(".helper")) {
+    int i = pathBeyondViewID.lastIndexOf('/');
+      if (i >= 0) {
+        String helperName = pathBeyondViewID.substring(i + 1);
+        String toolName = pathBeyondViewID.substring(0, i);
+        i = helperName.lastIndexOf('.');
+        helperName = helperName.substring(0, i);
+        Logger.log.debug("new helper name" + helperName);
+        Logger.log.debug("tool name" + toolName);
+        tsh.putTokenState(TOKEN_STATE_PREFIX + viewParameters.viewID
+            + "orig-helper-id", helperId);
+        tsh.putTokenState(TOKEN_STATE_PREFIX + viewParameters.viewID
+            + "helper-tool-name", toolName);
+        helperId = helperName;
+        tsh.putTokenState(TOKEN_STATE_PREFIX + viewParameters.viewID
+            + HelperViewParameters.HELPER_ID, helperId);
+      }
+    }
+
+    String origToolName = (String) tsh.getTokenState(TOKEN_STATE_PREFIX
+        + viewParameters.viewID + "helper-tool-name");
+    if (origToolName != null && pathBeyondViewID.endsWith(origToolName)) {
+      helperId = (String) tsh.getTokenState(TOKEN_STATE_PREFIX
+          + viewParameters.viewID + "orig-helper-id");
+      Logger.log.debug("returning to " + helperId);
+      tsh.putTokenState(TOKEN_STATE_PREFIX + viewParameters.viewID
+          + HelperViewParameters.HELPER_ID, helperId);
+      tsh.clearTokenState(TOKEN_STATE_PREFIX + viewParameters.viewID
+          + "helper-tool-name");
+      tsh.clearTokenState(TOKEN_STATE_PREFIX + viewParameters.viewID
+          + "orig-helper-id");
+    }    
+    
     ActiveTool helperTool = activeToolManager.getActiveTool(helperId);
 
     String baseUrl = bup.getBaseURL();
