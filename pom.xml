@@ -5,10 +5,9 @@
                       http://maven.apache.org/maven-v4_0_0.xsd">
    <modelVersion>4.0.0</modelVersion>
    <parent>
-     <artifactId>master</artifactId>
-     <groupId>org.sakaiproject</groupId>
-     <version>2.5.2</version>
-     <relativePath>../master/pom.xml</relativePath>
+     <artifactId>sakai-standard-tool</artifactId>
+     <groupId>org.sakaiproject.purepoms</groupId>
+     <version>2.8.0</version>
    </parent>
    <packaging>jar</packaging>
    <name>SakaiRSF</name>
@@ -292,50 +291,61 @@
       <dependency>
          <groupId>org.sakaiproject</groupId>
          <artifactId>generic-dao</artifactId>
-         <version>0.9.1</version>
+         <version>0.9.18</version>
          <scope>provided</scope>
       </dependency>
       <dependency>
-         <groupId>org.sakaiproject</groupId>
-         <artifactId>sakai-entity-api</artifactId>
-         <version>${sakai.version}</version>
-         <type>jar</type>
-         <scope>provided</scope>
+         <groupId>org.sakaiproject.kernel</groupId>
+         <artifactId>sakai-kernel-api</artifactId>
+      </dependency>
+      <dependency>
+         <groupId>org.sakaiproject.kernel</groupId>
+         <artifactId>sakai-component-manager</artifactId>
       </dependency>
       <dependency>
          <groupId>org.sakaiproject.entitybroker</groupId>
          <artifactId>entitybroker-api</artifactId>
-         <version>1.3.3</version>
+      </dependency>
+      <dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring</artifactId>
+      </dependency>
+       <dependency>
+         <groupId>javax.servlet</groupId>
+         <artifactId>servlet-api</artifactId>
+         <version>2.3</version>
          <type>jar</type>
          <scope>provided</scope>
       </dependency>
       <dependency>
          <groupId>org.sakaiproject</groupId>
-         <artifactId>sakai-authz-api</artifactId>
+         <artifactId>generic-dao</artifactId>
+         <version>0.9.18</version>
+         <scope>provided</scope>
       </dependency>
       <dependency>
-         <groupId>org.sakaiproject</groupId>
-         <artifactId>sakai-site-api</artifactId>
+         <groupId>org.sakaiproject.kernel</groupId>
+         <artifactId>sakai-kernel-api</artifactId>
       </dependency>
       <dependency>
-         <groupId>org.sakaiproject</groupId>
-         <artifactId>sakai-tool-api</artifactId>
+         <groupId>org.sakaiproject.kernel</groupId>
+         <artifactId>sakai-component-manager</artifactId>
       </dependency>
       <dependency>
-         <groupId>org.sakaiproject</groupId>
-         <artifactId>sakai-util-api</artifactId>
+         <groupId>org.sakaiproject.entitybroker</groupId>
+         <artifactId>entitybroker-api</artifactId>
       </dependency>
       <dependency>
-         <groupId>org.sakaiproject</groupId>
-         <artifactId>sakai-user-api</artifactId>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring</artifactId>
       </dependency>
       <dependency>
-         <groupId>org.sakaiproject</groupId>
-         <artifactId>sakai-content-api</artifactId>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-web</artifactId>
       </dependency>
       <dependency>
-         <groupId>org.sakaiproject</groupId>
-         <artifactId>sakai-component-api</artifactId>
+	<groupId>org.springframework</groupId>
+	<artifactId>spring-webmvc</artifactId>
       </dependency>
    </dependencies>
 
@@ -355,7 +365,7 @@
          </resource>
          <resource>
             <directory>src/java/</directory>
-            <targetPath>/</targetPath>
+            <targetPath>.</targetPath>
             <includes>
                <include>**/*.xml</include>
             </includes>
