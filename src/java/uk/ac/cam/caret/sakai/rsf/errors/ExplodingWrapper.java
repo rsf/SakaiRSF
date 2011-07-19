@@ -3,7 +3,6 @@
  */
 package uk.ac.cam.caret.sakai.rsf.errors;
 
-import uk.org.ponder.arrayutil.ArrayUtil;
 import uk.org.ponder.messageutil.TargettedMessage;
 import uk.org.ponder.messageutil.TargettedMessageException;
 import uk.org.ponder.messageutil.TargettedMessageList;

@@ -21,7 +21,6 @@ import uk.ac.cam.caret.sakai.rsf.producers.FrameAdjustingProducer;
 import uk.ac.cam.caret.sakai.rsf.template.SakaiBodyTPI;
 import uk.ac.cam.caret.sakai.rsf.template.SakaiPortalMatterSCR;
 import uk.org.ponder.rsf.renderer.ComponentRenderer;
-import uk.org.ponder.rsf.renderer.scr.BasicSCR;
 import uk.org.ponder.rsf.renderer.scr.FlatSCR;
 import uk.org.ponder.rsf.renderer.scr.NullRewriteSCR;
 import uk.org.ponder.rsf.renderer.scr.StaticRendererCollection;

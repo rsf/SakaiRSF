@@ -12,7 +12,6 @@ import org.sakaiproject.entitybroker.EntityReference;
 import org.sakaiproject.entitybroker.access.HttpServletAccessProvider;
 import org.sakaiproject.entitybroker.access.HttpServletAccessProviderManager;
 import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.InitializingBean;
 
 import uk.org.ponder.beanutil.WBLAcceptor;
 import uk.org.ponder.beanutil.WriteableBeanLocator;
