@@ -361,27 +361,28 @@
    </dependencies>
 
    <build>
-      <sourceDirectory>src</sourceDirectory>
+      <sourceDirectory>src/java</sourceDirectory>
       <resources>
          <!-- include the readme.txt file and the java source files -->
          <resource>
             <directory>${basedir}</directory>
             <includes>
-               <include>*.txt</include>
-               <include>src/**/*.java</include>
-               <include>src/**/*.html</include>
-               <include>src/**/*.xml</include>
-               <include>src/**/*.properties</include>
+               <include>java/*.txt</include>
+               <include>java/**/*.java</include>
+               <include>java/**/*.html</include>
+               <include>java/**/*.xml</include>
+               <include>java/**/*.properties</include>
             </includes>
          </resource>
-         <resource>
+       <!--   <resource>
             <directory>src/java/</directory>
             <targetPath>.</targetPath>
             <includes>
                <include>**/*.xml</include>
             </includes>
             <filtering>false</filtering>
-         </resource>
+         </resource>-->
+         
       </resources>
    </build>
 
