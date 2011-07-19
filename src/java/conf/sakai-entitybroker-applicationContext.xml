@@ -12,7 +12,7 @@
   <bean id="accessRegistrar"
     class="uk.ac.cam.caret.sakai.rsf.entitybroker.AccessRegistrar" init-method="init">
     <property name="accessProviderManager"
-      ref="org.sakaiproject.entitybroker.access.HttpServletAccessProviderManager" />
+      ref="org.sakaiproject.entitybroker.access.EntityViewAccessProviderManager" />
     <property name="RSACBeanLocator" ref="RSACBeanLocator" />
     <property name="entityBroker" ref="org.sakaiproject.entitybroker.EntityBroker"/>
   </bean>
