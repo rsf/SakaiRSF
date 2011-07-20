@@ -75,6 +75,11 @@
             <url>scp://source.sakaiproject.org/var/www/html/maven2</url>
             <layout>default</layout>
         </repository>
+        <site>
+            <id>sakai-site</id>
+            <name>Sakai release Site</name>
+            <url>scp://source.sakaiproject.org/var/www/html/release/rsf/SakaiRSF</url>
+        </site>
     </distributionManagement>
 
 
