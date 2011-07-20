@@ -84,8 +84,8 @@
    </issueManagement>
 
    <ciManagement>
-      <system>Continuum</system>
-      <url>http://saffron.caret.cam.ac.uk/continuum</url>
+      <system>Jenkins</system>
+      <url>http://builds.sakaiproject.org:8080/view/RSF/job/SakaiRSF/</url>
       <notifiers>
          <notifier>
             <type>mail</type>
