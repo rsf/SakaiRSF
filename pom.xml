@@ -105,12 +105,12 @@
    <!-- define source code repository -->
    <scm>
       <connection>
-         scm:svn:https://source.caret.cam.ac.uk/rsf/projects/SakaiRSF/trunk/
+         scm:git:git://github.com/rsf/SakaiRSF.git
       </connection>
       <developerConnection>
-         scm:svn:https://source.caret.cam.ac.uk/rsf/projects/SakaiRSF/trunk/
+         scm:git:git://github.com/rsf/SakaiRSF.git
       </developerConnection>
-      <url>https://source.caret.cam.ac.uk/rsf/projects/SakaiRSF/trunk/</url>
+      <url>scm:git:https://github.com/rsf/SakaiRSF</url>
    </scm>
 
    <!-- define the license -->
@@ -209,6 +209,11 @@
                <linkJavadoc>true</linkJavadoc>
                <javadocDir>apidocs</javadocDir>
             </configuration>
+         </plugin>
+         <plugin>
+         	<groupId>org.apache.maven.plugins</groupId>
+         	<artifactId>maven-site-plugin</artifactId>
+         	<version>2.3</version>
          </plugin>
       </plugins>
    </reporting>
