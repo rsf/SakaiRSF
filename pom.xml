@@ -107,9 +107,7 @@
       <connection>
          scm:git:git://github.com/rsf/SakaiRSF.git
       </connection>
-      <developerConnection>
-         scm:git:git://github.com/rsf/SakaiRSF.git
-      </developerConnection>
+      <developerConnection>scm:git:git@github.com:rsf/SakaiRSF.git</developerConnection>
       <url>scm:git:https://github.com/rsf/SakaiRSF</url>
    </scm>
 
