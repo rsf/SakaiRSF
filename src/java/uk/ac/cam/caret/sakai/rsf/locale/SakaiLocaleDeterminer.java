@@ -9,6 +9,7 @@ import javax.servlet.ServletRequest;
 
 import org.sakaiproject.entity.api.ResourceProperties;
 import org.sakaiproject.i18n.InternationalizedMessages;
+import org.sakaiproject.site.api.Site;
 import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.user.api.Preferences;
 import org.sakaiproject.user.api.PreferencesService;
@@ -20,6 +21,7 @@ import uk.org.ponder.localeutil.LocaleUtil;
  * Determins the correct locale for the current request by searching the following sources
  * in order of preference:
  * <ol>
+ * <li>The Site Language
  * <li>The User's preferences
  * <li>The current ServletRequest
  * <li>The Sakai Session
@@ -34,6 +36,7 @@ public class SakaiLocaleDeterminer implements FactoryBean {
   private SessionManager sessionmanager;
   private ServletRequest servletrequest;
   private PreferencesService prefsservice;
+  private Site site;
 
   private Locale getPreferencesLocale() {
     String userid = sessionmanager.getCurrentSessionUserId();
@@ -43,6 +46,13 @@ public class SakaiLocaleDeterminer implements FactoryBean {
     String prefLocale = props.getProperty(InternationalizedMessages.LOCALE_KEY);
     return prefLocale == null ? null
         : LocaleUtil.parseLocale(prefLocale);
+  }
+
+  private Locale getSiteLanguage() {
+    ResourceProperties props = site.getProperties();
+    String locale_string = props.getProperty("locale_string");
+    return locale_string == null ? null
+        : LocaleUtil.parseLocale(locale_string);
   }
 
   public void setPreferencesService(PreferencesService prefsservice) {
@@ -57,8 +67,15 @@ public class SakaiLocaleDeterminer implements FactoryBean {
     this.servletrequest = servletrequest;
   }
 
+  public void setSite(Site site) {
+    this.site = site;
+  }
+
   public Object getObject() {
-    Locale togo = getPreferencesLocale();
+    Locale togo = getSiteLanguage();
+    if (togo == null) {
+      togo = getPreferencesLocale();
+    }
     if (togo == null) {
       try {
         togo = (Locale) sessionmanager.getCurrentSession().getAttribute("locale");

@@ -57,6 +57,7 @@ When running locally, it can be the global BUP once more.
     <property name="preferencesService" ref="org.sakaiproject.user.api.PreferencesService"/>
     <property name="servletRequest" ref="httpServletRequest"/>
     <property name="sessionManager" ref="org.sakaiproject.tool.api.SessionManager"/>
+    <property name="site" ref="sakai-Site"/>
   </bean>
 
   <bean id="requestLocale"
