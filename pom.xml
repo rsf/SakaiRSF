@@ -10,7 +10,7 @@
    <name>SakaiRSF</name>
    <groupId>uk.org.ponder.sakairsf</groupId>
    <artifactId>sakairsf</artifactId>
-   <version>0.7.6-SNAPSHOT</version>
+   <version>0.7.6</version>
    <properties>
       <jservletutil.version>1.2.5</jservletutil.version>
       <ponderutilcore.version>1.2.5</ponderutilcore.version>
