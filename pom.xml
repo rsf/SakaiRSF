@@ -295,8 +295,6 @@
       <dependency>
          <groupId>javax.servlet</groupId>
          <artifactId>servlet-api</artifactId>
-         <version>2.3</version>
-         <type>jar</type>
          <scope>provided</scope>
       </dependency>
       <dependency>
@@ -320,19 +318,6 @@
       <dependency>
 	<groupId>org.springframework</groupId>
 	<artifactId>spring</artifactId>
-      </dependency>
-       <dependency>
-         <groupId>javax.servlet</groupId>
-         <artifactId>servlet-api</artifactId>
-         <version>2.3</version>
-         <type>jar</type>
-         <scope>provided</scope>
-      </dependency>
-      <dependency>
-         <groupId>org.sakaiproject</groupId>
-         <artifactId>generic-dao</artifactId>
-         <version>0.9.18</version>
-         <scope>provided</scope>
       </dependency>
       <dependency>
          <groupId>org.sakaiproject.kernel</groupId>
