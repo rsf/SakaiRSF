@@ -10,9 +10,13 @@ import javax.servlet.ServletRequest;
 import org.sakaiproject.entity.api.ResourceProperties;
 import org.sakaiproject.i18n.InternationalizedMessages;
 import org.sakaiproject.site.api.Site;
+import org.sakaiproject.site.api.SiteService;
+import org.sakaiproject.entity.api.EntityManager;
+import org.sakaiproject.exception.IdUnusedException;
 import org.sakaiproject.tool.api.SessionManager;
 import org.sakaiproject.user.api.Preferences;
 import org.sakaiproject.user.api.PreferencesService;
+import org.sakaiproject.entity.api.Reference;
 import org.springframework.beans.factory.FactoryBean;
 
 import uk.org.ponder.localeutil.LocaleUtil;
@@ -36,7 +40,9 @@ public class SakaiLocaleDeterminer implements FactoryBean {
   private SessionManager sessionmanager;
   private ServletRequest servletrequest;
   private PreferencesService prefsservice;
-  private Site site;
+  private String siteEntityReference;
+  private SiteService siteservice;
+  private EntityManager entitymanager;
 
   private Locale getPreferencesLocale() {
     String userid = sessionmanager.getCurrentSessionUserId();
@@ -48,7 +54,24 @@ public class SakaiLocaleDeterminer implements FactoryBean {
         : LocaleUtil.parseLocale(prefLocale);
   }
 
+    public void setSiteService(SiteService siteservice) {
+        this.siteservice = siteservice;
+    }
+
+    public void setEntityManager(EntityManager entitymanager) {
+        this.entitymanager = entitymanager;
+    }
+
+
   private Locale getSiteLanguage() {
+    Site site;
+    try {
+      Reference reference = entitymanager.newReference(siteEntityReference);
+      site = siteservice.getSite(reference.getId());
+    }
+    catch (IdUnusedException e) {
+        return null;
+    }
     ResourceProperties props = site.getProperties();
     String locale_string = props.getProperty("locale_string");
     return locale_string == null ? null
@@ -67,8 +90,8 @@ public class SakaiLocaleDeterminer implements FactoryBean {
     this.servletrequest = servletrequest;
   }
 
-  public void setSite(Site site) {
-    this.site = site;
+  public void setSiteEntityReference(String siteEntityReference) {
+    this.siteEntityReference = siteEntityReference;
   }
 
   public Object getObject() {
