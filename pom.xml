@@ -10,7 +10,7 @@
    <name>SakaiRSF</name>
    <groupId>uk.org.ponder.sakairsf</groupId>
    <artifactId>sakairsf</artifactId>
-   <version>10-SNAPSHOT</version>
+   <version>10.1-SNAPSHOT</version>
    <properties>
       <jservletutil.version>1.3.1-SNAPSHOT</jservletutil.version>
       <ponderutilcore.version>1.3.1-SNAPSHOT</ponderutilcore.version>
@@ -76,7 +76,8 @@
       </connection>
       <developerConnection>scm:git:git@github.com:rsf/SakaiRSF.git</developerConnection>
       <url>scm:git:https://github.com/rsf/SakaiRSF</url>
-   </scm>
+     <tag>HEAD</tag>
+  </scm>
 
    <!-- define the license -->
    <licenses>
